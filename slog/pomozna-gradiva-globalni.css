@@ -1,0 +1,185 @@
+/* =====================================================================
+   POMOŽNA GRADIVA – globalni slog (Divi → Možnosti teme → Splošno → Lasten CSS)
+   Različica 1 · 31. 10. 2026
+   Ta CSS NADOMESTI obstoječi blok v »Lasten CSS« (keyframes bounce + utripanje-gumba).
+   ===================================================================== */
+
+/* ---------- 1. Žetoni (iz slogovnega sistema) ---------- */
+:root {
+  --surface: #ffffff;
+  --surface-alt: #f5f3ef;
+  --ink: #1b1e28;
+  --muted: #4a4f5c;
+  --line: #c9c4bb;
+  --primary: #4b1585;
+  --primary-dark: #36105f;
+  --primary-tint: #efe8f8;
+  --accent: #f2b705;
+  --on-primary: #ffffff;
+  --predmet-ive: #1f5fad;
+  --predmet-ine: #a33d00;
+  --predmet-iek: #0b6e55;
+  --predmet-str: #8a2c6e;
+  --predmet-vui: #4a4f5c;
+  --primer-tint: #e7f0fa;  --primer-edge: #1f5fad;
+  --pozor-tint: #fff3cc;   --pozor-edge: #8a5a00;
+  --matura-tint: #e3f3ec;  --matura-edge: #0b6e55;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 40px; --space-5: 64px;
+  --radius-sm: 8px; --radius-md: 14px; --radius-pill: 999px;
+  --target-min: 48px; --focus-width: 4px; --measure: 68ch;
+  --shadow-card: 0 2px 8px rgba(27,30,40,.12);
+  --shadow-card-hover: 0 6px 18px rgba(27,30,40,.20);
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+}
+
+/* ---------- 2. Osnovna berljivost ---------- */
+body,
+body #page-container,
+body .et_pb_module,
+body input, body textarea, body select, body button {
+  font-family: var(--font-sans);
+}
+body { color: var(--ink); line-height: 1.6; }
+#page-container .et_pb_text,
+#page-container .et_pb_text_inner,
+#page-container .et_pb_blurb_description { color: var(--ink); }
+#page-container .et_pb_text_inner p,
+#page-container .et_pb_text_inner li { line-height: 1.6; }
+
+/* Obojestranska poravnava → leva (tudi če je nastavljena v odstavku) */
+#page-container .et_pb_text_inner p[style*="justify"],
+#page-container .et_pb_text_inner li[style*="justify"],
+#page-container .et_pb_text_inner [style*="justify"] { text-align: left !important; }
+#page-container .et_pb_text_align_justified { text-align: left !important; }
+
+/* Naslovi (za nove in prenesene lekcije) */
+#page-container h1, #page-container h2, #page-container h3, #page-container h4 {
+  font-family: var(--font-sans); color: var(--ink); font-weight: 700; padding-bottom: 0;
+}
+#page-container .et_pb_text_inner h1 { font-size: 40px; line-height: 1.15; margin: 0 0 var(--space-3); }
+#page-container .et_pb_text_inner h2 { font-size: 30px; line-height: 1.2;  margin: var(--space-4) 0 var(--space-2); }
+#page-container .et_pb_text_inner h3 { font-size: 24px; line-height: 1.25; margin: var(--space-3) 0 12px; }
+
+/* Povezave: vedno podčrtane */
+#page-container .et_pb_text_inner a,
+#page-container .et_pb_blurb_description a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+#page-container .et_pb_text_inner a:hover { color: var(--primary-dark); }
+
+/* ---------- 3. Viden fokus (Divi ga privzeto skrije) ---------- */
+body :focus { outline: none; }
+body :focus-visible,
+body a:focus-visible,
+body button:focus-visible,
+body input:focus-visible,
+body .et_pb_button:focus-visible {
+  outline: var(--focus-width) solid var(--primary) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 calc(var(--focus-width) + 7px) var(--accent) !important;
+  border-radius: var(--radius-sm);
+}
+/* Skok na vsebino za uporabnike tipkovnice (povezavo doda WordPress/Divi, če obstaja) */
+.skip-link:focus, .screen-reader-text:focus {
+  clip: auto !important; clip-path: none !important; width: auto; height: auto;
+  position: fixed !important; top: 12px; left: 12px; z-index: 100000;
+  padding: 12px 20px; background: var(--primary); color: #fff !important; font-weight: 700;
+}
+
+/* ---------- 4. Gumbi ---------- */
+body #page-container .et_pb_button {
+  font-family: var(--font-sans) !important;
+  font-size: 19px !important; font-weight: 700 !important; line-height: 1.2 !important;
+  min-height: var(--target-min);
+  padding: 12px 22px !important;
+  border-radius: var(--radius-sm) !important;
+  border-width: 2px !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+}
+/* Divi ob prehodu miške razširi gumb in doda puščico – to izklopimo */
+body #page-container .et_pb_button:hover { padding: 12px 22px !important; }
+body #page-container .et_pb_button:after { display: none !important; }
+
+/* Stari razred: poskakovanje ob prehodu miške je izklopljeno */
+.utripanje-gumba, .utripanje-gumba:hover { animation: none !important; }
+
+/* Nov razred za gumbe, ki jih dodajamo */
+body #page-container .et_pb_button.pg-btn {
+  color: var(--on-primary) !important; background: var(--primary) !important; border-color: var(--primary) !important;
+}
+body #page-container .et_pb_button.pg-btn:hover { background: var(--primary-dark) !important; border-color: var(--primary-dark) !important; }
+
+/* ---------- 5. Glava in meni ---------- */
+#main-header { box-shadow: 0 1px 0 var(--line) !important; }
+#top-menu li a, .et_mobile_menu li a {
+  font-family: var(--font-sans) !important;
+  font-size: 18px !important; font-weight: 600 !important; color: var(--ink) !important;
+}
+#top-menu li.current-menu-item > a,
+#top-menu li.current-menu-ancestor > a { color: var(--primary) !important; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 8px; }
+#top-menu li a:hover { color: var(--primary) !important; opacity: 1 !important; }
+/* Podmeni: večje vrstice, ciljna površina ≥ 48 px */
+#top-menu li li a { font-size: 17px !important; padding: 12px 20px !important; width: 260px; line-height: 1.3; }
+#top-menu .sub-menu { width: 300px; border-top-color: var(--primary) !important; }
+.et_mobile_menu li a { padding: 14px 5% !important; border-bottom: 1px solid var(--line); }
+.et_mobile_menu { border-top-color: var(--primary) !important; }
+#et_mobile_nav_menu .mobile_menu_bar:before, #et_search_icon:before { color: var(--primary) !important; }
+
+/* ---------- 6. Noga ---------- */
+#main-footer { background: var(--primary) !important; }
+#main-footer, #main-footer a, #footer-widgets .footer-widget li a, #footer-info, #footer-info a { color: #fff !important; }
+#footer-widgets h2, #footer-widgets h4 { color: #fff !important; font-family: var(--font-sans); }
+#footer-bottom { background: var(--primary-dark) !important; }
+
+/* ---------- 7. Komponente slogovnega sistema (pg-) ---------- */
+.pg-okvir { margin: var(--space-3) 0; padding: var(--space-3); background: var(--tint); border: 2px solid var(--edge); border-radius: var(--radius-md); color: var(--ink); }
+.pg-okvir__oznaka { margin: 0 0 12px !important; padding: 0 !important; font: 700 18px/1.2 var(--font-sans); color: var(--edge); text-transform: uppercase; letter-spacing: .05em; }
+.pg-okvir__oznaka::before { content: ""; display: inline-block; width: 24px; height: 24px; margin-right: 8px; vertical-align: -5px; background: var(--edge); -webkit-mask: var(--ikona) center/contain no-repeat; mask: var(--ikona) center/contain no-repeat; }
+.pg-okvir p:last-child, .pg-okvir ul:last-child { padding-bottom: 0; margin-bottom: 0; }
+.pg-okvir--cilj   { --tint: var(--primary-tint); --edge: var(--primary);
+  --ikona: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Ccircle cx='12' cy='12' r='4.5'/%3E%3Ccircle cx='12' cy='12' r='1' fill='black'/%3E%3C/svg%3E"); }
+.pg-okvir--primer { --tint: var(--primer-tint); --edge: var(--primer-edge);
+  --ikona: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='5' y='3' width='14' height='18' rx='2'/%3E%3Cpath d='M9 8h6M9 12h6M9 16h3'/%3E%3C/svg%3E"); }
+.pg-okvir--pozor  { --tint: var(--pozor-tint); --edge: var(--pozor-edge);
+  --ikona: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M12 3 2 20h20L12 3z'/%3E%3Cpath d='M12 10v4.5M12 17.2v.3'/%3E%3C/svg%3E"); }
+.pg-okvir--matura { --tint: var(--matura-tint); --edge: var(--matura-edge);
+  --ikona: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linejoin='round'%3E%3Cpath d='M2 9l10-5 10 5-10 5L2 9z'/%3E%3Cpath d='M6 11v5c3 2.5 9 2.5 12 0v-5'/%3E%3C/svg%3E"); }
+
+.pg-koraki { list-style: none !important; margin: 0 !important; padding: 0 !important; counter-reset: korak; }
+.pg-koraki > li { counter-increment: korak; display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: baseline; padding: 10px 0 !important; border-top: 1px solid var(--line); }
+.pg-koraki > li:first-child { border-top: 0; }
+.pg-koraki > li::before { content: counter(korak); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--primer-edge); color: #fff; font-weight: 700; font-size: 17px; }
+.pg-koraki__oznaka { display: block; font-size: 16px; font-weight: 700; color: var(--primer-edge); text-transform: uppercase; letter-spacing: .04em; }
+.pg-rezultat { display: inline-block; margin-top: 4px; padding: 4px 12px; background: #fff; border: 2px solid var(--primer-edge); border-radius: var(--radius-sm); font-weight: 700; }
+
+.pg-kartice { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.pg-kartica { display: flex; flex-direction: column; min-height: 180px; background: #fff; color: var(--ink) !important; text-decoration: none !important; border: 2px solid var(--line); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); }
+.pg-kartica:hover, .pg-kartica:focus-visible { box-shadow: var(--shadow-card-hover); border-color: var(--ink); }
+.pg-kartica__pas { padding: 14px var(--space-3); color: #fff; background: var(--barva, var(--primary)); }
+.pg-kartica__naslov { margin: 0; padding: 0; color: #fff !important; font: 700 34px/1 var(--font-sans); letter-spacing: .04em; }
+.pg-kartica__telo { padding: var(--space-2) var(--space-3) var(--space-3); font-size: 17px; line-height: 1.5; }
+.pg-kartica__telo ul { margin: 0; padding-left: 1.1em; }
+.pg-kartica__program { margin-top: auto; padding: 10px var(--space-3); font-size: 16px; color: var(--muted); border-top: 1px solid var(--line); }
+.pg-kartica--ive { --barva: var(--predmet-ive); } .pg-kartica--ine { --barva: var(--predmet-ine); }
+.pg-kartica--iek { --barva: var(--predmet-iek); } .pg-kartica--str { --barva: var(--predmet-str); }
+.pg-kartica--vui { --barva: var(--predmet-vui); }
+
+/* ---------- 8. Gibanje: spoštuj nastavitev »manj gibanja« ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+/* Divijeve vstopne animacije modulov (drsenje, odbijanje) izklopimo povsod */
+#page-container .et_animated { opacity: 1 !important; animation: none !important; transform: none !important; }
+
+/* ---------- 9. Telefon ---------- */
+@media (max-width: 600px) {
+  body { font-size: 18px; }
+  #page-container .et_pb_text_inner h1 { font-size: 32px; }
+  #page-container .et_pb_text_inner h2 { font-size: 26px; }
+  .pg-kartice { grid-template-columns: 1fr; }
+  body #page-container .et_pb_button { display: block; text-align: center; }
+}
