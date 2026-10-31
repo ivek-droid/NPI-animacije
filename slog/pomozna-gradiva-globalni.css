@@ -134,6 +134,11 @@ body #page-container .et_pb_button.pg-btn:hover { background: var(--primary-dark
 .et_mobile_menu { border-top-color: var(--primary) !important; }
 #et_mobile_nav_menu .mobile_menu_bar:before, #et_search_icon:before { color: var(--primary) !important; }
 
+/* Logotip v mobilni postavitvi (Divi ga sicer omeji na 54 % višine glave ≈ 43 px) */
+@media (max-width: 980px) {
+  #logo { max-height: 56px !important; }
+}
+
 /* ---------- 6. Noga ---------- */
 #main-footer { background: var(--primary) !important; }
 #main-footer, #main-footer a, #footer-widgets .footer-widget li a, #footer-info, #footer-info a { color: #fff !important; }
