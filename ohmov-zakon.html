@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohmov zakon – animacija</title>
+<style>
+  .ct-wrap { font-family: Arial, Helvetica, sans-serif; color: #111; background: #fff; max-width: 720px; margin: 0 auto; padding: 12px; font-size: 18px; line-height: 1.4; }
+  .ct-wrap h1 { font-size: 24px; margin: 0 0 8px; }
+  .ct-svg { width: 100%; height: auto; display: block; border: 2px solid #111; border-radius: 8px; background: #fff; }
+  .ct-controls { display: grid; gap: 14px; margin-top: 14px; }
+  .ct-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center; }
+  .ct-row label { font-weight: bold; }
+  .ct-btn { min-width: 52px; min-height: 52px; font-size: 24px; font-weight: bold; border: 2px solid #111; border-radius: 8px; background: #f2f2f2; color: #111; cursor: pointer; }
+  .ct-btn:hover { background: #e0e0e0; }
+  .ct-btn:focus-visible, .ct-range:focus-visible { outline: 4px solid #0050b3; outline-offset: 3px; }
+  .ct-val { min-width: 90px; text-align: center; font-size: 22px; font-weight: bold; }
+  .ct-range { grid-column: 1 / -1; width: 100%; height: 44px; accent-color: #0050b3; }
+  .ct-result { margin-top: 14px; padding: 12px; border: 2px solid #0050b3; border-radius: 8px; font-size: 22px; background: #eef5ff; }
+  .ct-play { margin-top: 12px; min-height: 52px; padding: 0 18px; font-size: 20px; font-weight: bold; border: 2px solid #111; border-radius: 8px; background: #ffd400; color: #111; cursor: pointer; }
+  .ct-play:focus-visible { outline: 4px solid #0050b3; outline-offset: 3px; }
+  .ct-desc { margin-top: 14px; font-size: 17px; }
+  .ct-note { font-size: 16px; color: #333; }
+</style>
+</head>
+<body>
+<main class="ct-wrap">
+  <h1>Ohmov zakon: I = U / R</h1>
+
+  <svg class="ct-svg" viewBox="0 0 600 300" role="img" aria-labelledby="ct-svg-title ct-svg-desc">
+    <title id="ct-svg-title">Preprost električni krog</title>
+    <desc id="ct-svg-desc">Vir napetosti na levi, upor na desni, povezana z vodnikoma. Rumene pike prikazujejo tok. Hitreje se premikajo, večji je tok.</desc>
+    <path id="ct-loop" d="M 100 60 L 500 60 L 500 240 L 100 240 Z" fill="none" stroke="#111" stroke-width="6"/>
+    <g id="ct-dots"></g>
+    <!-- vir napetosti (IEC simbol): dolga tanka črta = +, kratka debela črta = − -->
+    <rect x="60" y="136" width="80" height="28" fill="#fff"/>
+    <line x1="65" y1="140" x2="135" y2="140" stroke="#111" stroke-width="4"/>
+    <line x1="83" y1="160" x2="117" y2="160" stroke="#111" stroke-width="10"/>
+    <text x="142" y="134" font-size="24" font-weight="bold">+</text>
+    <text x="142" y="182" font-size="24" font-weight="bold">−</text>
+    <text x="172" y="158" font-size="20" id="ct-lbl-u">U = 12 V</text>
+    <!-- upor -->
+    <rect x="475" y="105" width="50" height="90" fill="#fff" stroke="#111" stroke-width="4"/>
+    <text x="462" y="158" font-size="20" text-anchor="end" id="ct-lbl-r">R = 40 Ω</text>
+    <!-- smer toka -->
+    <text x="300" y="45" font-size="18" text-anchor="middle">smer toka →</text>
+  </svg>
+
+  <button type="button" class="ct-play" id="ct-play" aria-pressed="false">⏸ Ustavi animacijo</button>
+
+  <div class="ct-controls">
+    <div class="ct-row">
+      <label for="ct-u">Napetost U</label>
+      <button type="button" class="ct-btn" id="ct-u-minus" aria-label="Zmanjšaj napetost">−</button>
+      <span class="ct-val" id="ct-u-val">12 V</span>
+      <button type="button" class="ct-btn" id="ct-u-plus" aria-label="Povečaj napetost">+</button>
+      <input class="ct-range" type="range" id="ct-u" min="0" max="24" step="1" value="12">
+    </div>
+    <div class="ct-row">
+      <label for="ct-r">Upor R</label>
+      <button type="button" class="ct-btn" id="ct-r-minus" aria-label="Zmanjšaj upor">−</button>
+      <span class="ct-val" id="ct-r-val">40 Ω</span>
+      <button type="button" class="ct-btn" id="ct-r-plus" aria-label="Povečaj upor">+</button>
+      <input class="ct-range" type="range" id="ct-r" min="10" max="100" step="10" value="40">
+    </div>
+  </div>
+
+  <div class="ct-result" id="ct-result" aria-live="polite">I = 12 V / 40 Ω = 0,30 A</div>
+
+  <p class="ct-desc"><strong>Kaj vidiš:</strong> večja napetost pomeni večji tok. Večji upor pomeni manjši tok. Pike se premikajo v smeri toka (od + skozi upor do −).</p>
+  <p class="ct-note">Poenostavitev: hitrost pik samo nakazuje velikost toka. Prave hitrosti elektronov ne prikazuje. Elektroni se gibljejo v nasprotni smeri.</p>
+</main>
+
+<script>
+(function () {
+  var uIn = document.getElementById('ct-u');
+  var rIn = document.getElementById('ct-r');
+  var res = document.getElementById('ct-result');
+  var playBtn = document.getElementById('ct-play');
+  var path = document.getElementById('ct-loop');
+  var dotsG = document.getElementById('ct-dots');
+  var len = path.getTotalLength();
+  var N = 14, dots = [], offset = 0, last = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var playing = !reduce;
+
+  for (var i = 0; i < N; i++) {
+    var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('r', '9'); c.setAttribute('fill', '#ffd400');
+    c.setAttribute('stroke', '#111'); c.setAttribute('stroke-width', '2');
+    dotsG.appendChild(c); dots.push(c);
+  }
+
+  function fmt(x, d) { return x.toFixed(d).replace('.', ','); }
+  function current() { return Number(uIn.value) / Number(rIn.value); }
+
+  function place() {
+    for (var i = 0; i < N; i++) {
+      var p = path.getPointAtLength(((i * len / N) + offset) % len);
+      dots[i].setAttribute('cx', p.x); dots[i].setAttribute('cy', p.y);
+      // skrij piko, ko prečka simbol vira
+      dots[i].setAttribute('visibility', (Math.abs(p.x - 100) < 1 && p.y > 126 && p.y < 174) ? 'hidden' : 'visible');
+    }
+  }
+
+  function update() {
+    var u = Number(uIn.value), r = Number(rIn.value), I = u / r;
+    document.getElementById('ct-u-val').textContent = u + ' V';
+    document.getElementById('ct-r-val').textContent = r + ' Ω';
+    document.getElementById('ct-lbl-u').textContent = 'U = ' + u + ' V';
+    document.getElementById('ct-lbl-r').textContent = 'R = ' + r + ' Ω';
+    res.textContent = 'I = ' + u + ' V / ' + r + ' Ω = ' + fmt(I, 2) + ' A';
+    uIn.setAttribute('aria-valuetext', u + ' voltov');
+    rIn.setAttribute('aria-valuetext', r + ' ohmov');
+  }
+
+  function step(dir, input) {
+    var v = Number(input.value) + dir * Number(input.step);
+    v = Math.min(Number(input.max), Math.max(Number(input.min), v));
+    input.value = v; update();
+  }
+
+  function frame(t) {
+    if (last !== null && playing) {
+      var dt = (t - last) / 1000;
+      offset = (offset + current() * 120 * dt) % len; // 1 A = 120 px/s
+      place();
+    }
+    last = t;
+    requestAnimationFrame(frame);
+  }
+
+  function setPlaying(p) {
+    playing = p;
+    playBtn.textContent = p ? '⏸ Ustavi animacijo' : '▶ Zaženi animacijo';
+    playBtn.setAttribute('aria-pressed', p ? 'false' : 'true');
+  }
+
+  uIn.addEventListener('input', update);
+  rIn.addEventListener('input', update);
+  document.getElementById('ct-u-minus').addEventListener('click', function () { step(-1, uIn); });
+  document.getElementById('ct-u-plus').addEventListener('click', function () { step(1, uIn); });
+  document.getElementById('ct-r-minus').addEventListener('click', function () { step(-1, rIn); });
+  document.getElementById('ct-r-plus').addEventListener('click', function () { step(1, rIn); });
+  playBtn.addEventListener('click', function () { setPlaying(!playing); });
+
+  setPlaying(playing);
+  update(); place();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
