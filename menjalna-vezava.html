@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Menjalna vezava – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
 <style>
 /* Layout: ena plošča s shemo (stanje zgoraj, krmilniki spodaj), pod njo tabela stanj in pravilo vezave. */
 :root {
@@ -152,6 +153,9 @@ ol.ct-rule strong { font-weight: 600; }
 .ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .9375rem; }
 @media (max-width: 680px) { .ct-scrollhint { display: block; } }
 .ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+/* Kompaktni način za vdelavo v lekcijo (?kompakt): brez naslova, tabele in pravila – ta so v lekciji */
+.ct-kompakt body { padding-block: 0; }
+.ct-kompakt .ct-wrap > header, .ct-kompakt .ct-cols { display: none; }
 .ct-paused .ct-flow { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
   .ct-flow { animation: none; }
@@ -175,7 +179,7 @@ ol.ct-rule strong { font-weight: 600; }
 
     <p class="ct-scrollhint">Shema je širša od zaslona – povleci jo levo in desno.</p>
     <div class="ct-stage" tabindex="0" aria-label="Shema – s puščicami jo premikaš levo in desno">
-      <svg class="ct-circuit" id="svg" viewBox="0 0 840 430" role="img" aria-label="Shema enopolne menjalne vezave z dvema menjalnima stikaloma in eno svetilko">
+      <svg class="ct-circuit" id="svg" viewBox="0 95 840 335" role="img" aria-label="Shema enopolne menjalne vezave z dvema menjalnima stikaloma in eno svetilko">
         <!-- svetilka: sij -->
         <circle class="ct-glow ct-g1" cx="760" cy="230" r="76"/>
         <circle class="ct-glow ct-g2" cx="760" cy="230" r="54"/>
