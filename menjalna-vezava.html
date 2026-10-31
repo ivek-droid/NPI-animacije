@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menjalna vezava – animacija</title>
+<style>
+/* Layout: ena plošča s shemo (stanje zgoraj, krmilniki spodaj), pod njo tabela stanj in pravilo vezave. */
+:root {
+  --bg: #f4f6f5;
+  --panel: #ffffff;
+  --ink: #18201e;
+  --muted: #586561;
+  --border: #d5dbd8;
+  --row: #e4f2ee;
+  --wire-off: #a9b3af;
+  --live: #c4410c;
+  --neutral: #1f5fb0;
+  --neutral-soft: #9db8da;
+  --lamp: #ffc61a;
+  --glow: #ffd95e;
+  --flow: #ffffff;
+  --accent: #0d7a6a;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111617; --panel: #1a2123; --ink: #e7edeb; --muted: #97a5a1; --border: #2c3638;
+    --row: #1d3431; --wire-off: #4a5754; --live: #f0803c; --neutral: #5da4f0; --neutral-soft: #2f4a68;
+    --lamp: #ffd23f; --glow: #ffcf40; --flow: #101619; --accent: #4fd1b9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111617; --panel: #1a2123; --ink: #e7edeb; --muted: #97a5a1; --border: #2c3638;
+  --row: #1d3431; --wire-off: #4a5754; --live: #f0803c; --neutral: #5da4f0; --neutral-soft: #2f4a68;
+  --lamp: #ffd23f; --glow: #ffcf40; --flow: #101619; --accent: #4fd1b9;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.55 var(--font-body);
+  padding-block: 12px 20px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1 { margin: 0 0 6px; font-size: 1.75rem; line-height: 1.15; font-weight: 600; text-wrap: balance; }
+.ct-lead { margin: 0; color: var(--muted); max-width: 64ch; }
+h2 { margin: 0 0 10px; font-size: 1.0625rem; font-weight: 600; text-wrap: balance; }
+
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+.ct-pad { padding: 16px; }
+
+.ct-status { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 16px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.ct-chip {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 15ch;
+  font: 600 0.875rem/1 var(--font-mono); padding: 8px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg);
+}
+.ct-chip i { width: 11px; height: 11px; border-radius: 50%; background: var(--wire-off); transition: background .3s, box-shadow .3s; }
+.ct-chip.ct-on i { background: var(--lamp); box-shadow: 0 0 9px var(--lamp); }
+.ct-status p { margin: 0; flex: 1 1 300px; min-width: 0; }
+
+.ct-stage { overflow-x: auto; padding: 8px 8px 0; }
+svg.ct-circuit { display: block; width: 100%; min-width: 640px; height: auto; }
+
+.ct-t { font-family: var(--font-mono); font-size: 22px; font-weight: 600; fill: var(--ink); }
+.ct-t.ct-m { font-weight: 500; font-size: 20px; fill: var(--muted); }
+.ct-body { fill: var(--panel); stroke: var(--muted); stroke-width: 2; }
+.ct-term { fill: var(--panel); stroke: var(--ink); stroke-width: 2; }
+.ct-src { fill: var(--panel); stroke: var(--ink); stroke-width: 2; }
+
+.ct-wire { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.ct-wire.ct-base { stroke: var(--wire-off); stroke-width: 6; }
+.ct-wire.ct-base.ct-n { stroke: var(--neutral-soft); }
+.ct-wire.ct-live { stroke: var(--live); stroke-width: 6; opacity: 0; transition: opacity .3s; }
+.ct-wire.ct-live.ct-n { stroke: var(--neutral); }
+.ct-wire.ct-live.ct-show { opacity: 1; }
+.ct-wire.ct-halo { stroke: var(--accent); stroke-width: 16; opacity: 0; transition: opacity .2s; }
+.ct-wire.ct-halo.ct-hl { opacity: .35; }
+
+.ct-flow {
+  fill: none; stroke: var(--flow); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 0.1 15.9; opacity: 0; transition: opacity .3s;
+  animation: run 0.9s linear infinite;
+}
+.ct-flow.ct-rev { animation-name: runrev; }
+.ct-flow.ct-show { opacity: 1; }
+@keyframes run { to { stroke-dashoffset: -16; } }
+@keyframes runrev { to { stroke-dashoffset: 16; } }
+
+.ct-lever { transform-origin: 0 0; transition: transform .35s cubic-bezier(.3,.7,.3,1); }
+.ct-lv { stroke: var(--ink); stroke-width: 6; stroke-linecap: round; transition: stroke .3s; }
+.ct-lv.ct-live { stroke: var(--live); }
+.ct-pivot { fill: var(--ink); }
+
+.ct-glow { fill: var(--glow); opacity: 0; transition: opacity .4s; }
+.ct-lamp-on .ct-glow.ct-g1 { opacity: .16; }
+.ct-lamp-on .ct-glow.ct-g2 { opacity: .3; }
+.ct-bulb { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; transition: fill .35s; }
+.ct-lamp-on .ct-bulb { fill: var(--lamp); }
+.ct-fil { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+.ct-ray { stroke: var(--lamp); stroke-width: 3.5; stroke-linecap: round; opacity: 0; transition: opacity .35s; }
+.ct-lamp-on .ct-ray { opacity: 1; }
+
+.ct-hit { fill: transparent; cursor: pointer; stroke: transparent; stroke-width: 3; }
+.ct-hit:hover { stroke: var(--border); }
+.ct-hit:focus-visible { outline: none; stroke: var(--accent); }
+
+.ct-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 4px 16px 14px; color: var(--muted); font-size: .875rem; }
+.ct-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.ct-legend b { display: inline-block; width: 22px; height: 6px; border-radius: 3px; }
+
+.ct-controls { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--border); }
+.ct-btn {
+  font: 500 1rem/1.2 var(--font-body); color: var(--ink); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; min-height: 44px;
+  display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+}
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ct-btn .ct-pos { font: 600 .875rem/1 var(--font-mono); background: var(--ink); color: var(--bg); border-radius: 6px; padding: 5px 8px; }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); }
+
+.ct-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+.ct-cols > * { min-width: 0; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font: 500 .75rem/1.3 var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td { padding: 10px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: 0; }
+td.ct-mono { font-family: var(--font-mono); font-weight: 600; }
+tr.ct-cur td { background: var(--row); font-weight: 600; }
+.ct-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--ink); margin-right: 8px; vertical-align: -1px; }
+.ct-dot.ct-on { background: var(--lamp); }
+.ct-note { margin: 10px 0 0; color: var(--muted); font-size: .875rem; }
+
+ol.ct-rule { margin: 0; padding: 0; list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 6px; }
+ol.ct-rule li { counter-increment: s; padding: 10px 12px 10px 44px; position: relative; border: 1px solid transparent; border-radius: 8px; }
+ol.ct-rule li::before {
+  content: counter(s); position: absolute; left: 12px; top: 10px; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--ink); color: var(--bg); font: 600 .8125rem/22px var(--font-mono); text-align: center;
+}
+ol.ct-rule li:hover, ol.ct-rule li:focus-visible { border-color: var(--accent); background: var(--row); outline: none; }
+ol.ct-rule strong { font-weight: 600; }
+
+.ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .9375rem; }
+@media (max-width: 680px) { .ct-scrollhint { display: block; } }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.ct-paused .ct-flow { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ct-flow { animation: none; }
+  .ct-lever, .ct-wire, .ct-glow, .ct-bulb, .ct-ray, .ct-flow { transition: none; }
+}
+</style>
+
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Menjalna vezava</h1>
+    <p class="ct-lead">Ena svetilka, dve stikali na različnih mestih. Preklopi stikali in poglej, kdaj je tokokrog sklenjen.</p>
+  </header>
+
+  <section class="ct-panel" aria-label="Animacija menjalne vezave">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip"><i></i><span id="chipText">Sveti</span></span>
+      <p id="statusText" aria-live="polite"></p>
+    </div>
+
+    <p class="ct-scrollhint">Shema je širša od zaslona – povleci jo levo in desno.</p>
+    <div class="ct-stage" tabindex="0" aria-label="Shema – s puščicami jo premikaš levo in desno">
+      <svg class="ct-circuit" id="svg" viewBox="0 0 840 430" role="img" aria-label="Shema enopolne menjalne vezave z dvema menjalnima stikaloma in eno svetilko">
+        <!-- svetilka: sij -->
+        <circle class="ct-glow ct-g1" cx="760" cy="230" r="76"/>
+        <circle class="ct-glow ct-g2" cx="760" cy="230" r="54"/>
+
+        <!-- ohišji stikal -->
+        <rect class="ct-body" x="210" y="160" width="110" height="140" rx="8"/>
+        <rect class="ct-body" x="530" y="160" width="110" height="140" rx="8"/>
+
+        <!-- vir -->
+        <circle class="ct-src" cx="50" cy="265" r="22"/>
+        <text class="ct-t" x="50" y="271" text-anchor="middle">~</text>
+        <text class="ct-t ct-m" x="82" y="270">230 V</text>
+
+        <!-- vodniki (plasti) -->
+        <g id="halo"></g>
+        <g id="base"></g>
+        <g id="live"></g>
+        <g id="flow"></g>
+
+        <!-- priključki -->
+        <circle class="ct-term" cx="50" cy="150" r="6"/>
+        <circle class="ct-term" cx="50" cy="380" r="6"/>
+        <circle class="ct-term" cx="210" cy="230" r="5"/>
+        <circle class="ct-term" cx="320" cy="190" r="5"/>
+        <circle class="ct-term" cx="320" cy="270" r="5"/>
+        <circle class="ct-term" cx="530" cy="190" r="5"/>
+        <circle class="ct-term" cx="530" cy="270" r="5"/>
+        <circle class="ct-term" cx="640" cy="230" r="5"/>
+        <circle class="ct-term" cx="760" cy="196" r="5"/>
+        <circle class="ct-term" cx="760" cy="264" r="5"/>
+
+        <!-- svetilka -->
+        <g>
+          <line class="ct-ray" x1="802" y1="230" x2="816" y2="230"/>
+          <line class="ct-ray" x1="789.7" y1="259.7" x2="799.6" y2="269.6"/>
+          <line class="ct-ray" x1="730.3" y1="259.7" x2="720.4" y2="269.6"/>
+          <line class="ct-ray" x1="718" y1="230" x2="704" y2="230"/>
+          <line class="ct-ray" x1="730.3" y1="200.3" x2="720.4" y2="190.4"/>
+          <line class="ct-ray" x1="789.7" y1="200.3" x2="799.6" y2="190.4"/>
+          <circle class="ct-bulb" cx="760" cy="230" r="34"/>
+          <line class="ct-fil" x1="745" y1="215" x2="775" y2="245"/>
+          <line class="ct-fil" x1="775" y1="215" x2="745" y2="245"/>
+        </g>
+
+        <!-- vzvodi stikal -->
+        <g transform="translate(210,230)">
+          <g class="ct-lever" id="lev1">
+            <line class="ct-lv ct-live" id="lv1" x1="0" y1="0" x2="117" y2="0"/>
+            <line class="ct-flow" id="lf1" x1="0" y1="0" x2="117" y2="0"/>
+            <circle class="ct-pivot" cx="0" cy="0" r="7"/>
+          </g>
+        </g>
+        <g transform="translate(640,230)">
+          <g class="ct-lever" id="lev2">
+            <line class="ct-lv" id="lv2" x1="0" y1="0" x2="-117" y2="0"/>
+            <line class="ct-flow ct-rev" id="lf2" x1="0" y1="0" x2="-117" y2="0"/>
+            <circle class="ct-pivot" cx="0" cy="0" r="7"/>
+          </g>
+        </g>
+
+        <!-- oznake -->
+        <text class="ct-t" x="50" y="126" text-anchor="middle">L</text>
+        <text class="ct-t" x="50" y="410" text-anchor="middle">N</text>
+        <text class="ct-t" x="265" y="148" text-anchor="middle">S1</text>
+        <text class="ct-t" x="585" y="148" text-anchor="middle">S2</text>
+        <text class="ct-t ct-m" x="196" y="218" text-anchor="end">L</text>
+        <text class="ct-t ct-m" x="652" y="218">L</text>
+        <text class="ct-t ct-m" x="332" y="178">1</text>
+        <text class="ct-t ct-m" x="332" y="298">2</text>
+        <text class="ct-t ct-m" x="518" y="178" text-anchor="end">1</text>
+        <text class="ct-t ct-m" x="518" y="298" text-anchor="end">2</text>
+        <text class="ct-t ct-m" x="725" y="136" text-anchor="middle">centralni kontakt</text>
+        <text class="ct-t ct-m" x="748" y="332" text-anchor="end">navojni kontakt</text>
+        <text class="ct-t" x="806" y="170">E1</text>
+
+        <!-- površini za klik -->
+        <rect class="ct-hit" id="hit1" x="205" y="155" width="120" height="150" rx="10" tabindex="0" role="button"/>
+        <rect class="ct-hit" id="hit2" x="525" y="155" width="120" height="150" rx="10" tabindex="0" role="button"/>
+      </svg>
+    </div>
+
+    <div class="ct-legend">
+      <span><b style="background: var(--live)"></b>fazni vodnik pod napetostjo</span>
+      <span><b style="background: var(--neutral)"></b>nevtralni vodnik s tokom</span>
+      <span><b style="background: var(--wire-off)"></b>vodnik brez napetosti</span>
+    </div>
+
+    <div class="ct-controls">
+      <button class="ct-btn" id="btn1" type="button"><span>Preklopi stikalo 1</span><span class="ct-pos" id="pos1">1</span></button>
+      <button class="ct-btn" id="btn2" type="button"><span>Preklopi stikalo 2</span><span class="ct-pos" id="pos2">1</span></button>
+      <button class="ct-btn" id="auto" type="button" aria-pressed="false">Samodejno preklapljanje</button>
+      <button class="ct-btn" id="pause" type="button" aria-pressed="false">Ustavi gibanje toka</button>
+    </div>
+  </section>
+
+  <div class="ct-cols">
+    <section class="ct-panel ct-pad">
+      <h2>Katera stanja prižgejo svetilko</h2>
+      <table>
+        <thead><tr><th>Stikalo 1</th><th>Stikalo 2</th><th>Svetilka</th></tr></thead>
+        <tbody id="tbody">
+          <tr data-a="1" data-b="1"><td class="ct-mono">1</td><td class="ct-mono">1</td><td><span class="ct-dot ct-on"></span>sveti</td></tr>
+          <tr data-a="1" data-b="2"><td class="ct-mono">1</td><td class="ct-mono">2</td><td><span class="ct-dot"></span>ne sveti</td></tr>
+          <tr data-a="2" data-b="1"><td class="ct-mono">2</td><td class="ct-mono">1</td><td><span class="ct-dot"></span>ne sveti</td></tr>
+          <tr data-a="2" data-b="2"><td class="ct-mono">2</td><td class="ct-mono">2</td><td><span class="ct-dot ct-on"></span>sveti</td></tr>
+        </tbody>
+      </table>
+      <p class="ct-note">Svetilka sveti, kadar sta obe stikali v istem položaju. Vsak preklop enega stikala spremeni stanje svetilke.</p>
+    </section>
+
+    <section class="ct-panel ct-pad">
+      <h2>Pravilo vezave</h2>
+      <ol class="ct-rule">
+        <li tabindex="0" data-hl="phase"><strong>Fazni vodnik</strong> vodimo od dovoda k bližnjemu stikalu, na kontakt z oznako L, P ali puščico.</li>
+        <li tabindex="0" data-hl="n"><strong>Nevtralni vodnik</strong> vodimo od dovoda do svetilke, na navojni kontakt.</li>
+        <li tabindex="0" data-hl="t1,t2"><strong>Dva stikalna vodnika</strong> povezujeta prosta kontakta obeh stikal. Vrstni red ni pomemben.</li>
+        <li tabindex="0" data-hl="lamp"><strong>Tretji stikalni vodnik</strong> vodi od kontakta L drugega stikala do centralnega kontakta svetilke.</li>
+      </ol>
+      <p class="ct-note">Z miško ali tipko Tab izberi korak, da se vodnik označi na shemi.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var A = 19.98;
+  var s1 = 1, s2 = 1, timer = null, step = 0;
+
+  function on() { return s1 === s2; }
+
+  var wires = [
+    { id: 'phase', d: 'M50,243 V150 H130 V230 H210', kind: '',  live: function () { return true; },      flow: function () { return on(); } },
+    { id: 't1',    d: 'M320,190 H530',               kind: '',  live: function () { return s1 === 1; },  flow: function () { return on() && s1 === 1; } },
+    { id: 't2',    d: 'M320,270 H530',               kind: '',  live: function () { return s1 === 2; },  flow: function () { return on() && s1 === 2; } },
+    { id: 'lamp',  d: 'M640,230 H690 V150 H760 V196', kind: '', live: function () { return on(); },     flow: function () { return on(); } },
+    { id: 'n',     d: 'M760,264 V380 H50 V287',      kind: 'n', live: function () { return on(); },     flow: function () { return on(); } }
+  ];
+
+  function mk(layer, cls, d) {
+    var p = document.createElementNS(NS, 'path');
+    p.setAttribute('class', cls);
+    p.setAttribute('d', d);
+    document.getElementById(layer).appendChild(p);
+    return p;
+  }
+  wires.forEach(function (w) {
+    w.halo = mk('halo', 'ct-wire ct-halo', w.d);
+    w.base = mk('base', 'ct-wire ct-base ' + (w.kind ? 'ct-' + w.kind : ''), w.d);
+    w.liveEl = mk('live', 'ct-wire ct-live ' + (w.kind ? 'ct-' + w.kind : ''), w.d);
+    w.flowEl = mk('flow', 'ct-flow', w.d);
+  });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('svg');
+
+  function render() {
+    var o = on();
+    wires.forEach(function (w) {
+      w.liveEl.classList.toggle('ct-show', w.live());
+      w.flowEl.classList.toggle('ct-show', w.flow());
+    });
+    $('lev1').style.transform = 'rotate(' + (s1 === 1 ? -A : A) + 'deg)';
+    $('lev2').style.transform = 'rotate(' + (s2 === 1 ? A : -A) + 'deg)';
+    $('lv2').classList.toggle('ct-live', o);
+    $('lf1').classList.toggle('ct-show', o);
+    $('lf2').classList.toggle('ct-show', o);
+    svg.classList.toggle('ct-lamp-on', o);
+
+    $('chip').classList.toggle('ct-on', o);
+    $('chipText').textContent = o ? 'Svetilka sveti' : 'Svetilka ne sveti';
+    $('statusText').textContent = o
+      ? 'Tok teče od L skozi stikalo 1 (položaj ' + s1 + '), stikalni vodnik ' + s1 + ', stikalo 2 (položaj ' + s2 + ') in svetilko nazaj do N.'
+      : 'Stikalo 1 pošilja napetost po stikalnem vodniku ' + s1 + ', stikalo 2 pa je v položaju ' + s2 + '. Tokokrog je prekinjen.';
+
+    $('pos1').textContent = s1;
+    $('pos2').textContent = s2;
+    $('hit1').setAttribute('aria-label', 'Stikalo 1, položaj ' + s1 + '. Pritisni za preklop.');
+    $('hit2').setAttribute('aria-label', 'Stikalo 2, položaj ' + s2 + '. Pritisni za preklop.');
+
+    var rows = document.querySelectorAll('#tbody tr');
+    for (var i = 0; i < rows.length; i++) {
+      var cur = +rows[i].dataset.a === s1 && +rows[i].dataset.b === s2;
+      rows[i].classList.toggle('ct-cur', cur);
+      if (cur) { rows[i].setAttribute('aria-current', 'true'); } else { rows[i].removeAttribute('aria-current'); }
+    }
+  }
+
+  function flip1() { s1 = s1 === 1 ? 2 : 1; render(); }
+  function flip2() { s2 = s2 === 1 ? 2 : 1; render(); }
+
+  function stopAuto() {
+    if (timer) { clearInterval(timer); timer = null; }
+    $('auto').setAttribute('aria-pressed', 'false');
+    $('auto').textContent = 'Samodejno preklapljanje';
+  }
+  function startAuto() {
+    $('auto').setAttribute('aria-pressed', 'true');
+    $('auto').textContent = 'Ustavi samodejno preklapljanje';
+    timer = setInterval(function () {
+      if (step % 2 === 0) { flip1(); } else { flip2(); }
+      step++;
+    }, 2600);
+  }
+
+  function manual(fn) { return function () { stopAuto(); fn(); }; }
+  function key(fn) {
+    return function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); stopAuto(); fn(); }
+    };
+  }
+
+  $('btn1').addEventListener('click', manual(flip1));
+  $('btn2').addEventListener('click', manual(flip2));
+  $('hit1').addEventListener('click', manual(flip1));
+  $('hit2').addEventListener('click', manual(flip2));
+  $('hit1').addEventListener('keydown', key(flip1));
+  $('hit2').addEventListener('keydown', key(flip2));
+  $('auto').addEventListener('click', function () { if (timer) { stopAuto(); } else { startAuto(); } });
+
+  function mark(ids, v) {
+    ids.split(',').forEach(function (id) {
+      wires.forEach(function (w) { if (w.id === id) { w.halo.classList.toggle('ct-hl', v); } });
+    });
+  }
+  document.querySelectorAll('[data-hl]').forEach(function (li) {
+    var ids = li.getAttribute('data-hl');
+    li.addEventListener('mouseenter', function () { mark(ids, true); });
+    li.addEventListener('mouseleave', function () { mark(ids, false); });
+    li.addEventListener('focus', function () { mark(ids, true); });
+    li.addEventListener('blur', function () { mark(ids, false); });
+  });
+
+  $('pause').addEventListener('click', function () {
+    var p = !svg.classList.contains('ct-paused');
+    svg.classList.toggle('ct-paused', p);
+    this.setAttribute('aria-pressed', p ? 'true' : 'false');
+    this.textContent = p ? 'Nadaljuj gibanje toka' : 'Ustavi gibanje toka';
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
