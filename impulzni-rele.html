@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bistabilni impulzni rele – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --live: #c4410c; --neutral: #1f5fad; --off: #a9b3af; --off-n: #9db8da;
+  --lamp: #f2b705; --glow: #ffd95e; --accent: #4b1585; --row: #efe8f8; --flow: #ffffff;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 280px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-stage { overflow-x: auto; padding: 4px 8px 0; }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .ct-scrollhint { display: block; } }
+svg.ct-circuit { display: block; width: 100%; min-width: 600px; height: auto; }
+.ct-t { font: 700 22px var(--mono); fill: var(--ink); }
+.ct-tm { font: 500 20px var(--mono); fill: var(--muted); }
+.ct-w { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ct-w-off { stroke: var(--off); } .ct-w-offn { stroke: var(--off-n); }
+.ct-w-live { stroke: var(--live); } .ct-w-n { stroke: var(--neutral); }
+.ct-flow { fill: none; stroke: var(--flow); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 15.9; animation: ct-run .9s linear infinite; }
+@keyframes ct-run { to { stroke-dashoffset: -16; } }
+.ct-paused .ct-flow { animation-play-state: paused; }
+.ct-term { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-blade { stroke-width: 6; stroke-linecap: round; }
+.ct-bulb { stroke: var(--ink); stroke-width: 3; }
+.ct-fil { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.ct-broken { stroke: #b00020; stroke-width: 4; stroke-linecap: round; }
+.ct-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 4px 16px 10px; color: var(--muted); font-size: .9rem; }
+.ct-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.ct-legend b { display: inline-block; width: 22px; height: 6px; border-radius: 3px; }
+.ct-controls { display: flex; flex-wrap: wrap; gap: 8px 10px; padding: 12px 16px; align-items: center; }
+.ct-group { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ct-group > span { font-weight: 600; margin-right: 2px; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 9px 14px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn:focus-visible, .ct-stage:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+tr.ct-sum td { font-weight: 700; border-bottom: 0; }
+.ct-num { font-family: var(--mono); font-weight: 700; }
+.ct-tablewrap { padding: 4px 6px 8px; }
+.ct-bottom { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--border); }
+@media (min-width: 760px) { .ct-bottom { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); } .ct-bottom .ct-controls { border-top: 0; border-right: 1px solid var(--border); align-content: flex-start; } }
+.ct-note { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { .ct-flow { animation: none; } }
+
+.ct-sym { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-box { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 5; }
+.ct-coil { stroke: var(--ink); stroke-width: 3; }
+.ct-tag { font: 600 17px var(--font); fill: var(--muted); }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Bistabilni impulzni rele</h1>
+    <p class="ct-lead">Kratek pritisk na katerokoli tipkalo pošlje impulz tuljavi. Rele preklopi kontakt in ga obdrži do naslednjega impulza.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: Bistabilni impulzni rele">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip"></span>
+      <p id="status" aria-live="polite"></p>
+    </div>
+    <p class="ct-scrollhint">Shema je širša od zaslona – povleci jo levo in desno.</p>
+    <div class="ct-stage" tabindex="0" aria-label="Shema – s puščicami jo premikaš levo in desno">
+      <svg class="ct-circuit" id="svg" viewBox="0 20 940 320" role="img" aria-label="Shema z bistabilnim impulznim relejem: tri tipkala vezana vzporedno na tuljavo releja, kontakt releja vklaplja svetilko"></svg>
+    </div>
+    <div class="ct-legend"><span><b style="background:var(--live)"></b>fazni ali stikalni vodnik pod napetostjo</span><span><b style="background:var(--neutral)"></b>nevtralni vodnik s tokom</span><span><b style="background:var(--off)"></b>brez napetosti</span></div>
+    <div class="ct-bottom">
+      <div class="ct-controls">
+        <button class="ct-btn" type="button" data-t="0">Pritisni tipkalo 1</button>
+        <button class="ct-btn" type="button" data-t="1">Pritisni tipkalo 2</button>
+        <button class="ct-btn" type="button" data-t="2">Pritisni tipkalo 3</button>
+        <button class="ct-btn" type="button" id="pause" aria-pressed="false">Ustavi gibanje toka</button>
+      </div>
+      <div class="ct-tablewrap"><table><thead><tr><th>Kaj</th><th>Stanje</th></tr></thead><tbody id="tbody"></tbody></table></div>
+    </div>
+    <p class="ct-note" id="note"></p>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('svg');
+  function P(d, cls) { return '<path class="ct-w ' + cls + '" d="' + d + '"/>'; }
+  function F(d) { return '<path class="ct-flow" d="' + d + '"/>'; }
+  function T(x, y, s, cls, anchor) { return '<text class="' + (cls || 'ct-t') + '" x="' + x + '" y="' + y + '"' + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  function dot(x, y) { return '<circle cx="' + x + '" cy="' + y + '" r="5" fill="var(--ink)"/>'; }
+  function term(x, y) { return '<circle class="ct-term" cx="' + x + '" cy="' + y + '" r="6"/>'; }
+  function lamp(cx, cy, on, label, lx, ly) {
+    var s = '';
+    if (on) s += '<circle cx="' + cx + '" cy="' + cy + '" r="46" fill="var(--glow)" opacity=".45"/>';
+    s += '<circle class="ct-bulb" cx="' + cx + '" cy="' + cy + '" r="26" fill="' + (on ? 'var(--lamp)' : 'var(--panel)') + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx - 13) + '" y1="' + (cy - 13) + '" x2="' + (cx + 13) + '" y2="' + (cy + 13) + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx + 13) + '" y1="' + (cy - 13) + '" x2="' + (cx - 13) + '" y2="' + (cy + 13) + '"/>';
+    if (label) s += T(lx, ly, label);
+    return s;
+  }
+  function source() {
+    return '<circle class="ct-term" cx="40" cy="180" r="24"/>' + T(40, 187, '~', 'ct-t', 'middle') + T(74, 187, '230 V', 'ct-tm');
+  }
+  function pauseBtn() {
+    $('pause').addEventListener('click', function () {
+      var p = !svg.classList.contains('ct-paused');
+      svg.classList.toggle('ct-paused', p);
+      this.setAttribute('aria-pressed', p ? 'true' : 'false');
+      this.textContent = p ? 'Nadaljuj gibanje toka' : 'Ustavi gibanje toka';
+    });
+  }
+
+
+  var st = { contact: 0, pressed: -1, count: 0 };
+  var TX = [150, 270, 390];
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tipkalo(x, closed) {
+    var s = term(x, 100) + term(x, 150);
+    s += '<line class="ct-blade" stroke="' + (closed ? 'var(--live)' : 'var(--off)') + '" x1="' + (x + (closed ? 0 : 14)) + '" y1="' + (closed ? 100 : 104) + '" x2="' + (x + (closed ? 0 : 14)) + '" y2="' + (closed ? 150 : 146) + '"/>';
+    s += '<line stroke="var(--ink)" stroke-width="3" x1="' + (x + (closed ? 0 : 14)) + '" y1="125" x2="' + (x + 34) + '" y2="125"/>';
+    s += '<line stroke="var(--ink)" stroke-width="4" stroke-linecap="round" x1="' + (x + 34) + '" y1="114" x2="' + (x + 34) + '" y2="136"/>';
+    return s;
+  }
+  function render() {
+    var imp = st.pressed >= 0, lit = st.contact === 1, s = '';
+    var o = T(40, 42, 'L', 'ct-t', 'middle') + T(40, 330, 'N', 'ct-t', 'middle') + P('M40 50 V155', 'ct-w-live') + source() + P('M40 205 V300', (imp || lit) ? 'ct-w-n' : 'ct-w-offn') + P('M40 50 H90', 'ct-w-live') + P('M40 300 H90', (imp || lit) ? 'ct-w-n' : 'ct-w-offn');
+    s += P('M40 50 H700', 'ct-w-live') + P('M40 300 H700', (imp || lit) ? 'ct-w-n' : 'ct-w-offn');
+    // krmilni krog
+    s += '<rect class="ct-box" x="110" y="64" width="470" height="224" rx="10"/>' + T(345, 282, 'krmilni krog', 'ct-tag', 'middle');
+    TX.forEach(function (x, i) {
+      var c = st.pressed === i;
+      s += P('M' + x + ' 50 V100', 'ct-w-live') + dot(x, 50) + tipkalo(x, c) + T(x + 44, 130, 'T' + (i + 1), 'ct-tm');
+      s += P('M' + x + ' 150 V190', c ? 'ct-w-live' : 'ct-w-off');
+      if (c) s += F('M' + x + ' 50 V190 H500');
+    });
+    s += P('M150 190 H500', imp ? 'ct-w-live' : 'ct-w-off');
+    s += dot(270, 190) + dot(390, 190);
+    // tuljava
+    s += P('M500 190 V205', imp ? 'ct-w-live' : 'ct-w-off');
+    s += '<rect class="ct-coil" x="480" y="205" width="40" height="44" fill="' + (imp ? 'var(--glow)' : 'var(--panel)') + '"/>';
+    s += T(530, 212, 'A1', 'ct-tm') + T(530, 258, 'A2', 'ct-tm');
+    s += P('M500 249 V300', imp ? 'ct-w-n' : 'ct-w-offn');
+    if (imp) s += F('M500 190 V205') + F('M500 249 V300 H-10 V205');
+    // mehanska povezava
+    s += '<path d="M520 227 H640" stroke="var(--muted)" stroke-width="2.5" stroke-dasharray="7 6" fill="none"/>';
+    // krmiljeni krog
+    s += '<rect class="ct-box" x="600" y="64" width="230" height="224" rx="10"/>' + T(735, 256, 'krmiljeni', 'ct-tag') + T(735, 276, 'krog', 'ct-tag');
+    s += P('M700 50 V95', 'ct-w-live') + dot(700, 50) + term(700, 95) + term(700, 150);
+    var ex = lit ? 700 : 728, ey = lit ? 150 : 140;
+    s += '<line class="ct-blade" stroke="var(--live)" x1="700" y1="95" x2="' + ex + '" y2="' + ey + '"/>';
+    s += T(712, 128, 'kontakt', 'ct-tag');
+    s += P('M700 150 V184', lit ? 'ct-w-live' : 'ct-w-off') + lamp(700, 210, lit, null) + P('M700 236 V300', lit ? 'ct-w-n' : 'ct-w-offn');
+    s += T(740, 218, 'E1', 'ct-t');
+    if (lit) s += F('M700 50 V184') + F('M700 236 V300 H-10 V205');
+    svg.innerHTML = o + '<g transform="translate(50 0)">' + s + '</g>';
+
+    $('chip').textContent = lit ? 'Svetilka sveti' : 'Svetilka ne sveti';
+    $('status').textContent = imp
+      ? 'Tipkalo T' + (st.pressed + 1) + ' je pritisnjeno: skozi tuljavo teče kratek impulz in rele preklopi kontakt.'
+      : (st.count === 0 ? 'Pritisni katerokoli tipkalo.'
+         : 'Tipkalo je spuščeno, tuljava je brez toka. Kontakt ostane ' + (lit ? 'sklenjen – svetilka sveti' : 'odprt – svetilka ne sveti') + ' do naslednjega impulza.');
+    $('tbody').innerHTML = '<tr><td>Tuljava (A1–A2)</td><td>' + (imp ? 'impulz' : 'brez toka') + '</td></tr>'
+      + '<tr><td>Kontakt releja</td><td>' + (lit ? 'sklenjen' : 'odprt') + '</td></tr>'
+      + '<tr><td>Število impulzov</td><td class="ct-num">' + st.count + '</td></tr>';
+    $('note').textContent = 'Tipkala so vezana vzporedno. Zaščitni vodnik PE ni narisan. Oznake priključkov se med proizvajalci lahko razlikujejo.';
+    document.querySelectorAll('[data-t]').forEach(function (b) { b.disabled = imp; });
+  }
+  document.querySelectorAll('[data-t]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (st.pressed >= 0) return;
+      st.pressed = +b.dataset.t; st.count++; st.contact ^= 1; render();
+      setTimeout(function () { st.pressed = -1; render(); b.focus(); }, reduce ? 900 : 900);
+    });
+  });
+  pauseBtn();
+  render();
+
+})();
+</script>
+</body>
+</html>

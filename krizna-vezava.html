@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Križna vezava – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --live: #c4410c; --neutral: #1f5fad; --off: #a9b3af; --off-n: #9db8da;
+  --lamp: #f2b705; --glow: #ffd95e; --accent: #4b1585; --row: #efe8f8; --flow: #ffffff;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 280px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-stage { overflow-x: auto; padding: 4px 8px 0; }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .ct-scrollhint { display: block; } }
+svg.ct-circuit { display: block; width: 100%; min-width: 700px; height: auto; }
+.ct-t { font: 700 22px var(--mono); fill: var(--ink); }
+.ct-tm { font: 500 20px var(--mono); fill: var(--muted); }
+.ct-w { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ct-w-off { stroke: var(--off); } .ct-w-offn { stroke: var(--off-n); }
+.ct-w-live { stroke: var(--live); } .ct-w-n { stroke: var(--neutral); }
+.ct-flow { fill: none; stroke: var(--flow); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 15.9; animation: ct-run .9s linear infinite; }
+@keyframes ct-run { to { stroke-dashoffset: -16; } }
+.ct-paused .ct-flow { animation-play-state: paused; }
+.ct-term { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-blade { stroke-width: 6; stroke-linecap: round; }
+.ct-bulb { stroke: var(--ink); stroke-width: 3; }
+.ct-fil { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.ct-broken { stroke: #b00020; stroke-width: 4; stroke-linecap: round; }
+.ct-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 4px 16px 10px; color: var(--muted); font-size: .9rem; }
+.ct-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.ct-legend b { display: inline-block; width: 22px; height: 6px; border-radius: 3px; }
+.ct-controls { display: flex; flex-wrap: wrap; gap: 8px 10px; padding: 12px 16px; align-items: center; }
+.ct-group { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ct-group > span { font-weight: 600; margin-right: 2px; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 9px 14px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn:focus-visible, .ct-stage:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+tr.ct-sum td { font-weight: 700; border-bottom: 0; }
+.ct-num { font-family: var(--mono); font-weight: 700; }
+.ct-tablewrap { padding: 4px 6px 8px; }
+.ct-bottom { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--border); }
+@media (min-width: 760px) { .ct-bottom { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); } .ct-bottom .ct-controls { border-top: 0; border-right: 1px solid var(--border); align-content: flex-start; } }
+.ct-note { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { .ct-flow { animation: none; } }
+
+.ct-sym { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-box { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 5; }
+.ct-coil { stroke: var(--ink); stroke-width: 3; }
+.ct-tag { font: 600 17px var(--font); fill: var(--muted); }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Križna vezava</h1>
+    <p class="ct-lead">Dve menjalni stikali in eno ali dve križni stikali. Svetilko prižgeš in ugasneš s katerega koli mesta.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: Križna vezava">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip"></span>
+      <p id="status" aria-live="polite"></p>
+    </div>
+    <p class="ct-scrollhint">Shema je širša od zaslona – povleci jo levo in desno.</p>
+    <div class="ct-stage" tabindex="0" aria-label="Shema – s puščicami jo premikaš levo in desno">
+      <svg class="ct-circuit" id="svg" viewBox="0 40 1000 290" role="img" aria-label="Dvopolna shema križne vezave: menjalno stikalo S1, križni stikali K1 in K2, menjalno stikalo S2 in svetilka"></svg>
+    </div>
+    <div class="ct-legend"><span><b style="background:var(--live)"></b>fazni ali stikalni vodnik pod napetostjo</span><span><b style="background:var(--neutral)"></b>nevtralni vodnik s tokom</span><span><b style="background:var(--off)"></b>brez napetosti</span></div>
+    <div class="ct-bottom">
+      <div class="ct-controls">
+        <div class="ct-group" role="group" aria-label="Število križnih stikal"><span>Križna stikala:</span>
+          <button class="ct-btn" type="button" data-k="1">1</button>
+          <button class="ct-btn" type="button" data-k="2">2</button>
+        </div>
+        <button class="ct-btn" type="button" id="bs1">Preklopi S1</button>
+        <button class="ct-btn" type="button" id="bk1">Preklopi K1</button>
+        <button class="ct-btn" type="button" id="bk2">Preklopi K2</button>
+        <button class="ct-btn" type="button" id="bs2">Preklopi S2</button>
+        <button class="ct-btn" type="button" id="pause" aria-pressed="false">Ustavi gibanje toka</button>
+      </div>
+      <div class="ct-tablewrap"><table><thead><tr><th>Stikalo</th><th>Položaj</th></tr></thead><tbody id="tbody"></tbody></table></div>
+    </div>
+    <p class="ct-note" id="note"></p>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('svg');
+  function P(d, cls) { return '<path class="ct-w ' + cls + '" d="' + d + '"/>'; }
+  function F(d) { return '<path class="ct-flow" d="' + d + '"/>'; }
+  function T(x, y, s, cls, anchor) { return '<text class="' + (cls || 'ct-t') + '" x="' + x + '" y="' + y + '"' + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  function dot(x, y) { return '<circle cx="' + x + '" cy="' + y + '" r="5" fill="var(--ink)"/>'; }
+  function term(x, y) { return '<circle class="ct-term" cx="' + x + '" cy="' + y + '" r="6"/>'; }
+  function lamp(cx, cy, on, label, lx, ly) {
+    var s = '';
+    if (on) s += '<circle cx="' + cx + '" cy="' + cy + '" r="46" fill="var(--glow)" opacity=".45"/>';
+    s += '<circle class="ct-bulb" cx="' + cx + '" cy="' + cy + '" r="26" fill="' + (on ? 'var(--lamp)' : 'var(--panel)') + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx - 13) + '" y1="' + (cy - 13) + '" x2="' + (cx + 13) + '" y2="' + (cy + 13) + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx + 13) + '" y1="' + (cy - 13) + '" x2="' + (cx - 13) + '" y2="' + (cy + 13) + '"/>';
+    if (label) s += T(lx, ly, label);
+    return s;
+  }
+  function source() {
+    return '<circle class="ct-term" cx="40" cy="180" r="24"/>' + T(40, 187, '~', 'ct-t', 'middle') + T(74, 187, '230 V', 'ct-tm');
+  }
+  function pauseBtn() {
+    $('pause').addEventListener('click', function () {
+      var p = !svg.classList.contains('ct-paused');
+      svg.classList.toggle('ct-paused', p);
+      this.setAttribute('aria-pressed', p ? 'true' : 'false');
+      this.textContent = p ? 'Nadaljuj gibanje toka' : 'Ustavi gibanje toka';
+    });
+  }
+
+
+  // položaj menjalnega stikala: 0 = vodnik 1 (zgoraj), 1 = vodnik 2 (spodaj); križno: 0 = naravnost, 1 = navzkriž
+  var st = { s1: 0, s2: 0, k1: 0, k2: 0, nk: 1 };
+  var Y = [120, 200];
+  function on() { var t = st.s1 ^ st.k1 ^ (st.nk === 2 ? st.k2 : 0); return t === st.s2; }
+  function cross(x0, k, liveIn, lit) {
+    // križno stikalo med x0 in x0+100; vhoda levo, izhoda desno
+    var s = '<rect class="ct-box" x="' + (x0 - 10) + '" y="96" width="120" height="128" rx="8"/>';
+    var pairs = k ? [[0, 1], [1, 0]] : [[0, 0], [1, 1]];
+    pairs.forEach(function (p) {
+      var live = p[0] === liveIn;
+      s += '<line class="ct-blade" stroke="' + (live ? 'var(--live)' : 'var(--off)') + '" x1="' + x0 + '" y1="' + Y[p[0]] + '" x2="' + (x0 + 100) + '" y2="' + Y[p[1]] + '"/>';
+      if (live && lit) s += F('M' + x0 + ' ' + Y[p[0]] + ' L' + (x0 + 100) + ' ' + Y[p[1]]);
+    });
+    s += term(x0, 120) + term(x0, 200) + term(x0 + 100, 120) + term(x0 + 100, 200);
+    return s;
+  }
+  function trav(x1, x2, liveIdx, lit) {
+    var s = '';
+    [0, 1].forEach(function (i) {
+      s += P('M' + x1 + ' ' + Y[i] + ' H' + x2, i === liveIdx ? 'ct-w-live' : 'ct-w-off');
+      if (i === liveIdx && lit) s += F('M' + x1 + ' ' + Y[i] + ' H' + x2);
+    });
+    return s;
+  }
+  function render() {
+    var lit = on(), s = '';
+    var o = P('M40 70 V155', 'ct-w-live') + P('M40 205 V300', lit ? 'ct-w-n' : 'ct-w-offn') + P('M40 70 H80', 'ct-w-live') + P('M40 300 H80', lit ? 'ct-w-n' : 'ct-w-offn') + source();
+    o += T(40, 62, 'L', 'ct-t', 'middle') + T(40, 326, 'N', 'ct-t', 'middle');
+    s += P('M40 70 H100 V160 H120', 'ct-w-live');
+    if (lit) s += F('M0 155 V70 H100 V160 H120');
+    // S1
+    s += '<rect class="ct-box" x="110" y="96" width="110" height="128" rx="8"/>' + T(165, 88, 'S1', 'ct-t', 'middle');
+    s += '<line class="ct-blade" stroke="var(--live)" x1="120" y1="160" x2="205" y2="' + Y[st.s1] + '"/>' + term(120, 160) + term(210, 120) + term(210, 200);
+    if (lit) s += F('M120 160 L205 ' + Y[st.s1]);
+    // K1
+    var t1 = st.s1;
+    s += trav(210, 320, t1, lit) + cross(320, st.k1, t1, lit) + T(370, 88, 'K1', 'ct-t', 'middle');
+    var t2 = t1 ^ st.k1, xS2;
+    if (st.nk === 2) {
+      s += trav(420, 520, t2, lit) + cross(520, st.k2, t2, lit) + T(570, 88, 'K2', 'ct-t', 'middle');
+      t2 = t2 ^ st.k2; s += trav(620, 720, t2, lit); xS2 = 720;
+    } else {
+      s += trav(420, 720, t2, lit); xS2 = 720;
+    }
+    // S2
+    s += '<rect class="ct-box" x="710" y="96" width="110" height="128" rx="8"/>' + T(765, 88, 'S2', 'ct-t', 'middle');
+    s += '<line class="ct-blade" stroke="' + (lit ? 'var(--live)' : 'var(--off)') + '" x1="810" y1="160" x2="725" y2="' + Y[st.s2] + '"/>' + term(810, 160) + term(720, 120) + term(720, 200);
+    if (lit) s += F('M725 ' + Y[st.s2] + ' L810 160');
+    // svetilka
+    s += P('M810 160 H862', lit ? 'ct-w-live' : 'ct-w-off') + lamp(888, 160, lit, null) + P('M914 160 H935 V300 H40', lit ? 'ct-w-n' : 'ct-w-offn');
+    if (lit) s += F('M810 160 H862') + F('M914 160 H935 V300 H0 V205');
+    s += T(888, 124, 'E1', 'ct-t', 'middle');
+    s += T(165, 250, 'menjalno', 'ct-tag', 'middle') + T(370, 250, 'križno', 'ct-tag', 'middle') + (st.nk === 2 ? T(570, 250, 'križno', 'ct-tag', 'middle') : '') + T(765, 250, 'menjalno', 'ct-tag', 'middle');
+    svg.innerHTML = o + '<g transform="translate(40 0)">' + s + '</g>';
+
+    document.querySelectorAll('[data-k]').forEach(function (b) { b.setAttribute('aria-pressed', +b.dataset.k === st.nk ? 'true' : 'false'); });
+    $('bk2').hidden = st.nk !== 2;
+    $('chip').textContent = lit ? 'Svetilka sveti' : 'Svetilka ne sveti';
+    var mest = 2 + st.nk;
+    $('status').textContent = (lit ? 'Pot od L do svetilke je sklenjena. ' : 'Pot je prekinjena na stikalu S2. ')
+      + 'Svetilko lahko prižgeš ali ugasneš s ' + mest + ' mest – vsak preklop kateregakoli stikala spremeni stanje svetilke.';
+    var rows = '<tr><td>S1 (menjalno)</td><td>vodnik ' + (st.s1 + 1) + '</td></tr>'
+      + '<tr><td>K1 (križno)</td><td>' + (st.k1 ? 'navzkriž' : 'naravnost') + '</td></tr>'
+      + (st.nk === 2 ? '<tr><td>K2 (križno)</td><td>' + (st.k2 ? 'navzkriž' : 'naravnost') + '</td></tr>' : '')
+      + '<tr><td>S2 (menjalno)</td><td>vodnik ' + (st.s2 + 1) + '</td></tr>';
+    $('tbody').innerHTML = rows;
+    $('note').textContent = 'Križno stikalo vodnika, ki prideta, poveže naravnost ali navzkriž. Zaščitni vodnik PE ni narisan.';
+  }
+  document.querySelectorAll('[data-k]').forEach(function (b) { b.addEventListener('click', function () { st.nk = +b.dataset.k; render(); }); });
+  $('bs1').addEventListener('click', function () { st.s1 ^= 1; render(); });
+  $('bs2').addEventListener('click', function () { st.s2 ^= 1; render(); });
+  $('bk1').addEventListener('click', function () { st.k1 ^= 1; render(); });
+  $('bk2').addEventListener('click', function () { st.k2 ^= 1; render(); });
+  pauseBtn();
+  render();
+
+})();
+</script>
+</body>
+</html>
