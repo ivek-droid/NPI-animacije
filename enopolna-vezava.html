@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enopolna vezava – ena, dve ali tri svetilke</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --live: #c4410c; --neutral: #1f5fad; --off: #a9b3af; --off-n: #9db8da;
+  --lamp: #f2b705; --glow: #ffd95e; --accent: #4b1585; --row: #efe8f8; --flow: #ffffff;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 280px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-stage { overflow-x: auto; padding: 4px 8px 0; }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .ct-scrollhint { display: block; } }
+svg.ct-circuit { display: block; width: 100%; min-width: 600px; height: auto; }
+.ct-t { font: 700 22px var(--mono); fill: var(--ink); }
+.ct-tm { font: 500 20px var(--mono); fill: var(--muted); }
+.ct-w { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ct-w-off { stroke: var(--off); } .ct-w-offn { stroke: var(--off-n); }
+.ct-w-live { stroke: var(--live); } .ct-w-n { stroke: var(--neutral); }
+.ct-flow { fill: none; stroke: var(--flow); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 15.9; animation: ct-run .9s linear infinite; }
+@keyframes ct-run { to { stroke-dashoffset: -16; } }
+.ct-paused .ct-flow { animation-play-state: paused; }
+.ct-term { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-blade { stroke-width: 6; stroke-linecap: round; }
+.ct-bulb { stroke: var(--ink); stroke-width: 3; }
+.ct-fil { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.ct-broken { stroke: #b00020; stroke-width: 4; stroke-linecap: round; }
+.ct-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 4px 16px 10px; color: var(--muted); font-size: .9rem; }
+.ct-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.ct-legend b { display: inline-block; width: 22px; height: 6px; border-radius: 3px; }
+.ct-controls { display: flex; flex-wrap: wrap; gap: 8px 10px; padding: 12px 16px; align-items: center; }
+.ct-group { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ct-group > span { font-weight: 600; margin-right: 2px; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 9px 14px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn:focus-visible, .ct-stage:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+tr.ct-sum td { font-weight: 700; border-bottom: 0; }
+.ct-num { font-family: var(--mono); font-weight: 700; }
+.ct-tablewrap { padding: 4px 6px 8px; }
+.ct-bottom { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--border); }
+@media (min-width: 760px) { .ct-bottom { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); } .ct-bottom .ct-controls { border-top: 0; border-right: 1px solid var(--border); align-content: flex-start; } }
+.ct-note { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { .ct-flow { animation: none; } }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Enopolna vezava: ena, dve ali tri svetilke</h1>
+    <p class="ct-lead">Dodajaj svetilke, preklapljaj stikalo in poglej, kaj se zgodi, ko ena svetilka pregori.</p>
+  </header>
+
+  <section class="ct-panel" aria-label="Animacija enopolne vezave">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip">Svetilke svetijo</span>
+      <p id="status" aria-live="polite"></p>
+    </div>
+    <p class="ct-scrollhint">Shema je širša od zaslona – povleci jo levo in desno.</p>
+    <div class="ct-stage" tabindex="0" aria-label="Shema – s puščicami jo premikaš levo in desno">
+      <svg class="ct-circuit" id="svg" viewBox="0 22 780 328" role="img" aria-label="Dvopolna shema enopolne vezave: fazni vodnik, enopolno stikalo, svetilke in nevtralni vodnik"></svg>
+    </div>
+    <div class="ct-legend">
+      <span><b style="background:var(--live)"></b>fazni ali stikalni vodnik s tokom</span>
+      <span><b style="background:var(--neutral)"></b>nevtralni vodnik s tokom</span>
+      <span><b style="background:var(--off)"></b>brez toka</span>
+    </div>
+    <div class="ct-bottom">
+    <div class="ct-controls">
+      <div class="ct-group" role="group" aria-label="Število svetilk"><span>Svetilke:</span>
+        <button class="ct-btn" type="button" data-n="1">1</button>
+        <button class="ct-btn" type="button" data-n="2">2</button>
+        <button class="ct-btn" type="button" data-n="3">3</button>
+      </div>
+      <button class="ct-btn" type="button" id="sw">Izklopi stikalo</button>
+      <button class="ct-btn" type="button" id="burn">Svetilka 2 pregori</button>
+      <div class="ct-group" role="group" aria-label="Način vezave"><span>Vezava:</span>
+        <button class="ct-btn" type="button" data-mode="par">vzporedno</button>
+        <button class="ct-btn" type="button" data-mode="ser">zaporedno</button>
+      </div>
+      <button class="ct-btn" type="button" id="pause" aria-pressed="false">Ustavi gibanje toka</button>
+    </div>
+    <div class="ct-tablewrap">
+      <table>
+        <thead><tr><th>Svetilka</th><th>Napetost</th><th>Tok</th><th>Stanje</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    </div>
+    <p class="ct-note" id="note"></p>
+  </section>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var U = 230, PN = 60, R = U * U / PN;          // žarnica 60 W / 230 V, R ≈ 882 Ω (poenostavljeno: R je stalna)
+  var st = { n: 1, on: true, burned: false, mode: 'par' };
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('svg');
+  var X = [360, 500, 640];
+
+  function fmt(v, d) { return v.toFixed(d).replace('.', ','); }
+  function fmtU(v) { return (Math.abs(v - Math.round(v)) < 0.05 ? fmt(v, 0) : fmt(v, 1)) + ' V'; }
+  function fmtI(v) { return fmt(v, 2) + ' A'; }
+
+  function calc() {
+    var lamps = [];
+    for (var i = 0; i < st.n; i++) lamps.push({ broken: st.burned && i === 1 });
+    var total = 0;
+    if (st.mode === 'par') {
+      lamps.forEach(function (l) {
+        l.u = st.on ? U : 0;
+        l.i = (st.on && !l.broken) ? U / R : 0;
+        total += l.i;
+      });
+    } else {
+      var anyBroken = lamps.some(function (l) { return l.broken; });
+      var I = (st.on && !anyBroken) ? U / (st.n * R) : 0;
+      lamps.forEach(function (l) {
+        l.i = I;
+        l.u = !st.on ? 0 : (anyBroken ? (l.broken ? U : 0) : U / st.n);
+      });
+      total = I;
+    }
+    lamps.forEach(function (l) { l.p = l.i * l.i * R; });
+    return { lamps: lamps, total: total };
+  }
+
+  function path(d, cls) { return '<path class="ct-w ' + cls + '" d="' + d + '"/>'; }
+  function flow(d) { return '<path class="ct-flow" d="' + d + '"/>'; }
+
+  function lampSvg(cx, cy, l, idx) {
+    var b = l.broken ? 0 : Math.min(1, l.p / PN);
+    var s = '';
+    if (b > 0.01) s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (30 + 22 * b) + '" fill="var(--glow)" opacity="' + (0.15 + 0.35 * b).toFixed(2) + '"/>';
+    s += '<circle class="ct-bulb" cx="' + cx + '" cy="' + cy + '" r="30" fill="' + (b > 0.01 ? 'var(--lamp)' : 'var(--panel)') + '" fill-opacity="' + (b > 0.01 ? (0.35 + 0.65 * b).toFixed(2) : 1) + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx - 15) + '" y1="' + (cy - 15) + '" x2="' + (cx + 15) + '" y2="' + (cy + 15) + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx + 15) + '" y1="' + (cy - 15) + '" x2="' + (cx - 15) + '" y2="' + (cy + 15) + '"/>';
+    if (l.broken) s += '<path class="ct-broken" d="M' + (cx - 36) + ' ' + (cy + 36) + ' L' + (cx + 36) + ' ' + (cy - 36) + '"/>';
+    s += '<text class="ct-t" x="' + (cx + (st.mode === 'par' ? 40 : -12)) + '" y="' + (st.mode === 'par' ? cy + 8 : cy + 64) + '">E' + (idx + 1) + '</text>';
+    return s;
+  }
+
+  function render() {
+    var c = calc(), any = c.total > 0, s = '';
+    var last = X[st.n - 1];
+    // vir in oznake
+    s += path('M40 70 V160', 'ct-w-live') + path('M40 210 V300', any ? 'ct-w-n' : 'ct-w-offn');
+    s += '<circle class="ct-term" cx="40" cy="185" r="24"/><text class="ct-t" x="40" y="192" text-anchor="middle">~</text>';
+    s += '<text class="ct-tm" x="74" y="192">230 V</text>';
+    s += '<text class="ct-t" x="40" y="52" text-anchor="middle">L</text><text class="ct-t" x="40" y="336" text-anchor="middle">N</text>';
+    // dovod do stikala (vedno pod napetostjo)
+    s += path('M40 70 H150', 'ct-w-live');
+    if (any) s += flow('M40 160 V70 H150');
+    // stikalo
+    var bx = st.on ? 230 : 150 + 80 * Math.cos(-0.5), by = st.on ? 70 : 70 + 80 * Math.sin(-0.5);
+    s += '<line class="ct-blade" x1="150" y1="70" x2="' + bx.toFixed(1) + '" y2="' + by.toFixed(1) + '" stroke="var(--live)"/>';
+    s += '<circle class="ct-term" cx="150" cy="70" r="7"/><circle class="ct-term" cx="230" cy="70" r="7"/>';
+    s += '<text class="ct-t" x="190" y="122" text-anchor="middle">S</text>';
+
+    if (st.mode === 'par') {
+      // stikalni vodnik (zgornja zbiralka) in N (spodaj)
+      s += path('M230 70 H' + last, st.on ? 'ct-w-live' : 'ct-w-off');
+      s += path('M40 300 H' + last, any ? 'ct-w-n' : 'ct-w-offn');
+      c.lamps.forEach(function (l, i) {
+        var x = X[i], has = l.i > 0;
+        s += path('M' + x + ' 70 V155', st.on ? 'ct-w-live' : 'ct-w-off');
+        s += path('M' + x + ' 215 V300', has ? 'ct-w-n' : 'ct-w-offn');
+        s += '<circle cx="' + x + '" cy="70" r="5" fill="var(--ink)"/><circle cx="' + x + '" cy="300" r="5" fill="var(--ink)"/>';
+        s += lampSvg(x, 185, l, i);
+        if (has) s += flow('M230 70 H' + x + ' V155') + flow('M' + x + ' 215 V300 H40 V210');
+      });
+      if (any) s += flow('M150 70 H230');
+    } else {
+      // zaporedno: svetilke v eni vrsti na zgornjem vodniku, nato navzdol na N
+      var prev = 230;
+      c.lamps.forEach(function (l, i) {
+        var x = X[i];
+        s += path('M' + prev + ' 70 H' + (x - 30), any || (i === 0 && st.on) ? 'ct-w-live' : 'ct-w-off');
+        if (any) s += flow('M' + prev + ' 70 H' + (x - 30));
+        s += lampSvg(x, 70, l, i);
+        prev = x + 30;
+      });
+      s += path('M' + prev + ' 70 H720 V300 H40', any ? 'ct-w-n' : 'ct-w-offn');
+      if (any) s += flow('M150 70 H230') + flow('M' + prev + ' 70 H720 V300 H40 V210');
+    }
+    svg.innerHTML = s;
+
+    // gumbi
+    document.querySelectorAll('[data-n]').forEach(function (b) { b.setAttribute('aria-pressed', +b.dataset.n === st.n ? 'true' : 'false'); });
+    document.querySelectorAll('[data-mode]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.mode === st.mode ? 'true' : 'false'); });
+    $('sw').textContent = st.on ? 'Izklopi stikalo' : 'Vklopi stikalo';
+    $('burn').disabled = st.n < 2;
+    $('burn').textContent = st.burned ? 'Zamenjaj svetilko 2' : 'Svetilka 2 pregori';
+
+    // tabela
+    var rows = '';
+    c.lamps.forEach(function (l, i) {
+      var stanje = l.broken ? 'pregorela' : (l.i > 0 ? (l.p > PN * 0.9 ? 'sveti polno' : 'sveti šibko') : 'ne sveti');
+      rows += '<tr><td>E' + (i + 1) + '</td><td class="ct-num">' + fmtU(l.u) + '</td><td class="ct-num">' + fmtI(l.i) + '</td><td>' + stanje + '</td></tr>';
+    });
+    rows += '<tr class="ct-sum"><td>Skupaj</td><td class="ct-num">230 V</td><td class="ct-num">' + fmtI(c.total) + '</td><td></td></tr>';
+    $('tbody').innerHTML = rows;
+
+    // besedilo
+    var lit = c.lamps.filter(function (l) { return l.i > 0; }).length;
+    $('chip').textContent = lit === 0 ? 'Nobena ne sveti' : (lit === st.n ? (st.n === 1 ? 'Svetilka sveti' : 'Vse svetijo') : 'Svetijo ' + lit + ' od ' + st.n);
+    var t;
+    if (!st.on) t = 'Stikalo je izklopljeno. Prekinjen je fazni vodnik, zato tok ne teče in svetilke so brez napetosti.';
+    else if (st.mode === 'par') {
+      t = 'Vsaka svetilka je priključena med stikalni vodnik in N, zato ima vsaka polnih 230 V.';
+      if (st.burned) t += ' Svetilka 2 je pregorela, druge svetijo naprej.';
+      if (st.n > 1) t += ' Skupni tok je vsota tokov vseh svetilk.';
+    } else {
+      t = st.burned ? 'Svetilka 2 je pregorela in prekinila edino pot toka – ugasnile so vse svetilke.'
+                    : (st.n === 1 ? 'Z eno svetilko ni razlike med vzporedno in zaporedno vezavo.'
+                                  : 'Napetost 230 V se razdeli med ' + st.n + ' svetilke, zato vsaka sveti šibko.');
+    }
+    $('status').textContent = t;
+    $('note').textContent = st.mode === 'ser'
+      ? 'Zaporedna vezava je tu samo za primerjavo – v inštalacijah svetilke vedno vežemo vzporedno. Izračun je poenostavljen: upornost žarnice je vzeta kot stalna (≈ 882 Ω), v resnici je pri manjši napetosti manjša.'
+      : 'Žarnice 60 W, 230 V. Zaščitni vodnik PE v shemi ni narisan.';
+  }
+
+  document.querySelectorAll('[data-n]').forEach(function (b) {
+    b.addEventListener('click', function () { st.n = +b.dataset.n; if (st.n < 2) st.burned = false; render(); });
+  });
+  document.querySelectorAll('[data-mode]').forEach(function (b) {
+    b.addEventListener('click', function () { st.mode = b.dataset.mode; render(); });
+  });
+  $('sw').addEventListener('click', function () { st.on = !st.on; render(); });
+  $('burn').addEventListener('click', function () { st.burned = !st.burned; render(); });
+  $('pause').addEventListener('click', function () {
+    var p = !svg.classList.contains('ct-paused');
+    svg.classList.toggle('ct-paused', p);
+    this.setAttribute('aria-pressed', p ? 'true' : 'false');
+    this.textContent = p ? 'Nadaljuj gibanje toka' : 'Ustavi gibanje toka';
+  });
+  render();
+})();
+</script>
+</body>
+</html>

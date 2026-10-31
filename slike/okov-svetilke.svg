@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <rect width="900" height="560" fill="#ffffff"/>
+  <!-- steklo žarnice -->
+  <path d="M330 210 C300 170 270 140 270 100 C270 45 330 10 400 10 C470 10 530 45 530 100 C530 140 500 170 470 210 Z" fill="#fff6cf" stroke="#1b1e28" stroke-width="4"/>
+  <path d="M370 205 L385 120 L400 150 L415 120 L430 205" fill="none" stroke="#8a5a00" stroke-width="3" stroke-linejoin="round"/>
+  <!-- ohišje okova (prerez) -->
+  <path d="M290 210 L290 420 Q290 440 310 440 L490 440 Q510 440 510 420 L510 210" fill="#e9e6df" stroke="#1b1e28" stroke-width="4"/>
+  <!-- navojni tulec (modro – N) -->
+  <path d="M333 215 L333 360 M467 215 L467 360" stroke="#1f5fad" stroke-width="10"/>
+  <path d="M333 230 l-10 12 l10 12 l-10 12 l10 12 l-10 12 l10 12 l-10 12 l10 12 l-10 12 l10 12 M467 230 l10 12 l-10 12 l10 12 l-10 12 l10 12 l-10 12 l10 12 l-10 12 l10 12 l-10 12" fill="none" stroke="#1f5fad" stroke-width="4"/>
+  <!-- podnožje žarnice z navojem -->
+  <rect x="338" y="210" width="124" height="140" rx="6" fill="#c9c4bb" stroke="#1b1e28" stroke-width="3"/>
+  <path d="M338 228 h124 M338 252 h124 M338 276 h124 M338 300 h124 M338 324 h124" stroke="#8d877c" stroke-width="3"/>
+  <!-- izolator in kontakt na dnu žarnice -->
+  <path d="M362 350 L438 350 L420 372 L380 372 Z" fill="#1b1e28"/>
+  <circle cx="400" cy="378" r="9" fill="#a33d00"/>
+  <!-- centralni kontakt okova (vzmet) -->
+  <path d="M400 388 L400 400 l-14 6 l28 6 l-28 6 l14 6 L400 430" fill="none" stroke="#a33d00" stroke-width="5" stroke-linejoin="round"/>
+  <!-- vodnika -->
+  <path d="M400 430 L400 540" stroke="#7a4a1e" stroke-width="10" stroke-linecap="round"/>
+  <path d="M333 360 L333 400 Q333 420 345 420 L360 420 Q372 420 372 432 L372 540" fill="none" stroke="#1f5fad" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- oznake -->
+  <g font-size="24" fill="#1b1e28">
+    <line x1="470" y1="270" x2="640" y2="200" stroke="#1b1e28" stroke-width="2"/>
+    <text x="648" y="190" font-weight="700" fill="#1f5fad">navojni kontakt</text>
+    <text x="648" y="220">nevtralni vodnik N</text>
+    <text x="648" y="248" font-size="21" fill="#4a4f5c">(moder)</text>
+
+    <line x1="410" y1="415" x2="640" y2="410" stroke="#1b1e28" stroke-width="2"/>
+    <text x="648" y="400" font-weight="700" fill="#a33d00">centralni kontakt</text>
+    <text x="648" y="430">stikalni vodnik L'</text>
+    <text x="648" y="458" font-size="21" fill="#4a4f5c">(faza prek stikala)</text>
+
+    
+
+    <line x1="270" y1="90" x2="160" y2="70" stroke="#1b1e28" stroke-width="2"/>
+    <text x="30" y="66">žarnica</text>
+    <line x1="338" y1="280" x2="170" y2="280" stroke="#1b1e28" stroke-width="2"/>
+    <text x="20" y="272">navoj žarnice</text>
+    <text x="20" y="300" font-size="21" fill="#4a4f5c">dosegljiv pri menjavi</text>
+    <line x1="292" y1="430" x2="170" y2="470" stroke="#1b1e28" stroke-width="2"/>
+    <text x="20" y="480">okov (prerez)</text>
+  </g>
+</svg>
