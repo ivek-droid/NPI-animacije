@@ -18,7 +18,7 @@ def tr(c, th=False):
     t = 'th' if th else 'td'
     return '<tr>' + ''.join(f'<{t} {TD}>{x}</{t}>' for x in c) + '</tr>'
 def tab(rows, head):
-    return '<table style="width:100%;border-collapse:collapse;font-size:18px">' + tr(head, True) + ''.join(tr(r) for r in rows) + '</table>'
+    return '<div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabela, drsni se vodoravno"><table style="width:100%;border-collapse:collapse;font-size:18px">' + tr(head, True) + ''.join(tr(r) for r in rows) + '</table></div>'
 def btn(url, label):
     return f'[et_pb_button button_url="{url}" url_new_window="on" button_text="{label}" module_class="pg-btn" _builder_version="4.27.9" custom_margin="0||12px||false|false"][/et_pb_button]'
 def korak(oznaka, vsebina, rez=False):
