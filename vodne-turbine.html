@@ -130,7 +130,7 @@ h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
       w += '<g transform="rotate(' + a + ' ' + cx + ' ' + cy + ') translate(' + cx + ' ' + (cy + R) + ')"><path d="M-17 -16 Q-16 10 0 6 Q16 10 17 -16" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/></g>';
     }
     w += '<circle cx="' + cx + '" cy="' + cy + '" r="20" fill="var(--metal)" stroke="var(--ink)" stroke-width="3"/>';
-    g += '<g transform="rotate(' + f(ang) + ' ' + cx + ' ' + cy + ')">' + w + '</g>';
+    g += '<g transform="rotate(' + f(-ang) + ' ' + cx + ' ' + cy + ')">' + w + '</g>';
     // oznake
     g += T(70, 26, 'visokotlačni cevovod', 'ct-lbl', 'start');
     g += T(150, 372, 'šoba', 'ct-lbl', 'middle') + lead(150, 352, 180, 316);
