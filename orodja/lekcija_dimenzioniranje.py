@@ -18,7 +18,7 @@ def tr(c, th=False):
     t = 'th' if th else 'td'
     return '<tr>' + ''.join(f'<{t} {TD}>{x}</{t}>' for x in c) + '</tr>'
 def tab(rows, head):
-    return '<div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabela, drsni se vodoravno"><table style="width:100%;border-collapse:collapse;font-size:18px">' + tr(head, True) + ''.join(tr(r) for r in rows) + '</table></div>'
+    return '<table style="width:100%;border-collapse:collapse;font-size:18px">' + tr(head, True) + ''.join(tr(r) for r in rows) + '</table>'
 def btn(url, label):
     return f'[et_pb_button button_url="{url}" url_new_window="on" button_text="{label}" module_class="pg-btn" _builder_version="4.27.9" custom_margin="0||12px||false|false"][/et_pb_button]'
 def korak(oznaka, vsebina, rez=False):
@@ -82,13 +82,14 @@ p3 = box('pozor', 'Kaj, če zamenjamo porabnik?', f'''<p style="margin-top:0">V 
 <p>Naslednja varovalka je 13 A. Za 1,5 mm² velja 1,9 · 13 A = 24,7 A &gt; 20,3 A. 2. pogoj ne drži. Zato vzamemo presek 2,5 mm² ({Iz_} = 18,5 A): 24,7 A ≤ 1,45 · 18,5 A = 26,8 A ✓.</p>
 <p>Presek povečamo zaradi segrevanja. Padec napetosti pri 1,5 mm² je 2,25 % in bi bil v mejah (dopustno 3 %).</p>''')
 
-hitra = H2 + 'Hitra preverba</h2>\n' + DET + 'Največji nazivni tok za dani presek (taljiva varovalka / odklopnik)</summary>' + '''
-<p style="margin-top:12px">Pomoč za preverjanje svojega računa. Velja za tabelo 3 brez skupine tokokrogov (f<sub>p</sub> = 1). Obe pogoja sta že upoštevana. Če je tvoj I<sub>n</sub> večji, presek ne zadošča.</p>
-''' + tab([['A2, 2 vodnika', '10 / 13', '16 / 16', '20 / 25', '25 / 32', '35 / 40', '50 / 50', '63 / 63'],
-          ['B2, 3 vodniki', '10 / 13', '16 / 20', '20 / 25', '25 / 32', '40 / 40', '50 / 50', '63 / 80'],
-          ['C, 3 vodniki', '13 / 16', '20 / 20', '25 / 32', '35 / 40', '50 / 50', '63 / 63', '80 / 80'],
-          ['D, 3 vodniki', '16 / 16', '20 / 20', '25 / 25', '32 / 32', '40 / 50', '50 / 63', '63 / 80']],
-         ['Način', '1,5 mm²', '2,5 mm²', '4 mm²', '6 mm²', '10 mm²', '16 mm²', '25 mm²']) + '\n</details>'
+presek_ = ['1,5 mm²', '2,5 mm²', '4 mm²', '6 mm²', '10 mm²', '16 mm²', '25 mm²']
+stolpci_ = {'A2': ['10 / 13', '16 / 16', '20 / 25', '25 / 32', '35 / 40', '50 / 50', '63 / 63'],
+            'B2': ['10 / 13', '16 / 20', '20 / 25', '25 / 32', '40 / 40', '50 / 50', '63 / 80'],
+            'C':  ['13 / 16', '20 / 20', '25 / 32', '35 / 40', '50 / 50', '63 / 63', '80 / 80'],
+            'D':  ['16 / 16', '20 / 20', '25 / 25', '32 / 32', '40 / 50', '50 / 63', '63 / 80']}
+hitra = H2 + 'Hitra preverba</h2>\n' + DET + 'Največji nazivni tok za dani presek (taljiva varovalka / odklopnik)</summary>' + \
+    '<p style="margin-top:12px">Pomoč za preverjanje svojega računa. Način A2 velja za 2 obremenjena vodnika, načini B2, C in D za 3. Tabela 3, brez skupine tokokrogov (f<sub>p</sub> = 1). Oba pogoja sta že upoštevana. Če je tvoj I<sub>n</sub> večji, presek ne zadošča.</p>\n' + \
+    tab([[presek_[i]] + [stolpci_[k][i] for k in stolpci_] for i in range(len(presek_))], ['Presek'] + list(stolpci_)) + '\n</details>'
 
 preveri = H2 + 'Preveri se</h2>' \
     + q('1. Zakaj varovalka ne sme imeti večjega nazivnega toka, kot ga vodnik zdrži?', 'Varovalka bi prepustila tok, ki vodnik segreje nad 70 °C. Izolacija bi se poškodovala.') \
