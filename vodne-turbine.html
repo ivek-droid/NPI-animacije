@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vodne turbine – Pelton, Francis, Kaplan</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --water: #1f5fad; --water-l: #cfe0f5; --metal: #8a8f99; --metal-l: #dfe2e7; --accent: #4b1585; --row: #efe8f8;
+  --warn: #9a3412; --ok: #0b6e4f;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-main { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .ct-main { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } .ct-side { border-left: 1px solid var(--border); } }
+.ct-main svg { display: block; width: 100%; height: auto; }
+.ct-side { display: flex; flex-direction: column; gap: 10px; padding: 12px 16px; }
+.ct-side h2 { margin: 0; font-size: 1.25rem; }
+.ct-use { margin: 0; font-weight: 600; }
+.ct-desc { margin: 0; }
+.ct-group { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+.ct-group > .ct-gl { font-weight: 600; flex: 1 0 100%; }
+.ct-val { font: 700 1rem var(--mono); min-width: 4.5em; text-align: center; }
+.ct-meter { height: 18px; border: 2px solid var(--ink); border-radius: 9px; overflow: hidden; background: var(--bg); }
+.ct-meter > i { display: block; height: 100%; background: var(--water); }
+.ct-eff { margin: 0; padding: 8px 12px; border-radius: 8px; border: 2px solid; font-weight: 600; }
+.ct-eff.ok { border-color: var(--ok); color: var(--ok); }
+.ct-eff.bad { border-color: var(--warn); color: var(--warn); }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 9px 14px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+.ct-lbl { font: 600 22px var(--font); fill: var(--ink); }
+.ct-lbl-s { font: 500 20px var(--font); fill: var(--muted); }
+.ct-lead-line { stroke: var(--muted); stroke-width: 2; }
+.ct-note { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .92rem; }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Vodne turbine</h1>
+    <p class="ct-lead">Izberi turbino. Oglej si njene dele in uravnavaj pretok vode.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: vodne turbine – Peltonova, Francisova in Kaplanova">
+    <div class="ct-tabs" role="group" aria-label="Izbira turbine">
+      <button class="ct-btn" type="button" data-t="pelton" aria-pressed="true">Peltonova</button>
+      <button class="ct-btn" type="button" data-t="francis" aria-pressed="false">Francisova</button>
+      <button class="ct-btn" type="button" data-t="kaplan" aria-pressed="false">Kaplanova</button>
+      <button class="ct-btn" type="button" id="pause" aria-pressed="false" style="margin-left:auto">Ustavi gibanje</button>
+    </div>
+    <div class="ct-main">
+      <svg id="svg" viewBox="0 0 600 420" role="img" aria-label=""></svg>
+      <div class="ct-side">
+        <h2 id="title"></h2>
+        <p class="ct-use" id="use"></p>
+        <div id="controls" style="display:flex;flex-direction:column;gap:10px"></div>
+        <div>
+          <span style="font-weight:600">Moč turbine: <span id="pwr" class="ct-num"></span></span>
+          <div class="ct-meter" aria-hidden="true"><i id="bar"></i></div>
+        </div>
+        <p class="ct-eff" id="eff" hidden></p>
+        <p class="ct-desc" id="desc" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="ct-note">Sheme so poenostavljene in niso v merilu. Vrtljaji turbine so stalni, ker mora biti frekvenca omrežja 50 Hz – z uravnavanjem pretoka se spreminja moč.</p>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('svg');
+  var turb = 'pelton', paused = false, ang = 0, dash = 0, last = 0;
+  var S = { pelton: { igla: 0.75, noz: false, nozT: 0 }, francis: { lop: 0.75 }, kaplan: { lop: 0.75, nak: 0.75 } };
+  var DEG = Math.PI / 180;
+  function f(x) { return x.toFixed(1); }
+  function T(x, y, s, cls, anchor) { return '<text class="' + (cls || 'ct-lbl') + '" x="' + x + '" y="' + y + '"' + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  function lead(x1, y1, x2, y2) { return '<line class="ct-lead-line" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"/><circle cx="' + x2 + '" cy="' + y2 + '" r="4" fill="var(--muted)"/>'; }
+  function flow(d, w) { return '<path d="' + d + '" fill="none" stroke="#fff" stroke-width="' + (w || 3.5) + '" stroke-linecap="round" stroke-dasharray=".1 18" stroke-dashoffset="' + f(-dash) + '"/>'; }
+  function pct(x) { return Math.round(x * 100) + ' %'; }
+
+  // ---------------- PELTON ----------------
+  function pelton() {
+    var s = S.pelton, cx = 360, cy = 190, R = 112, o = s.igla;
+    var cut = s.noz;                                   // nož odreže curek
+    var jw = 4 + 18 * o;                               // debelina curka
+    var g = '';
+    // visokotlačni cevovod in šoba
+    g += '<path d="M40 30 V300 H150" fill="none" stroke="var(--water)" stroke-width="40" stroke-linejoin="round"/>';
+    g += '<path d="M150 278 L215 290 L215 310 L150 322 Z" fill="var(--water)"/>';
+    g += '<path d="M150 276 L217 289 L217 311 L150 324" fill="none" stroke="var(--ink)" stroke-width="3"/>';
+    if (o > 0 && !paused) g += flow('M40 30 V300 H210');
+    else if (o > 0) g += flow('M40 30 V300 H210');
+    // igla
+    var tip = 214 - 20 * o;
+    g += '<line x1="70" y1="300" x2="' + (tip - 22) + '" y2="300" stroke="var(--metal)" stroke-width="6"/>';
+    g += '<path d="M' + (tip - 26) + ' 290 L' + tip + ' 300 L' + (tip - 26) + ' 310 Z" fill="var(--metal-l)" stroke="var(--ink)" stroke-width="2.5"/>';
+    // curek
+    if (o > 0) {
+      if (cut) {
+        g += '<path d="M217 300 Q236 300 246 330 L262 390" fill="none" stroke="var(--water)" stroke-width="' + f(jw) + '" stroke-linecap="round"/>';
+        g += flow('M217 300 Q236 300 246 330 L262 390', 3);
+      } else {
+        g += '<line x1="217" y1="300" x2="' + (cx - 8) + '" y2="300" stroke="var(--water)" stroke-width="' + f(jw) + '" stroke-linecap="round"/>';
+        g += flow('M217 300 H' + (cx - 8), 3);
+        g += '<path d="M' + (cx + 30) + ' 318 l14 40 M' + (cx + 60) + ' 314 l20 44 M' + (cx - 10) + ' 320 l6 40" stroke="var(--water)" stroke-width="4" stroke-linecap="round" stroke-dasharray="6 8" stroke-dashoffset="' + f(-dash) + '"/>';
+      }
+    }
+    // nož (deflektor)
+    var na = cut ? 38 : 0;
+    g += '<g transform="rotate(' + na + ' 232 272)"><rect x="226" y="246" width="12" height="40" rx="3" fill="var(--metal-l)" stroke="var(--ink)" stroke-width="2.5"/></g>';
+    g += '<circle cx="232" cy="248" r="5" fill="var(--ink)"/>';
+    // gonilnik
+    var w = '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R - 18) + '" fill="var(--metal-l)" stroke="var(--ink)" stroke-width="3"/>';
+    for (var i = 0; i < 16; i++) {
+      var a = i * 22.5;
+      w += '<g transform="rotate(' + a + ' ' + cx + ' ' + cy + ') translate(' + cx + ' ' + (cy + R) + ')"><path d="M-17 -16 Q-16 10 0 6 Q16 10 17 -16" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/></g>';
+    }
+    w += '<circle cx="' + cx + '" cy="' + cy + '" r="20" fill="var(--metal)" stroke="var(--ink)" stroke-width="3"/>';
+    g += '<g transform="rotate(' + f(ang) + ' ' + cx + ' ' + cy + ')">' + w + '</g>';
+    // oznake
+    g += T(70, 26, 'visokotlačni cevovod', 'ct-lbl', 'start');
+    g += T(150, 372, 'šoba', 'ct-lbl', 'middle') + lead(150, 352, 180, 316);
+    g += T(84, 262, 'igla', 'ct-lbl', 'middle') + lead(84, 270, 120, 297);
+    g += T(248, 244, 'nož', 'ct-lbl', 'start');
+    if (o > 0 && !cut) g += T(286, 344, 'curek', 'ct-lbl', 'middle');
+    g += T(500, 60, 'gonilnik', 'ct-lbl', 'middle') + T(500, 84, 'z lopatami', 'ct-lbl', 'middle') + lead(480, 96, 430, 130);
+    return g;
+  }
+
+  // ---------------- FRANCIS ----------------
+  function francis() {
+    var o = S.francis.lop, cx = 320, cy = 228, g = '';
+    // spiralno ohišje: zunanja meja od r=180 do 112
+    function rOut(t) { return 112 + 68 * (1 - t / 330); }   // t: 0 … 330°
+    var outer = [], mid = [];
+    for (var t = 0; t <= 330; t += 6) {
+      var a = (-90 + t) * DEG, r = rOut(t);
+      outer.push(f(cx + r * Math.cos(a)) + ' ' + f(cy + r * Math.sin(a)));
+      var rm = (r + 112) / 2;
+      mid.push(f(cx + rm * Math.cos(a)) + ' ' + f(cy + rm * Math.sin(a)));
+    }
+    var yTop = cy - 180;
+    g += '<path d="M20 ' + yTop + ' H' + cx + ' L' + outer.join(' L') + ' A112 112 0 1 0 ' + f(cx) + ' ' + (cy - 112) + ' H20 Z" fill="var(--water-l)" stroke="var(--ink)" stroke-width="3"/>';
+    g += '<circle cx="' + cx + '" cy="' + cy + '" r="112" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/>';
+    if (o > 0) g += flow('M20 ' + (cy - 146) + ' H' + cx + ' L' + mid.join(' L'));
+    // vodilne lopate
+    for (var i = 0; i < 14; i++) {
+      var p = i * (360 / 14) * DEG, px = cx + 98 * Math.cos(p), py = cy + 98 * Math.sin(p);
+      var dir = p + Math.PI / 2 - (10 + 55 * o) * DEG;         // zaprto ≈ tangencialno
+      var dx = 17 * Math.cos(dir), dy = 17 * Math.sin(dir);
+      g += '<line x1="' + f(px - dx) + '" y1="' + f(py - dy) + '" x2="' + f(px + dx) + '" y2="' + f(py + dy) + '" stroke="var(--metal)" stroke-width="7" stroke-linecap="round"/>';
+      g += '<circle cx="' + f(px) + '" cy="' + f(py) + '" r="3" fill="var(--ink)"/>';
+    }
+    // gonilnik
+    var w = '<circle cx="' + cx + '" cy="' + cy + '" r="72" fill="var(--metal-l)" stroke="var(--ink)" stroke-width="3"/>';
+    for (var k = 0; k < 9; k++) {
+      var b = k * 40;
+      w += '<path transform="rotate(' + b + ' ' + cx + ' ' + cy + ')" d="M' + cx + ' ' + (cy - 22) + ' Q' + (cx + 30) + ' ' + (cy - 40) + ' ' + (cx + 22) + ' ' + (cy - 70) + '" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>';
+    }
+    w += '<circle cx="' + cx + '" cy="' + cy + '" r="22" fill="var(--metal)" stroke="var(--ink)" stroke-width="3"/>';
+    g += '<g transform="rotate(' + f(ang) + ' ' + cx + ' ' + cy + ')">' + w + '</g>';
+    // oznake
+    g += T(24, cy - 160, 'dotok vode', 'ct-lbl', 'start');
+    g += T(530, 64, 'spiralno', 'ct-lbl', 'middle') + T(530, 88, 'ohišje', 'ct-lbl', 'middle') + lead(530, 98, 470, 150);
+    g += T(530, 370, 'vodilne', 'ct-lbl', 'middle') + T(530, 394, 'lopate', 'ct-lbl', 'middle') + lead(500, 348, 405, 280);
+    g += T(96, 330, 'gonilnik', 'ct-lbl', 'middle') + T(96, 354, '(rotor)', 'ct-lbl', 'middle') + lead(130, 318, 278, 250);
+    g += T(cx, 414, 'pogled od zgoraj · voda odteka navzdol v sesalno cev', 'ct-lbl-s', 'middle');
+    return g;
+  }
+
+  // ---------------- KAPLAN ----------------
+  function kaplan() {
+    var s = S.kaplan, g = '', cx = 300, hy = 240;
+    var pitch = 10 + 50 * s.nak;                          // naklon lopat rotorja (°)
+    var wall = 'M20 90 H170 M20 190 H170 V290 L110 410 M580 90 H430 M580 190 H430 V290 L490 410 M170 90 H430';
+    g += '<path d="M20 90 H580 V190 H430 V290 L490 410 H110 L170 290 V190 H20 Z" fill="var(--water-l)"/>';
+    g += '<path d="' + wall + '" fill="none" stroke="var(--ink)" stroke-width="4"/>';
+    // tok vode
+    if (s.lop > 0) {
+      var fw = 2 + 2.5 * s.lop;
+      g += flow('M20 140 H200 Q235 140 235 200 V300 L200 410', fw) + flow('M580 140 H400 Q365 140 365 200 V300 L400 410', fw);
+    }
+    // vodilne lopate: zaprte = navpične, odprte = vodoravne
+    var ga = (90 - 80 * s.lop) * DEG;
+    [110, 140, 170].forEach(function (y) {
+      [170, 430].forEach(function (x) {
+        var dx = 15 * Math.cos(ga), dy = 15 * Math.sin(ga);
+        g += '<line x1="' + f(x - dx) + '" y1="' + f(y - dy) + '" x2="' + f(x + dx) + '" y2="' + f(y + dy) + '" stroke="var(--metal)" stroke-width="7" stroke-linecap="round"/><circle cx="' + x + '" cy="' + y + '" r="3.5" fill="var(--ink)"/>';
+      });
+    });
+    // gred
+    g += '<rect x="' + (cx - 9) + '" y="14" width="18" height="' + (hy - 14) + '" fill="var(--metal)" stroke="var(--ink)" stroke-width="2"/>';
+    // lopate rotorja (pogled od strani, vrtenje)
+    var bl = [];
+    for (var k = 0; k < 5; k++) { var ph = (ang + k * 72) * DEG; bl.push({ s: Math.sin(ph), c: Math.cos(ph) }); }
+    bl.sort(function (a, b) { return a.c - b.c; });
+    function blade(b, front) {
+      var x1 = cx + 28 * b.s, x2 = cx + 122 * b.s, hh = 40 * Math.sin(pitch * DEG), sk = 34 * Math.cos(pitch * DEG) * b.c;
+      return '<path d="M' + f(x1 - sk / 2) + ' ' + f(hy - hh / 2) + ' L' + f(x2 - sk / 2) + ' ' + f(hy - hh / 2) + ' L' + f(x2 + sk / 2) + ' ' + f(hy + hh / 2) + ' L' + f(x1 + sk / 2) + ' ' + f(hy + hh / 2) + ' Z" fill="' + (front ? 'var(--metal-l)' : '#b9bec7') + '" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>';
+    }
+    bl.forEach(function (b) { if (b.c < 0) g += blade(b, false); });
+    g += '<path d="M' + (cx - 30) + ' ' + (hy - 28) + ' H' + (cx + 30) + ' V' + (hy + 12) + ' Q' + cx + ' ' + (hy + 62) + ' ' + (cx - 30) + ' ' + (hy + 12) + ' Z" fill="var(--metal)" stroke="var(--ink)" stroke-width="3"/>';
+    bl.forEach(function (b) { if (b.c >= 0) g += blade(b, true); });
+    // oznake
+    g += T(cx + 18, 40, 'gred do generatorja', 'ct-lbl', 'start');
+    g += T(84, 66, 'vodilne lopate', 'ct-lbl', 'middle') + lead(110, 74, 165, 106);
+    g += T(84, 222, 'dotok vode', 'ct-lbl-s', 'middle') + T(516, 222, 'dotok vode', 'ct-lbl-s', 'middle');
+    g += T(510, 266, 'lopate', 'ct-lbl', 'middle') + T(510, 290, 'rotorja', 'ct-lbl', 'middle') + lead(470, 262, 405, hy);
+    g += T(300, 400, 'sesalna cev', 'ct-lbl', 'middle');
+    return g;
+  }
+
+  // ---------------- podatki in kontrole ----------------
+  var INFO = {
+    pelton: { title: 'Peltonova turbina', use: 'Največji padci (več sto do čez 1000 m), majhni pretoki.',
+      label: 'Peltonova turbina od strani: visokotlačni cevovod, šoba z iglo, nož, curek vode in gonilnik z lopatami' },
+    francis: { title: 'Francisova turbina', use: 'Srednji in veliki padci (nekaj deset do več sto metrov).',
+      label: 'Francisova turbina od zgoraj: spiralno ohišje, vodilne lopate okrog gonilnika in gonilnik' },
+    kaplan: { title: 'Kaplanova turbina', use: 'Majhni padci in veliki pretoki – pretočne elektrarne na rekah.',
+      label: 'Kaplanova turbina v prerezu: vodilne lopate, rotor z nastavljivimi lopatami, gred in sesalna cev' }
+  };
+  function stepper(id, name, val) {
+    return '<div class="ct-group"><span class="ct-gl">' + name + '</span>' +
+      '<button class="ct-btn" type="button" data-k="' + id + '" data-d="-1">Zapri −</button>' +
+      '<span class="ct-val" id="v-' + id + '">' + pct(val) + '</span>' +
+      '<button class="ct-btn" type="button" data-k="' + id + '" data-d="1">Odpri +</button></div>';
+  }
+  function buildControls() {
+    var c = '';
+    if (turb === 'pelton') c = stepper('igla', 'Igla v šobi (odprtost šobe)', S.pelton.igla) +
+      '<div class="ct-group"><button class="ct-btn" type="button" id="noz" aria-pressed="' + S.pelton.noz + '">' + (S.pelton.noz ? 'Vrni curek na gonilnik' : 'Nenadna razbremenitev: nož') + '</button></div>';
+    if (turb === 'francis') c = stepper('lop', 'Vodilne lopate', S.francis.lop);
+    if (turb === 'kaplan') c = stepper('lop', 'Vodilne lopate', S.kaplan.lop) + stepper('nak', 'Naklon lopat rotorja', S.kaplan.nak).replace('Zapri −', 'Manjši −').replace('Odpri +', 'Večji +');
+    $('controls').innerHTML = c;
+    [].forEach.call($('controls').querySelectorAll('[data-k]'), function (b) {
+      b.addEventListener('click', function () {
+        var st = S[turb], k = b.getAttribute('data-k');
+        st[k] = Math.max(0, Math.min(1, Math.round((st[k] + 0.25 * +b.getAttribute('data-d')) * 4) / 4));
+        update(true);
+      });
+    });
+    var nz = $('noz');
+    if (nz) nz.addEventListener('click', function () {
+      S.pelton.noz = !S.pelton.noz;
+      update(true);
+      var b = $('noz'); if (b) b.focus();
+    });
+  }
+  function update(rebuild) {
+    var keep = document.activeElement && document.activeElement.getAttribute ? [document.activeElement.getAttribute('data-k'), document.activeElement.getAttribute('data-d'), document.activeElement.id] : null;
+    if (rebuild) buildControls();
+    if (keep) {
+      var el = keep[0] ? $('controls').querySelector('[data-k="' + keep[0] + '"][data-d="' + keep[1] + '"]') : (keep[2] ? $(keep[2]) : null);
+      if (el) el.focus();
+    }
+    $('title').textContent = INFO[turb].title;
+    $('use').textContent = INFO[turb].use;
+    svg.setAttribute('aria-label', INFO[turb].label);
+    var P, d, eff = $('eff');
+    eff.hidden = true;
+    if (turb === 'pelton') {
+      var s = S.pelton; P = s.noz ? 0 : s.igla;
+      if (s.noz) d = 'Nož je odrezal curek. Voda ne zadene gonilnika, moč je takoj 0. Igla bi zdaj počasi zapirala šobo, da tlak v cevovodu ne naraste preveč.';
+      else if (s.igla === 0) d = 'Igla je zaprla šobo. Curka ni, turbina ne daje moči.';
+      else d = 'Igla odpira šobo ' + pct(s.igla) + '. Debelejši curek pomeni večji pretok in večjo moč. Curek zadene le nekaj lopat naenkrat.';
+      $('v-igla').textContent = pct(s.igla);
+      $('v-igla').previousSibling.disabled = s.igla === 0; $('v-igla').nextSibling.disabled = s.igla === 1;
+    }
+    if (turb === 'francis') {
+      var o = S.francis.lop; P = o;
+      d = o === 0 ? 'Vodilne lopate so zaprte. Voda ne priteče do gonilnika.' :
+        'Vodilne lopate so odprte ' + pct(o) + '. Voda teče po spiralnem ohišju okrog in skozi vodilne lopate v gonilnik.';
+      $('v-lop').textContent = pct(o);
+      $('v-lop').previousSibling.disabled = o === 0; $('v-lop').nextSibling.disabled = o === 1;
+    }
+    if (turb === 'kaplan') {
+      var k = S.kaplan, diff = Math.abs(k.lop - k.nak), e = Math.max(0.4, 1 - 1.2 * diff);
+      P = k.lop * e;
+      $('v-lop').textContent = pct(k.lop); $('v-nak').textContent = pct(k.nak);
+      $('v-lop').previousSibling.disabled = k.lop === 0; $('v-lop').nextSibling.disabled = k.lop === 1;
+      $('v-nak').previousSibling.disabled = k.nak === 0; $('v-nak').nextSibling.disabled = k.nak === 1;
+      d = k.lop === 0 ? 'Vodilne lopate so zaprte. Voda ne teče skozi turbino.' :
+        'Dvojna regulacija: vodilne lopate določajo pretok, naklon lopat rotorja pa mora pretoku slediti.';
+      if (k.lop > 0) {
+        eff.hidden = false;
+        if (diff <= 0.25) { eff.className = 'ct-eff ok'; eff.textContent = 'Dober izkoristek: naklon lopat rotorja ustreza pretoku.'; }
+        else { eff.className = 'ct-eff bad'; eff.textContent = 'Slabši izkoristek: voda udarja v lopate rotorja. Uskladi naklon s pretokom.'; }
+      }
+    }
+    $('pwr').textContent = pct(P);
+    $('bar').style.width = (P * 100) + '%';
+    $('desc').textContent = d;
+    draw();
+  }
+  function moving() {
+    if (turb === 'pelton') return !S.pelton.noz && S.pelton.igla > 0;
+    return S[turb].lop > 0;
+  }
+  function draw() {
+    svg.innerHTML = turb === 'pelton' ? pelton() : turb === 'francis' ? francis() : kaplan();
+  }
+  function frame(ts) {
+    var dt = last ? Math.min(50, ts - last) : 0; last = ts;
+    if (!paused) {
+      dash = (dash + dt * 0.045) % 18.1;
+      if (moving()) ang = (ang + dt * 0.09) % 360;
+      else if (turb === 'pelton' && S.pelton.noz && S.pelton.igla > 0) ang = (ang + dt * 0.09) % 360;
+      draw();
+    }
+    requestAnimationFrame(frame);
+  }
+  [].forEach.call(document.querySelectorAll('[data-t]'), function (b) {
+    b.addEventListener('click', function () {
+      turb = b.getAttribute('data-t');
+      [].forEach.call(document.querySelectorAll('[data-t]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      update(true);
+    });
+  });
+  function setPause(p) {
+    paused = p; var b = $('pause');
+    b.setAttribute('aria-pressed', p ? 'true' : 'false');
+    b.textContent = p ? 'Nadaljuj gibanje' : 'Ustavi gibanje';
+  }
+  $('pause').addEventListener('click', function () { setPause(!paused); });
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPause(true);
+  update(true);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

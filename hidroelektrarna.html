@@ -82,22 +82,22 @@ input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--ac
     </div>
     <div class="ct-controls">
       <div class="ct-param">
-        <label for="h">Padec H</label>
+        <label for="h">Padec Δh</label>
         <button class="ct-btn" type="button" id="hMinus" aria-label="Manjši padec">−</button>
-        <input type="range" id="h" min="0" max="14" step="1" value="2">
+        <input type="range" id="h" min="0" max="15" step="1" value="2">
         <button class="ct-btn" type="button" id="hPlus" aria-label="Večji padec">+</button>
         <output id="hOut" for="h"></output>
       </div>
       <div class="ct-param">
         <label for="q">Pretok Q</label>
         <button class="ct-btn" type="button" id="qMinus" aria-label="Manjši pretok">−</button>
-        <input type="range" id="q" min="0" max="13" step="1" value="5">
+        <input type="range" id="q" min="0" max="13" step="1" value="12">
         <button class="ct-btn" type="button" id="qPlus" aria-label="Večji pretok">+</button>
         <output id="qOut" for="q"></output>
       </div>
       <div class="ct-row">
         <button class="ct-btn" type="button" id="pause" aria-pressed="false">Ustavi vodo</button>
-        <button class="ct-btn" type="button" id="reset">Primer z vaje (10 m, 3 m³/s)</button>
+        <button class="ct-btn" type="button" id="reset">Primer z vaje (8 m, 500 m³/s)</button>
       </div>
     </div>
     <p class="ct-calc" id="calc"></p>
@@ -108,13 +108,14 @@ input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--ac
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
-  var HS = [2, 5, 10, 15, 20, 30, 50, 70, 100, 150, 200, 300, 500, 700, 1000];
+  var HS = [2, 5, 8, 10, 15, 20, 30, 50, 70, 100, 150, 200, 300, 500, 700, 1000];
   var QS = [0.1, 0.2, 0.5, 1, 2, 3, 5, 10, 20, 50, 100, 200, 500, 1000];
   var ETA = 0.85, RHO = 1000, G = 9.81;
   // Približna območja uporabe (H v m, Q v m³/s)
+  // Približna območja: Francis in Pelton po učbeniku (IEK, 19.2.3), Kaplan do 70 m po besedilu strani
   var ZONES = [
     { id: 'kap', name: 'Kaplanova', h: [2, 70], q: [0.5, 1000] },
-    { id: 'fra', name: 'Francisova', h: [15, 500], q: [0.5, 1000] },
+    { id: 'fra', name: 'Francisova', h: [10, 500], q: [0.5, 1000] },
     { id: 'pel', name: 'Peltonova', h: [200, 1000], q: [0.1, 50] }
   ];
   var scene = $('scene'), chart = $('chart'), hIn = $('h'), qIn = $('q');
@@ -147,7 +148,7 @@ input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--ac
     s += T(gx(3), 46, 'Pelton', 'ct-tag', 'middle').replace('class="ct-tag"', 'class="ct-tag" style="fill:var(--pel)"');
     s += '<line class="ct-ax" x1="' + X0 + '" y1="' + Y0 + '" x2="' + X1 + '" y2="' + Y0 + '"/><line class="ct-ax" x1="' + X0 + '" y1="' + Y0 + '" x2="' + X0 + '" y2="' + Y1 + '"/>';
     s += T((X0 + X1) / 2, 406, 'pretok Q (m³/s)', 'ct-tm', 'middle');
-    s += '<text class="ct-tm" transform="translate(22 ' + (Y0 + Y1) / 2 + ') rotate(-90)" text-anchor="middle">padec H (m)</text>';
+    s += '<text class="ct-tm" transform="translate(22 ' + (Y0 + Y1) / 2 + ') rotate(-90)" text-anchor="middle">padec Δh (m)</text>';
     return s;
   }
   var CHART_BASE = chartBase();
@@ -181,7 +182,7 @@ input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--ac
     s += '<path d="M200 ' + yW + ' H230 M200 ' + yT + ' H230 M215 ' + (yW + 4) + ' V' + (yT - 4) + '" stroke="var(--accent)" stroke-width="2.5"/>';
     s += '<path d="M209 ' + (yW + 14) + ' L215 ' + (yW + 3) + ' L221 ' + (yW + 14) + ' M209 ' + (yT - 14) + ' L215 ' + (yT - 3) + ' L221 ' + (yT - 14) + '" fill="none" stroke="var(--accent)" stroke-width="2.5"/>';
     s += '<line x1="20" y1="' + yW + '" x2="230" y2="' + yW + '" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 5"/>';
-    s += T(236, (yW + yT) / 2 + 8, 'H = ' + num(H, 0) + ' m', 'ct-t').replace('class="ct-t"', 'class="ct-t" style="fill:var(--accent)"');
+    s += T(236, (yW + yT) / 2 + 8, 'Δh = ' + num(H, 0) + ' m', 'ct-t').replace('class="ct-t"', 'class="ct-t" style="fill:var(--accent)"');
     s += T(250, yT + 56, 'Q = ' + fmtQ(Q), 'ct-tm', 'middle');
     s += T(590, 30, 'turbina: ' + (names.length ? names.map(function (z) { return z.name; }).join(' / ') : '–'), 'ct-tag', 'end');
     scene.innerHTML = s;
@@ -202,8 +203,9 @@ input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--ac
     if (names.length === 1) tx = 'Primerna turbina: ' + names[0].name + '.';
     else if (names.length > 1) tx = 'Primerni sta ' + names.map(function (z) { return z.name; }).join(' in ') + ' turbina. Izbira je odvisna še od cene in izkoristka.';
     else tx = 'Točka je zunaj območij na grafu. Za te podatke nobena od treh turbin ni običajna.';
-    $('status').textContent = 'Padec ' + num(H, 0) + ' m, pretok ' + fmtQ(Q) + '. Moč je približno ' + fmtP(P) + '. ' + tx;
-    $('calc').innerHTML = 'P = ρ · g · Q · H · η = 1000 · 9,81 · ' + num(Q, 1) + ' · ' + num(H, 0) + ' · 0,85 = ' + num(Math.round(P), 0) + ' W ≈ <b>' + fmtP(P) + '</b>';
+    $('status').textContent = 'Padec Δh = ' + num(H, 0) + ' m, pretok Q = ' + fmtQ(Q) + '. Moč je približno ' + fmtP(P) + '. ' + tx;
+    var Pv = 9.81 * Q * H, pv = num(Pv, Pv < 10 ? 2 : 1) + ' kW';
+    $('calc').innerHTML = 'P<sub>vode</sub> = 9,81 · Q · Δh = 9,81 · ' + num(Q, 1) + ' · ' + num(H, 0) + ' = ' + pv + '<br>P = η · P<sub>vode</sub> = 0,85 · ' + pv + ' ≈ <b>' + fmtP(P) + '</b>';
     drawScene(H, Q, names);
     var cx = gx(Q), cy = gy(H);
     chart.innerHTML = CHART_BASE + '<circle cx="' + cx + '" cy="' + cy + '" r="12" fill="var(--lamp)" stroke="var(--ink)" stroke-width="3"/>'
@@ -215,7 +217,7 @@ input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--ac
   $('hPlus').addEventListener('click', function () { step(hIn, 1); });
   $('qMinus').addEventListener('click', function () { step(qIn, -1); });
   $('qPlus').addEventListener('click', function () { step(qIn, 1); });
-  $('reset').addEventListener('click', function () { hIn.value = 2; qIn.value = 5; render(); });
+  $('reset').addEventListener('click', function () { hIn.value = 2; qIn.value = 12; render(); });
   $('pause').addEventListener('click', function () {
     var p = !scene.classList.contains('ct-paused');
     scene.classList.toggle('ct-paused', p);
