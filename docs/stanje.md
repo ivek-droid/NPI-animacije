@@ -8,7 +8,7 @@
   - Padec napetosti (1344, meni 1346), `/padec-napetosti/`
 
 ## Naslednje
-- Varovalke in odklopniki (gG, B/C/D, faktor k, selektivnost), nato zbirka nalog; po želji animacija »izberi presek«. Podmeniji pod 188.
+- Varovalke in odklopniki: **osnutek (page_id 1347, neobjavljen, čaka potrditev)**, generator `orodja/lekcija_varovalke.py`. Po objavi: podmeni pod 188, nato zbirka nalog; po želji animacija »izberi presek«. Podmeniji pod 188.
 - Stran 185: tabla zimski 2021/5, naloga 5.4 ima napako (faktor 2 dvakrat, 4,5 % namesto 2,25 %). Uporabnik še ni odločil: zamenjati sliko ali dodati opombo. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
 
 ## Odprto
