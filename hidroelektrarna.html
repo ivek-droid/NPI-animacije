@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hidroelektrarna – padec, pretok, moč in turbina</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --water: #1f5fad; --water-l: #cfe0f5; --accent: #4b1585; --row: #efe8f8; --lamp: #f2b705;
+  --kap: #0b6e4f; --fra: #1f5fad; --pel: #9a3412;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 280px; }
+.ct-chip { display: inline-flex; align-items: center; font: 700 1.05rem/1 var(--mono); padding: 9px 14px; border-radius: 999px; border: 2px solid var(--accent); background: var(--row); color: var(--accent); white-space: nowrap; }
+.ct-figs { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 6px 8px 0; }
+@media (min-width: 760px) { .ct-figs { grid-template-columns: 1.05fr 1fr; } }
+.ct-figs svg { display: block; width: 100%; height: auto; }
+.ct-t { font: 700 22px var(--mono); fill: var(--ink); }
+.ct-tm { font: 500 20px var(--mono); fill: var(--muted); }
+.ct-tag { font: 600 19px var(--font); fill: var(--ink); }
+.ct-ax { stroke: var(--muted); stroke-width: 2; }
+.ct-grid { stroke: #e3dfd8; stroke-width: 1.5; }
+.ct-pipe { fill: none; stroke: var(--water); stroke-linecap: round; }
+.ct-flow { fill: none; stroke: #ffffff; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 18; animation: ct-run .8s linear infinite; }
+@keyframes ct-run { to { stroke-dashoffset: -18.1; } }
+.ct-spin { animation: ct-rot 1.6s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes ct-rot { to { transform: rotate(360deg); } }
+.ct-paused .ct-flow, .ct-paused .ct-spin { animation-play-state: paused; }
+.ct-zone { stroke-width: 3; }
+.ct-zone-kap { fill: rgba(11,110,79,.10); stroke: var(--kap); }
+.ct-zone-fra { fill: rgba(31,95,173,.08); stroke: var(--fra); stroke-dasharray: 10 6; }
+.ct-zone-pel { fill: rgba(154,52,18,.10); stroke: var(--pel); stroke-dasharray: 3 5; }
+.ct-controls { display: flex; flex-direction: column; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--border); }
+.ct-param { display: grid; grid-template-columns: 7.5em 44px 1fr 44px 6.5em; gap: 8px; align-items: center; }
+.ct-param label { font-weight: 600; }
+.ct-param output { font: 700 1rem var(--mono); text-align: right; white-space: nowrap; }
+@media (max-width: 520px) { .ct-param { grid-template-columns: 44px 1fr 44px; grid-template-areas: 'l o o' 'm r p'; row-gap: 2px; } .ct-param label { grid-area: l; } .ct-param output { grid-area: o; } .ct-param button:first-of-type { grid-area: m; } .ct-param input { grid-area: r; } .ct-param button:last-of-type { grid-area: p; } }
+.ct-views { display: none; gap: 8px; padding: 10px 16px 0; }
+@media (max-width: 759px) { .ct-views { display: flex; } .ct-figs[data-view=scene] #chart, .ct-figs[data-view=chart] #scene { display: none; } }
+input[type=range] { width: 100%; height: 44px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 9px 14px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:focus-visible, input[type=range]:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+.ct-row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.ct-calc { margin: 0; padding: 10px 16px 12px; border-top: 1px solid var(--border); font: 500 1rem/1.6 var(--mono); overflow-wrap: anywhere; }
+.ct-calc b { color: var(--accent); }
+.ct-note { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .92rem; }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Hidroelektrarna: padec, pretok in moč</h1>
+    <p class="ct-lead">Spremeni padec in pretok vode. Opazuj, kolikšna je moč in katera turbina je primerna.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: hidroelektrarna – padec, pretok, moč in izbira turbine">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip"></span>
+      <p id="status" aria-live="polite"></p>
+    </div>
+    <div class="ct-views" role="group" aria-label="Prikaz">
+      <button class="ct-btn" type="button" id="vScene" aria-pressed="true">Shema elektrarne</button>
+      <button class="ct-btn" type="button" id="vChart" aria-pressed="false">Graf turbin</button>
+    </div>
+    <div class="ct-figs" id="figs" data-view="scene">
+      <svg id="scene" viewBox="0 0 600 380" role="img" aria-label="Shema hidroelektrarne: jezero, cevovod, turbina in generator"></svg>
+      <svg id="chart" viewBox="0 0 540 412" role="img" aria-label="Graf: padec v odvisnosti od pretoka z območji Kaplanove, Francisove in Peltonove turbine"></svg>
+    </div>
+    <div class="ct-controls">
+      <div class="ct-param">
+        <label for="h">Padec H</label>
+        <button class="ct-btn" type="button" id="hMinus" aria-label="Manjši padec">−</button>
+        <input type="range" id="h" min="0" max="14" step="1" value="2">
+        <button class="ct-btn" type="button" id="hPlus" aria-label="Večji padec">+</button>
+        <output id="hOut" for="h"></output>
+      </div>
+      <div class="ct-param">
+        <label for="q">Pretok Q</label>
+        <button class="ct-btn" type="button" id="qMinus" aria-label="Manjši pretok">−</button>
+        <input type="range" id="q" min="0" max="13" step="1" value="5">
+        <button class="ct-btn" type="button" id="qPlus" aria-label="Večji pretok">+</button>
+        <output id="qOut" for="q"></output>
+      </div>
+      <div class="ct-row">
+        <button class="ct-btn" type="button" id="pause" aria-pressed="false">Ustavi vodo</button>
+        <button class="ct-btn" type="button" id="reset">Primer z vaje (10 m, 3 m³/s)</button>
+      </div>
+    </div>
+    <p class="ct-calc" id="calc"></p>
+    <p class="ct-note">Izkoristek celotne elektrarne je v animaciji stalen: η = 0,85. Območja turbin na grafu so približna in poenostavljena.</p>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var HS = [2, 5, 10, 15, 20, 30, 50, 70, 100, 150, 200, 300, 500, 700, 1000];
+  var QS = [0.1, 0.2, 0.5, 1, 2, 3, 5, 10, 20, 50, 100, 200, 500, 1000];
+  var ETA = 0.85, RHO = 1000, G = 9.81;
+  // Približna območja uporabe (H v m, Q v m³/s)
+  var ZONES = [
+    { id: 'kap', name: 'Kaplanova', h: [2, 70], q: [0.5, 1000] },
+    { id: 'fra', name: 'Francisova', h: [15, 500], q: [0.5, 1000] },
+    { id: 'pel', name: 'Peltonova', h: [200, 1000], q: [0.1, 50] }
+  ];
+  var scene = $('scene'), chart = $('chart'), hIn = $('h'), qIn = $('q');
+
+  function num(x, d) { return x.toLocaleString('sl-SI', { maximumFractionDigits: d, minimumFractionDigits: 0 }).replace(/\./g, '\u202f'); }
+  function fmtP(w) {
+    if (w < 1000) return num(Math.round(w), 0) + ' W';
+    if (w < 1e6) return num(w / 1000, w < 1e4 ? 2 : (w < 1e5 ? 1 : 0)) + ' kW';
+    if (w < 1e9) return num(w / 1e6, w < 1e7 ? 2 : (w < 1e8 ? 1 : 0)) + ' MW';
+    return num(w / 1e9, 2) + ' GW';
+  }
+  function fmtQ(q) { return num(q, 1) + ' m³/s'; }
+  function T(x, y, s, cls, anchor) { return '<text class="' + (cls || 'ct-t') + '" x="' + x + '" y="' + y + '"' + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  function suitable(H, Q) { return ZONES.filter(function (z) { return H >= z.h[0] && H <= z.h[1] && Q >= z.q[0] && Q <= z.q[1]; }); }
+
+  // ---------- graf ----------
+  var X0 = 86, X1 = 500, Y0 = 350, Y1 = 22;
+  function gx(q) { return X0 + (Math.log10(q) + 1) / 4 * (X1 - X0); }   // 0,1 … 1000
+  function gy(h) { return Y0 - Math.log10(h) / 3 * (Y0 - Y1); }         // 1 … 1000
+  function chartBase() {
+    var s = '';
+    [0.1, 1, 10, 100, 1000].forEach(function (q) { s += '<line class="ct-grid" x1="' + gx(q) + '" y1="' + Y1 + '" x2="' + gx(q) + '" y2="' + Y0 + '"/>' + T(gx(q), Y0 + 24, num(q, 1), 'ct-tm', 'middle'); });
+    [1, 10, 100, 1000].forEach(function (h) { s += '<line class="ct-grid" x1="' + X0 + '" y1="' + gy(h) + '" x2="' + X1 + '" y2="' + gy(h) + '"/>' + T(X0 - 8, gy(h) + 7, h, 'ct-tm', 'end'); });
+    ZONES.forEach(function (z) {
+      var x = gx(z.q[0]), y = gy(z.h[1]), w = gx(z.q[1]) - x, hh = gy(z.h[0]) - y;
+      s += '<rect class="ct-zone ct-zone-' + z.id + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + hh + '" rx="6"/>';
+    });
+    s += T(gx(60), gy(4), 'Kaplan', 'ct-tag', 'middle').replace('class="ct-tag"', 'class="ct-tag" style="fill:var(--kap)"');
+    s += T(gx(60), gy(160), 'Francis', 'ct-tag', 'middle').replace('class="ct-tag"', 'class="ct-tag" style="fill:var(--fra)"');
+    s += T(gx(3), 46, 'Pelton', 'ct-tag', 'middle').replace('class="ct-tag"', 'class="ct-tag" style="fill:var(--pel)"');
+    s += '<line class="ct-ax" x1="' + X0 + '" y1="' + Y0 + '" x2="' + X1 + '" y2="' + Y0 + '"/><line class="ct-ax" x1="' + X0 + '" y1="' + Y0 + '" x2="' + X0 + '" y2="' + Y1 + '"/>';
+    s += T((X0 + X1) / 2, 406, 'pretok Q (m³/s)', 'ct-tm', 'middle');
+    s += '<text class="ct-tm" transform="translate(22 ' + (Y0 + Y1) / 2 + ') rotate(-90)" text-anchor="middle">padec H (m)</text>';
+    return s;
+  }
+  var CHART_BASE = chartBase();
+
+  // ---------- shema ----------
+  function drawScene(H, Q, names) {
+    var t = Math.log10(H / 2) / Math.log10(500);           // 0 … 1
+    var yW = 70, yT = 150 + t * 170;                        // gladina, turbina
+    var w = 8 + (Math.log10(Q) + 1) / 4 * 26;               // debelina cevovoda
+    var s = '';
+    // jezero in jez
+    s += '<path d="M20 ' + yW + ' H150 V' + (yW + 70) + ' H20 Z" fill="var(--water-l)" stroke="var(--water)" stroke-width="2"/>';
+    s += '<path d="M150 ' + (yW - 14) + ' H172 V' + (yT + 40) + ' H150 Z" fill="#d9d4cb" stroke="var(--muted)" stroke-width="2"/>';
+    s += T(84, yW - 12, 'jezero', 'ct-tag', 'middle');
+    // cevovod
+    var d = 'M150 ' + (yW + 50) + ' L190 ' + (yW + 50) + ' L300 ' + yT + ' L340 ' + yT;
+    s += '<path class="ct-pipe" d="' + d + '" stroke-width="' + w.toFixed(1) + '"/>';
+    s += '<path class="ct-flow" d="' + d + '"/>';
+    // turbina
+    s += '<circle cx="370" cy="' + yT + '" r="30" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/>';
+    s += '<g class="ct-spin"><path d="M370 ' + (yT - 22) + ' V' + (yT + 22) + ' M348 ' + yT + ' H392 M355 ' + (yT - 15) + ' L385 ' + (yT + 15) + ' M385 ' + (yT - 15) + ' L355 ' + (yT + 15) + '" stroke="var(--water)" stroke-width="4" stroke-linecap="round"/></g>';
+    s += T(370, yT + 56, 'turbina', 'ct-tag', 'middle');
+    // gred in generator
+    s += '<line x1="400" y1="' + yT + '" x2="450" y2="' + yT + '" stroke="var(--ink)" stroke-width="6"/>';
+    s += '<rect x="450" y="' + (yT - 32) + '" width="64" height="64" rx="10" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/>' + T(482, yT + 8, 'G', 'ct-t', 'middle');
+    s += T(482, yT + 56, 'generator', 'ct-tag', 'middle');
+    // daljnovod in moč
+    s += '<path d="M514 ' + yT + ' H548 V' + (yT - 70) + '" fill="none" stroke="var(--lamp)" stroke-width="6" stroke-linecap="round"/>';
+    s += '<path d="M536 ' + (yT - 64) + ' L548 ' + (yT - 82) + ' L560 ' + (yT - 64) + '" fill="none" stroke="var(--lamp)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>';
+    // kotiranje padca
+    s += '<path d="M200 ' + yW + ' H230 M200 ' + yT + ' H230 M215 ' + (yW + 4) + ' V' + (yT - 4) + '" stroke="var(--accent)" stroke-width="2.5"/>';
+    s += '<path d="M209 ' + (yW + 14) + ' L215 ' + (yW + 3) + ' L221 ' + (yW + 14) + ' M209 ' + (yT - 14) + ' L215 ' + (yT - 3) + ' L221 ' + (yT - 14) + '" fill="none" stroke="var(--accent)" stroke-width="2.5"/>';
+    s += '<line x1="20" y1="' + yW + '" x2="230" y2="' + yW + '" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 5"/>';
+    s += T(236, (yW + yT) / 2 + 8, 'H = ' + num(H, 0) + ' m', 'ct-t').replace('class="ct-t"', 'class="ct-t" style="fill:var(--accent)"');
+    s += T(250, yT + 56, 'Q = ' + fmtQ(Q), 'ct-tm', 'middle');
+    s += T(590, 30, 'turbina: ' + (names.length ? names.map(function (z) { return z.name; }).join(' / ') : '–'), 'ct-tag', 'end');
+    scene.innerHTML = s;
+  }
+
+  function render() {
+    var H = HS[+hIn.value], Q = QS[+qIn.value];
+    var P = RHO * G * Q * H * ETA;
+    var names = suitable(H, Q);
+    $('hOut').textContent = num(H, 0) + ' m';
+    $('qOut').textContent = fmtQ(Q);
+    hIn.setAttribute('aria-valuetext', num(H, 0) + ' metrov');
+    qIn.setAttribute('aria-valuetext', num(Q, 1) + ' kubičnih metrov na sekundo');
+    $('hMinus').disabled = +hIn.value === 0; $('hPlus').disabled = +hIn.value === HS.length - 1;
+    $('qMinus').disabled = +qIn.value === 0; $('qPlus').disabled = +qIn.value === QS.length - 1;
+    $('chip').textContent = 'P ≈ ' + fmtP(P);
+    var tx;
+    if (names.length === 1) tx = 'Primerna turbina: ' + names[0].name + '.';
+    else if (names.length > 1) tx = 'Primerni sta ' + names.map(function (z) { return z.name; }).join(' in ') + ' turbina. Izbira je odvisna še od cene in izkoristka.';
+    else tx = 'Točka je zunaj območij na grafu. Za te podatke nobena od treh turbin ni običajna.';
+    $('status').textContent = 'Padec ' + num(H, 0) + ' m, pretok ' + fmtQ(Q) + '. Moč je približno ' + fmtP(P) + '. ' + tx;
+    $('calc').innerHTML = 'P = ρ · g · Q · H · η = 1000 · 9,81 · ' + num(Q, 1) + ' · ' + num(H, 0) + ' · 0,85 = ' + num(Math.round(P), 0) + ' W ≈ <b>' + fmtP(P) + '</b>';
+    drawScene(H, Q, names);
+    var cx = gx(Q), cy = gy(H);
+    chart.innerHTML = CHART_BASE + '<circle cx="' + cx + '" cy="' + cy + '" r="12" fill="var(--lamp)" stroke="var(--ink)" stroke-width="3"/>'
+      + '<path d="M' + (cx - 20) + ' ' + cy + ' H' + (cx - 13) + ' M' + (cx + 13) + ' ' + cy + ' H' + (cx + 20) + ' M' + cx + ' ' + (cy - 20) + ' V' + (cy - 13) + ' M' + cx + ' ' + (cy + 13) + ' V' + (cy + 20) + '" stroke="var(--ink)" stroke-width="3"/>';
+  }
+  function step(inp, d) { var v = Math.min(+inp.max, Math.max(0, +inp.value + d)); inp.value = v; render(); }
+  hIn.addEventListener('input', render); qIn.addEventListener('input', render);
+  $('hMinus').addEventListener('click', function () { step(hIn, -1); });
+  $('hPlus').addEventListener('click', function () { step(hIn, 1); });
+  $('qMinus').addEventListener('click', function () { step(qIn, -1); });
+  $('qPlus').addEventListener('click', function () { step(qIn, 1); });
+  $('reset').addEventListener('click', function () { hIn.value = 2; qIn.value = 5; render(); });
+  $('pause').addEventListener('click', function () {
+    var p = !scene.classList.contains('ct-paused');
+    scene.classList.toggle('ct-paused', p);
+    this.setAttribute('aria-pressed', p ? 'true' : 'false');
+    this.textContent = p ? 'Nadaljuj vodo' : 'Ustavi vodo';
+  });
+  function view(v) { $('figs').setAttribute('data-view', v); $('vScene').setAttribute('aria-pressed', v === 'scene' ? 'true' : 'false'); $('vChart').setAttribute('aria-pressed', v === 'chart' ? 'true' : 'false'); }
+  $('vScene').addEventListener('click', function () { view('scene'); });
+  $('vChart').addEventListener('click', function () { view('chart'); });
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    scene.classList.add('ct-paused'); $('pause').setAttribute('aria-pressed', 'true'); $('pause').textContent = 'Nadaljuj vodo';
+  }
+  render();
+})();
+</script>
+</body>
+</html>
