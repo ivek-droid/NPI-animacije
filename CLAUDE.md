@@ -6,6 +6,8 @@ Navodila projekta (vloga, pravila točnosti, pisanje za dijake) so v claude.ai p
 ## Način dela z uporabnikom
 - Slovenščina, tikanje, direktno. Učitelj potrdi **vsako objavo** na javni strani in **vsak popravek svojega besedila** (popravke naštej, ne vnašaj molče).
 - Na GitHub (ta repozitorij) lahko potiskam brez potrditve.
+- Ob začetku novega pogovora repozitorij ivek-droid/NPI-animacije priključi sam, brez vprašanja.
+- Strani predelujeva **eno po eno** (osnutek → potrditev → objava), ne več naenkrat.
 - **Poraba (usage):** sam predlagaj nov pogovor ali strnitev konteksta:
   - nov pogovor po zaključeni celoti (npr. ena ali dve lekciji) ali ko je pogovor zelo dolg (veliko posnetkov zaslona);
   - pred novim sklopom (nov predmet, domača stran) vedno začni nov pogovor;
