@@ -10,7 +10,7 @@
 
 ## Naslednje
 - Zbirka nalog (stran 185); po želji animacija »izberi presek«. Podmeniji pod 188.
-- Stran 185: tabla zimski 2021/5, naloga 5.4 ima napako (faktor 2 dvakrat, 4,5 % namesto 2,25 %). Uporabnik še ni odločil: zamenjati sliko ali dodati opombo. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
+- Stran 185: opomba k nalogi 5.4 (zimski 2021) objavljena 1. 11. 2026 (okvir »Pozor« pod gumboma za zimski 2021; napaka v faktorju 2 in varovalka 10 A). Slika table ni zamenjana. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
 
 ## Odprto
 - INEp: Nadtokovna zaščita (619), Izvedba električnih inštalacij (662), Nevarnosti el. toka (995).
