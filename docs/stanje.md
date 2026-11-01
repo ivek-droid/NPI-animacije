@@ -6,9 +6,10 @@
 - INEp → ELEKTRIČNE INŠTALACIJE (185, meni 188): zbirka maturitetnih nalog (slike in PDF-ji, nespremenjena) in podmeniji:
   - Dimenzioniranje vodnika (1338, meni 1343), `/dimenzioniranje-vodnika/`
   - Padec napetosti (1344, meni 1346), `/padec-napetosti/`
+  - Varovalke in odklopniki (1347, meni 1349), `/varovalke-in-odklopniki/`, generator `orodja/lekcija_varovalke.py`
 
 ## Naslednje
-- Varovalke in odklopniki: **osnutek (page_id 1347, neobjavljen, čaka potrditev)**, generator `orodja/lekcija_varovalke.py`. Po objavi: podmeni pod 188, nato zbirka nalog; po želji animacija »izberi presek«. Podmeniji pod 188.
+- Zbirka nalog (stran 185); po želji animacija »izberi presek«. Podmeniji pod 188.
 - Stran 185: tabla zimski 2021/5, naloga 5.4 ima napako (faktor 2 dvakrat, 4,5 % namesto 2,25 %). Uporabnik še ni odločil: zamenjati sliko ali dodati opombo. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
 
 ## Odprto
