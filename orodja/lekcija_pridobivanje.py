@@ -19,12 +19,12 @@ def tr(c, th=False):
     t = 'th' if th else 'td'
     return '<tr>' + ''.join(f'<{t} {TD}>{x}</{t}>' for x in c) + '</tr>'
 tabela = H2 + 'Katero turbino izbrati?</h2>\n<p>Turbino izberemo po <strong>padcu</strong> (H – višina, s katere pade voda) in <strong>pretoku</strong> (Q – koliko vode steče v eni sekundi).</p>\n' + \
-    '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:18px">' + \
+    '<table style="width:100%;border-collapse:collapse;font-size:18px">' + \
     tr(['Turbina', 'Padec', 'Pretok', 'Vrsta'], True) + \
     tr(['<strong>Peltonova</strong>', 'velik (več sto metrov)', 'majhen', 'enakotlačna']) + \
     tr(['<strong>Francisova</strong>', 'srednji (15–500 m)', 'srednji', 'nadtlačna']) + \
     tr(['<strong>Kaplanova</strong>', 'majhen (do 70 m)', 'velik', 'nadtlačna']) + \
-    '</table></div>\n<p style="font-size:16px;color:#4a4f5c">Meje se med turbinami prekrivajo. Številke so iz besedila spodaj.</p>'
+    '</table>\n<p style="font-size:16px;color:#4a4f5c">Meje se med turbinami prekrivajo. Številke so iz besedila spodaj.</p>'
 
 pelton = H2 + 'Peltonova turbina</h2>\n<p><strong>Za velike padce in majhne pretoke.</strong></p>\n' + \
 '''<p>Voda brizga iz šobe z veliko hitrostjo. Curek vode je usmerjen tangencialno na lopatice gonilnika. Voda udarja ob lopatice in oddaja gonilniku svojo kinetično energijo. Vodni curek brizga samo na nekaj lopatic, zato je gonilnik samo delno oblit z vodo. Druge lopatice gonilnika ne sprejemajo vodne energije.</p>
