@@ -162,13 +162,17 @@ tr.ct-sum td { font-weight: 700; border-bottom: 0; }
     s += P('M500 249 V300', imp ? 'ct-w-n' : 'ct-w-offn');
     if (imp) s += F('M500 190 V205') + F('M500 249 V300 H-10 V205');
     // mehanska povezava
-    s += '<path d="M520 227 H640" stroke="var(--muted)" stroke-width="2.5" stroke-dasharray="7 6" fill="none"/>';
+    // mehanska povezava: od tuljave do kontakta (elektromagnet premakne kontakt)
+    var cx = lit ? 700 : 714;
+    s += '<path d="M520 227 H655 V122 H' + (cx - 3) + '" stroke="var(--accent)" stroke-width="3" stroke-dasharray="8 6" fill="none"/>';
+    s += '<circle cx="' + cx + '" cy="122" r="5" fill="var(--accent)"/>';
+    s += T(468, 234, 'elektromagnet', 'ct-tag', 'end');
     // krmiljeni krog
     s += '<rect class="ct-box" x="600" y="64" width="230" height="224" rx="10"/>' + T(735, 256, 'krmiljeni', 'ct-tag') + T(735, 276, 'krog', 'ct-tag');
     s += P('M700 50 V95', 'ct-w-live') + dot(700, 50) + term(700, 95) + term(700, 150);
     var ex = lit ? 700 : 728, ey = lit ? 150 : 140;
     s += '<line class="ct-blade" stroke="var(--live)" x1="700" y1="95" x2="' + ex + '" y2="' + ey + '"/>';
-    s += T(712, 128, 'kontakt', 'ct-tag');
+    s += T(722, 108, 'kontakt', 'ct-tag');
     s += P('M700 150 V184', lit ? 'ct-w-live' : 'ct-w-off') + lamp(700, 210, lit, null) + P('M700 236 V300', lit ? 'ct-w-n' : 'ct-w-offn');
     s += T(740, 218, 'E1', 'ct-t');
     if (lit) s += F('M700 50 V184') + F('M700 236 V300 H-10 V205');
