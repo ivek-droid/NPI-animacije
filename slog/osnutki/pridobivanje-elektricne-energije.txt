@@ -1,0 +1,83 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Pridobivanje električne energije – vodne turbine</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>razložiti, kako hidroelektrarna pretvori energijo vode v električno,</li>
+<li>izbrati turbino glede na padec in pretok,</li>
+<li>izračunati moč hidroelektrarne.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Od vode do elektrike</h2>
+<p>Pomisli na mlinsko kolo. Voda pada nanj in ga vrti. Več vode in višje kot pade, močneje ga vrti.</p>
+<p>Hidroelektrarna dela enako. Namesto mlinskega kolesa ima turbino. Turbina vrti generator, ta proizvaja električno energijo.</p>[/et_pb_text][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Katero turbino izbrati?</h2>
+<p>Turbino izberemo po <strong>padcu</strong> (H – višina, s katere pade voda) in <strong>pretoku</strong> (Q – koliko vode steče v eni sekundi).</p>
+<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:18px"><tr><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">Turbina</th><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">Padec</th><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">Pretok</th><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">Vrsta</th></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left"><strong>Peltonova</strong></td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">velik (več sto metrov)</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">majhen</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">enakotlačna</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left"><strong>Francisova</strong></td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">srednji (15–500 m)</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">srednji</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">nadtlačna</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left"><strong>Kaplanova</strong></td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">majhen (do 70 m)</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">velik</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left">nadtlačna</td></tr></table></div>
+<p style="font-size:16px;color:#4a4f5c">Meje se med turbinami prekrivajo. Številke so iz besedila spodaj.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Pot energije</p>
+<ol>
+<li><strong>Voda v jezeru</strong> ima potencialno energijo, ker je visoko.</li>
+<li><strong>Voda v cevovodu</strong> pada in dobi hitrost – kinetično energijo.</li>
+<li><strong>Turbina</strong> pretvori energijo vode v mehansko energijo vrtenja.</li>
+<li><strong>Generator</strong> pretvori mehansko energijo v električno.</li>
+</ol><p>Pri vsaki pretvorbi se del energije izgubi (trenje, segrevanje). To opisuje izkoristek η.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Peltonova turbina</h2>
+<p><strong>Za velike padce in majhne pretoke.</strong></p>
+<p>Voda brizga iz šobe z veliko hitrostjo. Curek vode je usmerjen tangencialno na lopatice gonilnika. Voda udarja ob lopatice in oddaja gonilniku svojo kinetično energijo. Vodni curek brizga samo na nekaj lopatic, zato je gonilnik samo delno oblit z vodo. Druge lopatice gonilnika ne sprejemajo vodne energije.</p>
+<p>Pretok vode in s tem moč Peltonove turbine se uravnava s premikanjem igle v šobi; poleg igle v šobi imajo turbine še nož. Ta naprava pri razbremenitvi turbine takoj odreže curek, medtem ko igla počasi pripira šobe tako, da pri nepričakovani razbremenitvi ne pride do prekomernega povišanja tlaka v tlačnem cevovodu.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_video src="https://npi.splet.arnes.si/files/2023/11/Voith-Functioning-of-Pelton-turbines-EN-1-1.mp4" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px"][/et_pb_video][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Video: delovanje Peltonove turbine. Opazuj curek vode in lopatice.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Francisova turbina</h2>
+<p><strong>Za srednje padce in srednje pretoke.</strong></p>
+<p>Francisova vodna turbina je nadtlačna turbina radialno-aksialnega tipa in je najpogosteje uporabljena vodna turbina, saj je primerna za srednje pretoke in srednje padce, kakršne ima večina virov vodne energije.</p>
+<p>Moč turbine je odvisna od pretoka vode in smeri toka vode glede na lopatice gonilnika, kar uravnavajo vodilne lopatice, ki so premične in se jih da poljubno odpreti ali zapreti.</p>
+<p>Sodobne Francisove turbine imajo spiralno ohišje, ki se uporablja pri tlačnih višinah od 15 do 500 m. Pri padcih do 15 m doteka voda do turbine po odprtih kanalih – jaških. Izkoristek dobre Francisove turbine je okoli 0,9 (90 %).</p>
+<p>Francisova turbina je lahko horizontalna ali vertikalna. Njeni gradniki:</p>
+<ul>
+<li>spiralno ohišje,</li>
+<li>vodilne lopatice,</li>
+<li>gonilnik,</li>
+<li>sesalna cev (difuzor ali aspirator).</li>
+</ul>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_video src="https://npi.splet.arnes.si/files/2023/11/Working-of-Francis-Turbine.mp4" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px"][/et_pb_video][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Video: delovanje Francisove turbine. Opazuj, kod voda priteče do gonilnika.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kaplanova turbina</h2>
+<p><strong>Za majhne padce in velike pretoke.</strong></p>
+<p>Kaplanova vodna turbina je aksialna nadtlačna vodna turbina, ki ima vtok radialen, iztok pa aksialen. Uporablja se za velike pretoke in manjše padce (do 70 m).</p>
+<ul>
+<li>Gonilnik je podoben ladijskemu vijaku: ima široko pesto in 4 do 8 lopatic. Prerez lopatice je podoben letalskemu krilu (vzgon).</li>
+<li>Vodilne lopatice imajo isto obliko kot pri Francisovi turbini, število lopatic je med 8 in 24.</li>
+<li>Dvojna regulacija: nastavljati se dajo lopatice gonilnika in vodilne lopatice. Zato voda vstopa brez udarca pri zelo različnih pretokih.</li>
+<li>Dober izkoristek dosežemo že pri 25 % nazivne obremenitve.</li>
+<li>Kaplanove turbine se vrtijo hitro, zato so manjše in cenejše.</li>
+</ul>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_video src="https://npi.splet.arnes.si/files/2023/11/WORKING-OF-KAPLAN-TURBINE.mp4" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px"][/et_pb_video][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Video: delovanje Kaplanove turbine. Opazuj obliko gonilnika.</p>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Moč hidroelektrarne</h2>
+<p>Več vode in višji padec pomenita večjo moč.</p>
+<p style="font-size:22px;font-weight:700">P = ρ · g · Q · H · η</p>
+<ul>
+<li>P – moč v vatih (W),</li>
+<li>ρ – gostota vode: 1000 kg/m³,</li>
+<li>g – težni pospešek: 9,81 m/s²,</li>
+<li>Q – pretok v m³/s,</li>
+<li>H – padec v metrih (m),</li>
+<li>η – izkoristek (brez enote, vedno manjši od 1).</li>
+</ul><p>Pretok vedno pretvori v m³/s: 1 m³/s = 1000 l/s.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer</p>
+<p style="margin-top:0">Mala hidroelektrarna ima padec 10 m. Pretok vode je 3 m³/s. Izkoristek elektrarne je 0,85. Kolikšna je moč? Katero turbino izberemo?</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>H = 10 m, Q = 3 m³/s, η = 0,85, ρ = 1000 kg/m³, g = 9,81 m/s²</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>P = ?, vrsta turbine</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>P = ρ · g · Q · H · η</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>P = 1000 kg/m³ · 9,81 m/s² · 3 m³/s · 10 m · 0,85</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>P = 250 155 W</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">P ≈ 250 kW</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Turbina</span>Padec 10 m je majhen (manj kot 15 m), pretok je velik → Kaplanova turbina.</span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>kg/m³ · m/s² · m³/s · m = kg · m²/s³ = W. Ocena: 8,3 · 3 · 10 ≈ 250 kW.</span></li>
+</ol>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Pretok vstaviš v litrih na sekundo (3000 l/s) namesto v m³/s. Dobiš 250 MW – 1000-krat preveč.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi sam</h2>
+<p>Spreminjaj padec in pretok. Opazuj moč in točko na grafu turbin. Uporabiš lahko tudi tipko Tab in Enter.</p>
+[iframe src="https://ivek-droid.github.io/NPI-animacije/hidroelektrarna.html?kompakt" width="100%" height="700" title="Animacija: hidroelektrarna"][/et_pb_text][et_pb_button button_url="https://ivek-droid.github.io/NPI-animacije/hidroelektrarna.html" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. Padec je 600 m, pretok je majhen. Katero turbino izbereš?</summary><p style="margin-top:12px">Peltonovo turbino.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. Kateri del hidroelektrarne pretvori mehansko energijo v električno?</summary><p style="margin-top:12px">Generator. Turbina samo vrti generator.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. Pretok se podvoji, padec ostane enak. Kaj se zgodi z močjo?</summary><p style="margin-top:12px">Moč se podvoji. P je premo sorazmerna s Q.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">4. Zakaj ima Kaplanova turbina dober izkoristek pri različnih pretokih?</summary><p style="margin-top:12px">Ker ima dvojno regulacijo: nastavljajo se lopatice gonilnika in vodilne lopatice.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>Pot energije: potencialna → kinetična → mehanska → električna.</li>
+<li>Turbina vrti generator.</li>
+<li>Pelton: velik padec, majhen pretok.</li>
+<li>Francis: srednji padec in pretok.</li>
+<li>Kaplan: majhen padec, velik pretok.</li>
+<li>P = ρ · g · Q · H · η; hitra ocena: P (kW) ≈ 8,3 · Q · H (pri η = 0,85).</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
