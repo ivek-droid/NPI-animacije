@@ -156,25 +156,25 @@ tr.ct-sum td { font-weight: 700; border-bottom: 0; }
     s += P('M150 190 H500', imp ? 'ct-w-live' : 'ct-w-off');
     s += dot(270, 190) + dot(390, 190);
     // tuljava
-    s += P('M500 190 V205', imp ? 'ct-w-live' : 'ct-w-off');
-    s += '<rect class="ct-coil" x="480" y="205" width="40" height="44" fill="' + (imp ? 'var(--glow)' : 'var(--panel)') + '"/>';
-    s += T(530, 212, 'A1', 'ct-tm') + T(530, 258, 'A2', 'ct-tm');
-    s += P('M500 249 V300', imp ? 'ct-w-n' : 'ct-w-offn');
-    if (imp) s += F('M500 190 V205') + F('M500 249 V300 H-10 V205');
+    s += P('M500 190 V232', imp ? 'ct-w-live' : 'ct-w-off');
+    s += '<rect class="ct-coil" x="480" y="232" width="40" height="44" fill="' + (imp ? 'var(--glow)' : 'var(--panel)') + '"/>';
+    s += T(528, 246, 'A1', 'ct-tm') + T(528, 276, 'A2', 'ct-tm');
+    s += P('M500 276 V300', imp ? 'ct-w-n' : 'ct-w-offn');
+    if (imp) s += F('M500 190 V232') + F('M500 276 V300 H-10 V205');
     // mehanska povezava
     // mehanska povezava: od tuljave do kontakta (elektromagnet premakne kontakt)
     var cx = lit ? 700 : 714;
-    s += '<path d="M520 227 H655 V122 H' + (cx - 3) + '" stroke="var(--accent)" stroke-width="3" stroke-dasharray="8 6" fill="none"/>';
+    s += '<path d="M520 254 H780 V122 H' + (cx + 3) + '" stroke="var(--accent)" stroke-width="3" stroke-dasharray="8 6" fill="none"/>';
     s += '<circle cx="' + cx + '" cy="122" r="5" fill="var(--accent)"/>';
-    s += T(468, 234, 'elektromagnet', 'ct-tag', 'end');
+    s += T(470, 250, 'elektromagnet', 'ct-tag', 'end');
     // krmiljeni krog
-    s += '<rect class="ct-box" x="600" y="64" width="230" height="224" rx="10"/>' + T(735, 256, 'krmiljeni', 'ct-tag') + T(735, 276, 'krog', 'ct-tag');
+    s += '<rect class="ct-box" x="600" y="64" width="230" height="224" rx="10"/>' + T(612, 86, 'krmiljeni', 'ct-tag') + T(612, 106, 'krog', 'ct-tag');
     s += P('M700 50 V95', 'ct-w-live') + dot(700, 50) + term(700, 95) + term(700, 150);
     var ex = lit ? 700 : 728, ey = lit ? 150 : 140;
     s += '<line class="ct-blade" stroke="var(--live)" x1="700" y1="95" x2="' + ex + '" y2="' + ey + '"/>';
     s += T(722, 108, 'kontakt', 'ct-tag');
     s += P('M700 150 V184', lit ? 'ct-w-live' : 'ct-w-off') + lamp(700, 210, lit, null) + P('M700 236 V300', lit ? 'ct-w-n' : 'ct-w-offn');
-    s += T(740, 218, 'E1', 'ct-t');
+    s += T(664, 218, 'E1', 'ct-t', 'end');
     if (lit) s += F('M700 50 V184') + F('M700 236 V300 H-10 V205');
     svg.innerHTML = o + '<g transform="translate(50 0)">' + s + '</g>';
 
