@@ -1,0 +1,106 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Padec napetosti na vodniku</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>povedati, zakaj napetost na porabniku pade,</li>
+<li>izračunati padec napetosti ΔU in Δu,</li>
+<li>izračunati potreben presek in največjo dolžino vodnika,</li>
+<li>izbrati presek, ki zadošča tudi segrevanju.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Zakaj napetost na koncu vodnika pade</h2>
+<p>Pomisli na dolg tanek vrtni cevovod. Voda na koncu teče šibkeje kot na pipi.</p>
+<p>Tudi vodnik se upira toku. Ima upornost R. Na njej nastane padec napetosti ΔU = I · R. Porabnik zato dobi manj napetosti, kot je ima vir.</p>
+<p>Upornost je večja, če je vodnik daljši ali tanjši. Tok teče po poti tja in nazaj, zato vzamemo <strong>dvakratno dolžino 2 · l</strong>.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Definicija</p>
+<p style="margin-top:0">Padec napetosti je razlika med napetostjo na viru in na porabniku.</p>
+<p>ΔU = U<sub>vir</sub> − U<sub>porabnik</sub> (v V)</p>
+<p>Δu = ΔU / U<sub>vir</sub> · 100 (v %)</p>
+<p>Primer: vir 230 V, porabnik 225 V. ΔU = 5 V, Δu = 5 / 230 · 100 = 2,17 %.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Enofazni tokokrog (U<sub>f</sub> = 230 V)</p>
+<p style="margin-top:0">Δu = 200 · l · P / (λ · A · U<sub>f</sub>²)</p>
+<p>A = 200 · l · P / (λ · Δu · U<sub>f</sub>²)</p>
+<p>l = λ · A · Δu · U<sub>f</sub>² / (200 · P)</p>
+</div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Trifazni tokokrog (U = 400 V)</p>
+<p style="margin-top:0">Δu = 100 · l · P / (λ · A · U²)</p>
+<p>A = 100 · l · P / (λ · Δu · U²)</p>
+<p>l = λ · A · Δu · U² / (100 · P)</p>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Enote</p>
+<p>l v m, P v W, A v mm², λ = 56 S·m/mm², napetost v V, Δu v %. Pri trifaznem tokokrogu je U medfazna napetost 400 V.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Postopek v petih korakih</h2>
+<ol>
+<li>Zapiši podatke: l, P, napetost in λ = 56 S·m/mm².</li>
+<li>Določi dopustni padec Δu (naloga ali tabela 7).</li>
+<li>Izračunaj presek A iz formule.</li>
+<li>Izberi prvi standardni presek, ki je ≥ izračunani: 1,5; 2,5; 4; 6; 10; 16; 25; 35; 50 mm².</li>
+<li>Preveri še segrevanje (lekcija <a href="https://npi.splet.arnes.si/dimenzioniranje-vodnika/">Dimenzioniranje vodnika</a>). Vzemi večji presek od obeh.</li>
+</ol>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Dopustni padec napetosti (tabela 7)</h2>
+<table style="width:100%;border-collapse:collapse;font-size:18px"><tr><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">Δu</th><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">Kje velja</th></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">3 %</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">razsvetljava, napajanje iz nizkonapetostnega omrežja</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">5 %</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">razsvetljava, napajanje iz lastne transformatorske postaje</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">5 %</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">drugi porabniki, napajanje iz nizkonapetostnega omrežja</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">8 %</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">drugi porabniki, napajanje iz lastne transformatorske postaje</td></tr></table>
+<p style="font-size:16px;color:#4a4f5c">Če naloga poda vrednost, uporabi njo. Učbenik za vse porabnike navaja 3 %.</p>[/et_pb_text][et_pb_button button_url="https://npi.splet.arnes.si/files/2024/01/formule-na-maturi.pdf" url_new_window="on" button_text="Formule na maturi (PDF)" module_class="pg-btn" _builder_version="4.27.9" custom_margin="0||12px||false|false"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer 1: potreben presek</p>
+<p style="margin-top:0">Fazni porabnik je napajan po vodniku dolžine 14 m. Specifična prevodnost je λ = 56 S·m/mm², tok je 10 A, padec napetosti 2 V. Izračunaj presek vodnika.</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>l = 14 m, I = 10 A, ΔU = 2 V, λ = 56 S·m/mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>presek A</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>ΔU = 2 · l · I / (λ · A), zato A = 2 · l · I / (λ · ΔU)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>A = 2 · 14 m · 10 A / (56 S·m/mm² · 2 V)</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>A = 280 / 112 = 2,50 mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 2,5 mm² (standardni presek)</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Tok 10 A, vodnik 2,5 mm²: ΔU = 2 · 14 · 10 / (56 · 2,5) = 2 V ✓</span></li>
+</ol>
+
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Pozabiš na število 2 (pot tja in nazaj). Dobiš 1,25 mm² in izbereš 1,5 mm². Vodnik je pretanek.</p>
+</div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer 2: preveri padec</p>
+<p style="margin-top:0">Grelnik moči 2,5 kW je priključen na 230 V z vodnikom 1,5 mm², dolgim 20 m. Ali je padec napetosti pod 3 %?</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 2500 W, U<sub>f</sub> = 230 V, l = 20 m, A = 1,5 mm², λ = 56 S·m/mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>Δu</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>Δu = 200 · l · P / (λ · A · U<sub>f</sub>²)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>Δu = 200 · 20 · 2500 / (56 · 1,5 · 230²)</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>Δu = 10 000 000 / 4 443 600 = 2,25 %</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">Δu = 2,25 % ≤ 3 % ✓</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Vodnik je kratek, tok majhen: pričakujemo manj kot 3 %.</span></li>
+</ol>
+
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Faktor 2 dodaš še enkrat. Formula z 200 ga že vsebuje (2 · 100). Dobiš 4,5 % in napačen sklep, da vodnik ni dober.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer 3: največja dolžina</p>
+<p style="margin-top:0">Trifazni porabnik 38 kW na 400 V je priključen s kablom 25 mm². Dopustni padec je 1,5 %. Kako dolg je lahko kabel?</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 38 000 W, U = 400 V, A = 25 mm², Δu = 1,5 %, λ = 56 S·m/mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>dolžina l</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>l = λ · A · Δu · U² / (100 · P)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>l = 56 · 25 · 1,5 · 400² / (100 · 38 000)</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>l = 336 000 000 / 3 800 000 = 88,4 m</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">l = 88,4 m</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Δu pri 88,4 m: 100 · 88,4 · 38 000 / (56 · 25 · 400²) = 1,5 % ✓</span></li>
+</ol>
+
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>V trifazni formuli vzameš 230 V. Pri trifazni formuli je U = 400 V.</p>
+</div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--pozor" style="margin:0">
+<p class="pg-okvir__oznaka">Dva preverjanja, en presek</p>
+<p style="margin-top:0">Presek mora zadostiti <strong>segrevanju</strong> in <strong>padcu napetosti</strong>. Končni presek je večji od obeh.</p>
+<p>Primer: kabel za 38 kW je dolg 120 m. Pri 25 mm² je Δu = 100 · 120 · 38 000 / (56 · 25 · 400²) = 2,04 %. To je več kot 1,5 %. Pri 35 mm² je Δu = 1,45 % ✓. Vzamemo 35 mm², čeprav segrevanje zadošča že pri 25 mm².</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. Zakaj je v formuli za enofazni tokokrog število 2?</summary><p style="margin-top:12px">Tok teče po faznem vodniku do porabnika in po nevtralnem nazaj. Pot je dvakrat daljša od dolžine kabla.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. Enofazni porabnik 2000 W na 230 V, vodnik 1,5 mm², dolžina 30 m. Koliko je Δu?</summary><p style="margin-top:12px">Δu = 200 · 30 · 2000 / (56 · 1,5 · 230²) = 12 000 000 / 4 443 600 = 2,70 %. To je manj kot 3 %, vodnik ustreza.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. Za segrevanje zadošča 2,5 mm², za padec napetosti pa potrebuješ 4 mm². Kateri presek vzameš?</summary><p style="margin-top:12px">4 mm². Končni presek je večji od obeh.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>Padec napetosti je razlika med virom in porabnikom.</li>
+<li>Pot toka je 2 · l, zato je v enofazni formuli 200 = 2 · 100.</li>
+<li>Enofazno U<sub>f</sub> = 230 V, trifazno U = 400 V.</li>
+<li>Najprej izračunaj presek, nato izberi standardnega.</li>
+<li>Presek mora zadostiti segrevanju in padcu napetosti.</li>
+</ul>
+</div>[/et_pb_text][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--matura" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Matura</p>
+<p>Formule za padec napetosti in tabelo 7 imaš na listu s formulami. Za vajo odpri zbirko nalog (spomladanski rok 2023, naloga 19; zimski rok 2020, 2021 in 2022, naloge 5).</p>
+<p><a href="https://npi.splet.arnes.si/elektricne-instalacije/">Zbirka maturitetnih nalog</a> · <a href="https://www.ric.si/poklicna-matura/predmeti/drugi-predmet/elektrotehnika/">Maturitetno gradivo (RIC)</a></p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
