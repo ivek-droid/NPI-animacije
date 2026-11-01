@@ -2,10 +2,11 @@ src = open('/home/claude/npi-animacije/orodja/lekcije_pomocniki_in_ivep.py').rea
 exec(src)
 # Vir: Električne inštalacije za IEK (tehnik), pogl. 19.2.3 Hidroelektrarne (str. 342–344).
 
+VER = 2  # povečaj ob vsaki spremembi animacije (obide predpomnilnik)
 def anim2(file, title, h2, intro, h):
     return (text(H2 + h2 + '</h2>\n<p>' + intro + ' Uporabiš lahko tudi tipko Tab in Enter.</p>\n'
-                 f'[iframe src="{GH}{file}?kompakt" width="100%" height="{h}" title="Animacija: {title}"]')
-            + f'[et_pb_button button_url="{GH}{file}" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button]')
+                 f'[iframe src="{GH}{file}?kompakt&v={VER}" width="100%" height="{h}" title="Animacija: {title}"]')
+            + f'[et_pb_button button_url="{GH}{file}?v={VER}" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button]')
 
 kaj = H2 + '''Od vode do elektrike</h2>
 <p>Pomisli na mlinsko kolo. Voda pada nanj in ga vrti. Več vode in višje kot pade, močneje ga vrti.</p>
