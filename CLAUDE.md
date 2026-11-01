@@ -57,7 +57,8 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 Objavljeno v novem slogu: vse vezave pod IVEp (menjalna, enopolna, serijska, križna, impulzni rele) in INEp → Trifazni izmenični sistem, Pridobivanje električne energije (hidroelektrarne; videi mp4 odstranjeni, datoteke še v knjižnici medijev).
 
 Odprto:
-- INEp: Električne inštalacije, Nadtokovna zaščita, Izvedba električnih inštalacij, Nevarnosti el. toka (`/995-2/`).
+- INEp: Električne inštalacije (glej spodaj), Nadtokovna zaščita, Izvedba električnih inštalacij, Nevarnosti el. toka (`/995-2/`).
+- Električne inštalacije (stran 185, `/elektricne-instalacije/`): zbirka slik in PDF-jev maturitetnih nalog in tabel. Analiza z napakami (tabla 2021/5: dodaten faktor 2 pri padcu napetosti) in predlogom razdelitve v `slog/analiza-elektricne-instalacije.md`, preračuni v `orodja/preveri_dimenzioniranje.py`. Čaka odločitev učitelja, katero stran predelava prvo. Izpitne pole (ric.si, sc-nm.si) iz oblaka niso dosegljive; table in PDF-je se bere prek vgrajenega brskalnika.
 - IVEp: Vezave za razsvetljavo – uvod, Zaključno delo in dokumentacija.
 - IEKp, STR, VUI, Pomoč – še stari slog.
 - Domača stran s karticami predmetov (kratice IVE, INE, IEK, STR, VUI; polna imena za `aria-label` še manjkajo).
