@@ -15,7 +15,7 @@
 <p style="margin-top:0"><strong>Preobremenitev:</strong> tok je malo prevelik in teče dlje časa. Vodnik se počasi segreva.</p>
 <p><strong>Kratek stik:</strong> upornost bremena je skoraj 0 Ω. Tok je lahko stokrat ali tisočkrat večji od nazivnega. Nevarnost je takoj.</p>
 </div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Taljiva varovalka (gG)</h2>
-<p>V ohišju je tanka žička, ki jo prevaja tok. Pri prevelikem toku se žička segreje in se stali. Tokokrog je prekinjen.</p>
+<p>V ohišju je tanka žička, ki prevaja tok. Pri prevelikem toku se žička segreje in se stali. Tokokrog je prekinjen.</p>
 <p>Tok se prekine v nekaj sekundah ali v delčku sekunde. Večji je nadtok, hitreje se žička stali. Nazivni tok varovalka prenaša neomejeno dolgo.</p><ul>
 <li>Ohišje je napolnjeno s kremenčevim peskom, ki ugasne električni oblok.</li>
 <li>Barvni indikator pokaže, da je vložek pregorel.</li>

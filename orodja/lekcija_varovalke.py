@@ -38,7 +38,7 @@ zakaj = H2 + 'Zakaj sploh varovalka</h2>' + '''
 <p><strong>Kratek stik:</strong> upornost bremena je skoraj 0 Ω. Tok je lahko stokrat ali tisočkrat večji od nazivnega. Nevarnost je takoj.</p>''', '16px 0 0')
 
 varovalka = H2 + 'Taljiva varovalka (gG)</h2>' + '''
-<p>V ohišju je tanka žička, ki jo prevaja tok. Pri prevelikem toku se žička segreje in se stali. Tokokrog je prekinjen.</p>
+<p>V ohišju je tanka žička, ki prevaja tok. Pri prevelikem toku se žička segreje in se stali. Tokokrog je prekinjen.</p>
 <p>Tok se prekine v nekaj sekundah ali v delčku sekunde. Večji je nadtok, hitreje se žička stali. Nazivni tok varovalka prenaša neomejeno dolgo.</p>''' \
     + ul(['Ohišje je napolnjeno s kremenčevim peskom, ki ugasne električni oblok.', 'Barvni indikator pokaže, da je vložek pregorel.', 'Velikostni obroč prepreči, da bi vstavil vložek za večji tok.']) \
     + box('pozor', 'Nikoli ne popravljaj', '<p style="margin-top:0">Vložka ne smeš zakrpati z žico ali ga premostiti. Potem varovalke ni več. Vodnik se pregreje in lahko nastane požar.</p>', '16px 0 0')
