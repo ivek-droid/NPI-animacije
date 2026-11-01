@@ -23,6 +23,7 @@ Navodila projekta (vloga, pravila točnosti, pisanje za dijake) so v claude.ai p
 - Postopek objave lekcije: osnutek (`status:draft`, `meta._et_pb_use_builder:'on'`) → preveri, da je `content.raw` enak poslanemu (filter) → ogled 1280/480 px → potrditev → preveri `modified` ciljne strani in da je stara vsebina v revizijah → zamenjaj `content` → preveri javno stran brez prijave (`credentials:'omit'`) → osnutek v smeti (DELETE brez force).
 - Varnostni klasifikator lahko zavrne zapis na objavljeno stran → prosi uporabnika za izrecno potrditev, ne obhajaj.
 - Vsebina osnutka se v brskalnik prenese z GitHuba: `https://raw.githubusercontent.com/ivek-droid/NPI-animacije/main/slog/osnutki/<ime>.txt` (raw je takoj na voljo; Pages ima zamik ~1 min).
+- **Predpomnilnik:** GitHub Pages hrani datoteke do 10 min. Po spremembi že vdelane animacije povečaj različico v naslovu (`?kompakt=N` v iframu, `?v=N` na gumbu; `VER` v generatorju lekcije). Znaka `&` v naslovu ne uporabljaj – WP filter ga spremeni.
 - **GitHub Pages zastoj:** če `pages build and deployment` pade pri »deploy« (»in progress deployment«), uporabnik v Settings → Pages preklopi vir na None in nazaj na main / (root). Stanje: `https://api.github.com/repos/ivek-droid/NPI-animacije/actions/runs?per_page=3`.
 
 ## Slog
