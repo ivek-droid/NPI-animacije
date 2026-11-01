@@ -9,7 +9,7 @@
 - Nonce: `await (await fetch('/wp-admin/admin-ajax.php?action=rest-nonce')).text()` → glava `X-WP-Nonce`.
 - Strani: `/wp-json/wp/v2/pages/<id>?context=edit`. Mediji: `POST /wp-json/wp/v2/media`.
 - Meni (id 2, »Glavni meni«): `POST /wp-json/wp/v2/menu-items` z `{title, type:'post_type', object:'page', object_id, menus:2, parent, status:'publish'}`.
-- Podmeniji INEp: starš INEp je postavka 68, ELEKTRIČNE INŠTALACIJE postavka 188. Nove lekcije te serije so podmeniji pod 188.
+- Podmeniji INEp: nadrejena postavka INEp je 68, ELEKTRIČNE INŠTALACIJE postavka 188. Nove lekcije te serije so podmeniji pod 188.
 
 ## Postopek objave lekcije (osnutek → potrditev → objava)
 1. Generator napiše `slog/osnutki/<ime>.txt`, commit in push.
