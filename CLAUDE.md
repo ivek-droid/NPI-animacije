@@ -48,13 +48,15 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | krizna-vezava.html | 700 | Križna vezava (813) |
 | impulzni-rele.html | 680 | Bistabilni impulzni rele (1075) – uporabnik želi **to** različico črtkane povezave (desno, gor, desno do kontakta) |
 | trifazni-sistem.html | 780 | Trifazni izmenični sistem (89) |
+| vodne-turbine.html | 620 | Pridobivanje el. energije (82) – Pelton/Francis/Kaplan, regulacija pretoka |
+| hidroelektrarna.html | 730 | Pridobivanje el. energije (82) – P = 9,81·Q·Δh, graf turbin |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |
 
-## Stanje (1. 11. 2026)
-Objavljeno v novem slogu: vse vezave pod IVEp (menjalna, enopolna, serijska, križna, impulzni rele) in INEp → Trifazni izmenični sistem.
+## Stanje (1. 11. 2026, popoldne)
+Objavljeno v novem slogu: vse vezave pod IVEp (menjalna, enopolna, serijska, križna, impulzni rele) in INEp → Trifazni izmenični sistem, Pridobivanje električne energije (hidroelektrarne; videi mp4 odstranjeni, datoteke še v knjižnici medijev).
 
 Odprto:
-- INEp: Pridobivanje električne energije, Električne inštalacije, Nadtokovna zaščita, Izvedba električnih inštalacij, Nevarnosti el. toka (`/995-2/`).
+- INEp: Električne inštalacije, Nadtokovna zaščita, Izvedba električnih inštalacij, Nevarnosti el. toka (`/995-2/`).
 - IVEp: Vezave za razsvetljavo – uvod, Zaključno delo in dokumentacija.
 - IEKp, STR, VUI, Pomoč – še stari slog.
 - Domača stran s karticami predmetov (kratice IVE, INE, IEK, STR, VUI; polna imena za `aria-label` še manjkajo).
@@ -62,5 +64,7 @@ Odprto:
 - Naslov strani »TRIFAZNI IZMENIČNI SISTEM« z velikimi črkami (vpliva na meni) – čaka potrditev.
 - Gumb »na vrh strani« (Divi možnost) – predlog.
 - Okvir »Matura« dodaj le s povezavo na katalog, ki jo da uporabnik.
+
+Vir snovi: učbenik `elektricne-instalacije-za-IEK-tehnik.pdf` v claude.ai projektu (sken, 54 str., OCR s tesseract `-l eng` deluje zadovoljivo; pogl. 19 = trifazni sistem, pridobivanje, prenos). Pri izrazih sledi učbeniku (npr. »lopate«, Δh, P_vode = 9,81 · Q · Δh).
 
 Terminologija: nevtralni vodnik N (na starih slikah »ničelni vodnik« – opomba v podnapisu), tipkalo (ne tipka), zaščitni vodnik PE.
