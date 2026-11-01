@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trifazni izmenični sistem – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --live: #c4410c; --neutral: #1f5fad; --off: #a9b3af; --off-n: #9db8da;
+  --lamp: #f2b705; --glow: #ffd95e; --accent: #4b1585; --row: #efe8f8; --flow: #ffffff;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 280px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-stage { overflow-x: auto; padding: 4px 8px 0; }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .ct-scrollhint { display: block; } }
+svg.ct-circuit { display: block; width: 100%; min-width: 720px; height: auto; }
+.ct-t { font: 700 22px var(--mono); fill: var(--ink); }
+.ct-tm { font: 500 20px var(--mono); fill: var(--muted); }
+.ct-w { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ct-w-off { stroke: var(--off); } .ct-w-offn { stroke: var(--off-n); }
+.ct-w-live { stroke: var(--live); } .ct-w-n { stroke: var(--neutral); }
+.ct-flow { fill: none; stroke: var(--flow); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 15.9; animation: ct-run .9s linear infinite; }
+@keyframes ct-run { to { stroke-dashoffset: -16; } }
+.ct-paused .ct-flow { animation-play-state: paused; }
+.ct-term { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-blade { stroke-width: 6; stroke-linecap: round; }
+.ct-bulb { stroke: var(--ink); stroke-width: 3; }
+.ct-fil { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.ct-broken { stroke: #b00020; stroke-width: 4; stroke-linecap: round; }
+.ct-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 4px 16px 10px; color: var(--muted); font-size: .9rem; }
+.ct-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.ct-legend b { display: inline-block; width: 22px; height: 6px; border-radius: 3px; }
+.ct-controls { display: flex; flex-wrap: wrap; gap: 8px 10px; padding: 12px 16px; align-items: center; }
+.ct-group { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ct-group > span { font-weight: 600; margin-right: 2px; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 9px 14px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn:focus-visible, .ct-stage:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+tr.ct-sum td { font-weight: 700; border-bottom: 0; }
+.ct-num { font-family: var(--mono); font-weight: 700; }
+.ct-tablewrap { padding: 4px 6px 8px; }
+.ct-bottom { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--border); }
+@media (min-width: 760px) { .ct-bottom { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); } .ct-bottom .ct-controls { border-top: 0; border-right: 1px solid var(--border); align-content: flex-start; } }
+.ct-note { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { .ct-flow { animation: none; } }
+
+.ct-sym { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.ct-box { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 5; }
+.ct-coil { stroke: var(--ink); stroke-width: 3; }
+.ct-tag { font: 600 17px var(--font); fill: var(--muted); }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Trifazni izmenični sistem</h1>
+    <p class="ct-lead">Trije kazalci se vrtijo skupaj, zamaknjeni za 120°. Desno vidiš, kako se iz njih rišejo tri sinusne napetosti.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: Trifazni izmenični sistem">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip"></span>
+      <p id="status" aria-live="polite"></p>
+    </div>
+    <p class="ct-scrollhint">Shema je širša od zaslona – povleci jo levo in desno.</p>
+    <div class="ct-stage" tabindex="0" aria-label="Shema – s puščicami jo premikaš levo in desno">
+      <svg class="ct-circuit" id="svg" viewBox="0 0 900 380" role="img" aria-label="Levo trije vrteči se kazalci faznih napetosti, zamaknjeni za 120 stopinj; desno časovni potek treh sinusnih napetosti s kazalcem trenutnega kota"></svg>
+    </div>
+    <div class="ct-legend"><span><b style="background:#7a4a1e"></b>L1 (rjav, polna črta)</span><span><b style="background:repeating-linear-gradient(90deg,#1b1e28 0 8px,transparent 8px 12px)"></b>L2 (črn, črtkano)</span><span><b style="background:repeating-linear-gradient(90deg,#6b6b6b 0 3px,transparent 3px 7px)"></b>L3 (siv, pikčasto)</span><span><b style="background:var(--accent)"></b>medfazna U12</span></div>
+    <div class="ct-bottom">
+      <div class="ct-controls">
+        <button class="ct-btn" type="button" id="back">− 15°</button>
+        <button class="ct-btn" type="button" id="fwd">+ 15°</button>
+        <button class="ct-btn" type="button" id="u12" aria-pressed="false">Pokaži medfazno U12</button>
+        <button class="ct-btn" type="button" id="pause" aria-pressed="false">Ustavi gibanje toka</button>
+      </div>
+      <div class="ct-tablewrap"><table><thead><tr><th>Napetost</th><th>Trenutna vrednost</th></tr></thead><tbody id="tbody"></tbody></table></div>
+    </div>
+    <p class="ct-note" id="note"></p>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('svg');
+  function P(d, cls) { return '<path class="ct-w ' + cls + '" d="' + d + '"/>'; }
+  function F(d) { return '<path class="ct-flow" d="' + d + '"/>'; }
+  function T(x, y, s, cls, anchor) { return '<text class="' + (cls || 'ct-t') + '" x="' + x + '" y="' + y + '"' + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  function dot(x, y) { return '<circle cx="' + x + '" cy="' + y + '" r="5" fill="var(--ink)"/>'; }
+  function term(x, y) { return '<circle class="ct-term" cx="' + x + '" cy="' + y + '" r="6"/>'; }
+  function lamp(cx, cy, on, label, lx, ly) {
+    var s = '';
+    if (on) s += '<circle cx="' + cx + '" cy="' + cy + '" r="46" fill="var(--glow)" opacity=".45"/>';
+    s += '<circle class="ct-bulb" cx="' + cx + '" cy="' + cy + '" r="26" fill="' + (on ? 'var(--lamp)' : 'var(--panel)') + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx - 13) + '" y1="' + (cy - 13) + '" x2="' + (cx + 13) + '" y2="' + (cy + 13) + '"/>';
+    s += '<line class="ct-fil" x1="' + (cx + 13) + '" y1="' + (cy - 13) + '" x2="' + (cx - 13) + '" y2="' + (cy + 13) + '"/>';
+    if (label) s += T(lx, ly, label);
+    return s;
+  }
+  function source() {
+    return '<circle class="ct-term" cx="40" cy="180" r="24"/>' + T(40, 187, '~', 'ct-t', 'middle') + T(74, 187, '230 V', 'ct-tm');
+  }
+  function pauseBtn() {
+    $('pause').addEventListener('click', function () {
+      var p = !svg.classList.contains('ct-paused');
+      svg.classList.toggle('ct-paused', p);
+      this.setAttribute('aria-pressed', p ? 'true' : 'false');
+      this.textContent = p ? 'Nadaljuj gibanje toka' : 'Ustavi gibanje toka';
+    });
+  }
+
+
+  var UF = 230, UH = UF * Math.SQRT2;            // fazna efektivna 230 V, temenska ≈ 325 V
+  var ang = 90, show12 = false;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var playing = !reduce, last = null;
+  var CX = 170, CY = 190, R = 95;                // kazalci in graf v enakem merilu: 325 V -> 95 px
+  var GX = 360, GW = 510, GY = 190, GS = R / UH;  // zato vodoravne projekcije zadenejo krivulje
+  var COL = ['#7a4a1e', '#1b1e28', '#6b6b6b'], DASH = ['', '10 6', '3 5'];
+  function u(k, a) { return UH * Math.sin((a - 120 * k) * Math.PI / 180); }
+  function curve(fn, col, dash, w) {
+    var d = '';
+    for (var x = 0; x <= 360; x += 4) d += (x ? 'L' : 'M') + (GX + x / 360 * GW).toFixed(1) + ' ' + (GY - fn(x) * GS).toFixed(1);
+    return '<path d="' + d + '" fill="none" stroke="' + col + '" stroke-width="' + (w || 3.5) + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>';
+  }
+  function arrow(x1, y1, x2, y2, col, dash, w) {
+    var a = Math.atan2(y2 - y1, x2 - x1), h = 14;
+    var p1 = [x2 - h * Math.cos(a - 0.4), y2 - h * Math.sin(a - 0.4)], p2 = [x2 - h * Math.cos(a + 0.4), y2 - h * Math.sin(a + 0.4)];
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="' + col + '" stroke-width="' + (w || 4) + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'
+      + '<path d="M' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' L' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1) + ' L' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1) + 'Z" fill="' + col + '"/>';
+  }
+  function fmtV(v) { var r = Math.round(v); return (r > 0 ? '+' : (r < 0 ? '−' : '')) + Math.abs(r) + ' V'; }
+  function render() {
+    var a = ((ang % 360) + 360) % 360, s = '';
+    // kazalci
+    s += '<circle cx="' + CX + '" cy="' + CY + '" r="' + R + '" fill="none" stroke="var(--border)" stroke-width="2"/>';
+    s += '<line x1="' + (CX - R - 12) + '" y1="' + CY + '" x2="' + (CX + R + 12) + '" y2="' + CY + '" stroke="var(--border)" stroke-width="1.5"/>';
+    var tips = [];
+    for (var k = 0; k < 3; k++) {
+      var t = (a - 120 * k) * Math.PI / 180, x = CX + R * Math.cos(t), y = CY - R * Math.sin(t);
+      tips.push([x, y]);
+      s += '<line x1="' + x.toFixed(1) + '" y1="' + y.toFixed(1) + '" x2="' + GX + '" y2="' + y.toFixed(1) + '" stroke="' + COL[k] + '" stroke-width="1.2" stroke-dasharray="2 5" opacity=".6"/>';
+      s += arrow(CX, CY, x, y, COL[k], DASH[k] ? '' : '', 4.5);
+      var lx = CX + (R + 24) * Math.cos(t), ly = CY - (R + 24) * Math.sin(t) + 7;
+      s += T(lx.toFixed(1), ly.toFixed(1), 'U' + (k + 1) + 'N', 'ct-tm', 'middle');
+    }
+    if (show12) s += arrow(tips[1][0], tips[1][1], tips[0][0], tips[0][1], 'var(--accent)', '', 4);
+    s += '<circle cx="' + CX + '" cy="' + CY + '" r="5" fill="var(--ink)"/>';
+    // 120° lok med U1N in U2N
+    var t0 = a * Math.PI / 180, t1 = (a - 120) * Math.PI / 180, rr = 42;
+    s += '<path d="M' + (CX + rr * Math.cos(t0)).toFixed(1) + ' ' + (CY - rr * Math.sin(t0)).toFixed(1) + ' A' + rr + ' ' + rr + ' 0 0 1 ' + (CX + rr * Math.cos(t1)).toFixed(1) + ' ' + (CY - rr * Math.sin(t1)).toFixed(1) + '" fill="none" stroke="var(--muted)" stroke-width="2"/>';
+    var tm = (a - 60) * Math.PI / 180;
+    s += T((CX + 66 * Math.cos(tm)).toFixed(1), (CY - 66 * Math.sin(tm) + 6).toFixed(1), '120°', 'ct-tag', 'middle');
+    // graf
+    s += '<line x1="' + GX + '" y1="' + GY + '" x2="' + (GX + GW) + '" y2="' + GY + '" stroke="var(--muted)" stroke-width="1.5"/>';
+    [0, 90, 180, 270, 360].forEach(function (d) {
+      var x = GX + d / 360 * GW;
+      s += '<line x1="' + x + '" y1="' + (GY - 4) + '" x2="' + x + '" y2="' + (GY + 4) + '" stroke="var(--muted)" stroke-width="1.5"/>';
+      s += T(x, 372, d + '°', 'ct-tag', 'middle');
+    });
+    for (k = 0; k < 3; k++) s += curve(function (x) { return u(k, x); }, COL[k], DASH[k]);
+    if (show12) s += curve(function (x) { return u(0, x) - u(1, x); }, 'var(--accent)', '', 3);
+    var cx = GX + a / 360 * GW;
+    s += '<line x1="' + cx.toFixed(1) + '" y1="20" x2="' + cx.toFixed(1) + '" y2="355" stroke="var(--accent)" stroke-width="2"/>';
+    for (k = 0; k < 3; k++) s += '<circle cx="' + cx.toFixed(1) + '" cy="' + (GY - u(k, a) * GS).toFixed(1) + '" r="6" fill="' + COL[k] + '" stroke="#fff" stroke-width="2"/>';
+    s += T(GX + 4, 34, 'u', 'ct-tm') + T(GX + GW - 4, GY - 10, 'α', 'ct-tm', 'end');
+    svg.innerHTML = s;
+
+    var v = [u(0, a), u(1, a), u(2, a)], sum = v[0] + v[1] + v[2];
+    var rows = '';
+    for (k = 0; k < 3; k++) rows += '<tr><td>u' + (k + 1) + 'N (L' + (k + 1) + ')</td><td class="ct-num">' + fmtV(v[k]) + '</td></tr>';
+    rows += '<tr class="ct-sum"><td>Vsota u1N + u2N + u3N</td><td class="ct-num">' + fmtV(Math.abs(sum) < 0.5 ? 0 : sum) + '</td></tr>';
+    if (show12) rows += '<tr><td>u12 = u1N − u2N</td><td class="ct-num">' + fmtV(v[0] - v[1]) + '</td></tr>';
+    $('tbody').innerHTML = rows;
+    $('chip').textContent = 'α = ' + Math.round(a) + '°';
+    $('status').textContent = show12
+      ? 'Medfazna napetost U12 je razlika napetosti L1 in L2. Njena efektivna vrednost je √3 · 230 V ≈ 400 V.'
+      : 'Fazne napetosti so zamaknjene za 120°. Vsota vseh treh je v vsakem trenutku 0 V.';
+  }
+  function frame(t) {
+    if (!playing) { last = null; return; }
+    if (last !== null) ang += (t - last) / 1000 * 45;   // 45° na sekundo (en obrat v 8 s)
+    last = t; render(); requestAnimationFrame(frame);
+  }
+  function setPlay(p) {
+    playing = p;
+    $('pause').setAttribute('aria-pressed', p ? 'false' : 'true');
+    $('pause').textContent = p ? 'Ustavi vrtenje' : 'Zaženi vrtenje';
+    if (p) requestAnimationFrame(frame);
+  }
+  $('pause').addEventListener('click', function () { setPlay(!playing); });
+  $('back').addEventListener('click', function () { setPlay(false); ang = Math.round((ang - 15) / 15) * 15; render(); });
+  $('fwd').addEventListener('click', function () { setPlay(false); ang = Math.round((ang + 15) / 15) * 15; render(); });
+  $('u12').addEventListener('click', function () { show12 = !show12; this.setAttribute('aria-pressed', show12 ? 'true' : 'false'); this.textContent = show12 ? 'Skrij medfazno U12' : 'Pokaži medfazno U12'; render(); });
+  $('note').textContent = 'Fazna napetost 230 V (temenska ≈ 325 V). V resnici se kazalci zavrtijo 50-krat na sekundo – tu zelo počasi.';
+  render(); setPlay(playing);
+
+})();
+</script>
+</body>
+</html>
