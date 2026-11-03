@@ -42,6 +42,11 @@ Ib4 = 10000 / (S3 * 400); assert f(Ib4) == '14,43'
 assert f(2 * 100 / 230) == '0,87' and f(75 / 230) == '0,33'
 assert f(230 * 1.57 / 3, 1) == '120,4' and f(230 * 2.61 / 3, 1) == '200,1'
 
+# O: upornost žice (vaja)
+Aok = math.pi * 0.3 ** 2 / 4; assert f(Aok, 4) == '0,0707'
+lok = 2.5 * 56 * 0.0707; assert f(lok, 1) == '9,9' and f(9.9 / (56 * 0.0707)) == '2,50'
+assert f(2.5 * 0.0707 / 0.5, 4) == '0,3535'  # napačen račun z ρ = 0,5 Ω·m in neusklajenimi enotami
+
 # ---------- gradniki ----------
 def korak(o, v, rez=False):
     v = f'<span class="pg-rezultat">{v}</span>' if rez else v
@@ -66,6 +71,7 @@ uvod = cilj('Zbirka maturitetnih nalog', [
     'najprej poskusiti sam, nato odpreti rešitev po korakih,',
     'preveriti svoj rezultat in se vrniti na lekcijo, če ti ne gre.'])
 uvod += '\n' + H2.replace('margin-top:0', 'margin-top:22px') + 'Teme</h2>\n' + ul([
+    '<a href="#upornost-naloge">Upornost in dolžina vodnika</a> (1 vaja)',
     '<a href="#padec-napetosti-naloge">Padec napetosti in presek vodnika</a> (4 naloge)',
     '<a href="#dimenzioniranje-naloge">Dimenzioniranje vodnika in varovalke</a> (4 naloge)',
     '<a href="#razsvetljava-naloge">Razsvetljava: tok in moč žarnic</a> (4 naloge)',
@@ -74,6 +80,18 @@ uvod += '\n' + H2.replace('margin-top:0', 'margin-top:22px') + 'Teme</h2>\n' + u
 
 LEK_PN = SITE + 'padec-napetosti/'; LEK_DIM = SITE + 'dimenzioniranje-vodnika/'; LEK_VAR = SITE + 'varovalke-in-odklopniki/'
 PDF = SITE + 'files/'; FORM = PDF + '2024/01/formule-na-maturi.pdf'
+
+o1 = naloga('Vaja: dolžina žice iz upornosti',
+    'Bakrena žica okroglega preseka ima premer d = 0,3 mm in upornost R = 2,5 Ω. Specifična prevodnost bakra je λ = 56 Sm/mm². Kako dolga je žica?',
+    koraki([korak('Podatki', 'R = 2,5 Ω, d = 0,3 mm, λ = 56 Sm/mm²'),
+            korak('Iskano', 'dolžina žice l'),
+            korak('Formula', 'R = l / (λ · A). Iz nje: l = R · λ · A'),
+            korak('Presek', 'A = π · d² / 4 = π · (0,3 mm)² / 4 = 0,0707 mm²'),
+            korak('Vstavim', 'l = 2,5 Ω · 56 Sm/mm² · 0,0707 mm² = 9,9 m'),
+            korak('Rezultat', 'l ≈ 9,9 m', True),
+            korak('Preverim', 'R = 9,9 m / (56 Sm/mm² · 0,0707 mm²) = 2,5 Ω ✓. Tanka žica (0,3 mm) je dolga skoraj 10 m: to je smiselno za upornost nekaj ohmov.')]),
+    napaka('Mešaš enote: specifično upornost v Ωm in presek v mm². Rezultat je potem napačen za faktor milijon. Uporabi λ v Sm/mm² skupaj s presekom v mm² in dolžino v m.'))
+sekcija_O = (H2 + 'Upornost in dolžina vodnika</h2>\n<p>Osnova za vse račune padca napetosti: R = l / (λ · A). Pazi na enote: λ v Sm/mm², A v mm², l v m.</p>\n' + o1)
 
 # ---------- A: padec napetosti ----------
 a1 = naloga('Matura 2023, spomladanski rok, 1. pola, naloga 19: presek vodnika',
@@ -235,8 +253,9 @@ sekcija_C = (H2 + 'Razsvetljava: tok in moč žarnic</h2>\n<p>V nalogah z razsve
 izv = H2 + 'Izvirne table in PDF-ji</h2>\n<p>Spodaj so izvirni posnetki table, naloge iz učbenika in maturitetne tabele, kot so bili doslej.</p>'
 
 out = sec(row(col('4_4', text(uvod))))
-out += sec(sec_row('padec-napetosti-naloge', text(sekcija_A)), '#f5f3ef')
-out += sec(sec_row('dimenzioniranje-naloge', text(sekcija_B)))
-out += sec(sec_row('razsvetljava-naloge', text(sekcija_C)), '#f5f3ef')
-out += sec(sec_row('izvirniki', text(izv)))
+out += sec(sec_row('upornost-naloge', text(sekcija_O)), '#f5f3ef')
+out += sec(sec_row('padec-napetosti-naloge', text(sekcija_A)))
+out += sec(sec_row('dimenzioniranje-naloge', text(sekcija_B)), '#f5f3ef')
+out += sec(sec_row('razsvetljava-naloge', text(sekcija_C)))
+out += sec(sec_row('izvirniki', text(izv)), '#f5f3ef')
 write('zbirka-po-temah', out)
