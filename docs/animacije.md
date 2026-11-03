@@ -15,7 +15,7 @@ Pod vdelavo gumb »Odpri … v celem oknu« (oblika kot drugi gumbi, brez razred
 - V animacijah formule z besedilnimi oznakami; LaTeX le tu ali kot slika (na Arnesu MathJax ni mogoč).
 
 ## Orodja
-Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menjalna in enopolna sta samostojni datoteki. Testi `orodja/test_*.js` (Playwright, poženi iz korena repozitorija). `odcitavanje-instrumenta.html` je samostojna datoteka (skale: črna 0–5 = 50 razdelkov, 0–15 = 75, rdeča 0–10 = 50, 0–30 = 30; brez 1000 V in ohmmetra; test: `node orodja/test_odcitavanje.js`). `izberi-presek.html` je samostojna datoteka; model preverja `orodja/ref_presek.py` (tabele 1–7 na maturi): `python3 orodja/ref_presek.py /tmp/ref.json && node orodja/test_presek.js /tmp/ref.json`.
+Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menjalna in enopolna sta samostojni datoteki. Testi `orodja/test_*.js` (Playwright, poženi iz korena repozitorija). `odcitavanje-instrumenta.html` je samostojna datoteka (skale: črna 0–5 = 50 razdelkov, 0–15 = 75, rdeča 0–10 = 50, 0–30 = 30; brez 1000 V in ohmmetra; test: `node orodja/test_odcitavanje.js`). `priklop-merilnikov.html` je samostojna datoteka (vozliščna analiza: vir 12 V, ampermeter 0,001 Ω, voltmeter 100 kΩ; mostički kot mesta prekinitve; presoja je fizikalna, ne po seznamu povezav; test: `node orodja/test_priklop.js`). `izberi-presek.html` je samostojna datoteka; model preverja `orodja/ref_presek.py` (tabele 1–7 na maturi): `python3 orodja/ref_presek.py /tmp/ref.json && node orodja/test_presek.js /tmp/ref.json`.
 
 ## Vdelane animacije
 | Animacija | iframe višina | stran |
@@ -29,5 +29,6 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | vodne-turbine.html | 620 | Pridobivanje el. energije (82) |
 | hidroelektrarna.html | 730 | Pridobivanje el. energije (82) |
 | izberi-presek.html | 1220 (pri 480 px 1530) | Dimenzioniranje vodnika (1338), razdelek »Izberi presek sam« pred »Preveri se« |
+| priklop-merilnikov.html | 1220 (pri 480 px 1700) | IVEp, stran »Uporaba univerzalnega merilnika« (1367), pred animacijo odčitavanja; test `orodja/test_priklop.js` |
 | odcitavanje-instrumenta.html | 1450 (pri 480 px 2300) | IVEp, stran »Uporaba univerzalnega merilnika« (1367); test `orodja/test_odcitavanje.js` |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |
