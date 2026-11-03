@@ -28,5 +28,5 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | trifazni-sistem.html | 780 | Trifazni izmenični sistem (89) |
 | vodne-turbine.html | 620 | Pridobivanje el. energije (82) |
 | hidroelektrarna.html | 730 | Pridobivanje el. energije (82) |
-| izberi-presek.html | 1220 (pri 480 px 1530) | še ni vdelana; predlog: Dimenzioniranje vodnika (1338) |
+| izberi-presek.html | 1220 (pri 480 px 1530) | Dimenzioniranje vodnika (1338), razdelek »Izberi presek sam« pred »Preveri se« |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |

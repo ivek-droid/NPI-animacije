@@ -10,7 +10,7 @@
 
 ## Naslednje
 - Zbirka po temah objavljena 3. 11. 2026 na strani 185 (generator `orodja/lekcija_zbirka.py`); stari razdelki so pod »Izvirne table in PDF-ji«. Razsvetljava: 5.1 in 5.2 po uradnih navodilih za spom 2020, jesen 2021, spom 2023. Manjkajo navodila za jesen 2020 (P202) in jesen 2022 (P222) ter risbe 5.4. Opomba pri nalogi zimski 2020 5.4 popravljena (prej napačno »2021«; datoteki »zimski 2020/2021« sta ista pola P203).
-- Zbirka nalog (stran 185); animacija »izberi presek« je izdelana (`izberi-presek.html`, 3. 11. 2026), čaka potrditev mesta vdelave. Podmeniji pod 188.
+- Zbirka nalog (stran 185); animacija »izberi presek« je izdelana (`izberi-presek.html`, 3. 11. 2026), vdelana na stran 1338 (3. 11. 2026). Višine iframa ni bilo mogoče izmeriti v izrisu (pane skrit): preveri vizualno. Podmeniji pod 188.
 - Stran 185: opomba k nalogi 5.4 (zimski 2021) objavljena 1. 11. 2026 (okvir »Pozor« pod gumboma za zimski 2021; napaka v faktorju 2 in varovalka 10 A). Slika table ni zamenjana. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
 
 ## Odprto
