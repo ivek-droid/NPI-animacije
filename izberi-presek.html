@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Izberi presek vodnika – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --ok: #0b6b3a; --ok-bg: #e3f3e9; --bad: #a3001b; --bad-bg: #fbe6e9;
+  --neutral: #1f5fad; --accent: #4b1585; --row: #efe8f8; --zone: #dcd0ee;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 280px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 2px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-chip.ct-ok { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
+.ct-chip.ct-bad { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
+.ct-sec { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-sec:last-of-type { border-bottom: 0; }
+.ct-h { margin: 0 0 8px; font-size: 1rem; font-weight: 700; }
+.ct-sum { margin: 0 0 8px; font: 600 .95rem var(--mono); }
+details > summary { list-style: none; display: inline-flex; align-items: center; margin-bottom: 10px; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+.ct-params { display: grid; grid-template-columns: 1fr; gap: 8px 24px; }
+@media (min-width: 760px) { .ct-params { grid-template-columns: 1fr 1fr; } }
+.ct-prm { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-height: 44px; }
+.ct-prm > .ct-lab { flex: 0 0 140px; font-weight: 600; line-height: 1.25; }
+.ct-prm output { font: 700 1rem var(--mono); min-width: 70px; text-align: left; }
+.ct-group { display: inline-flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn:focus-visible, input[type=range]:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+input[type=range] { width: 100px; height: 44px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+.ct-calc { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-family: var(--mono); font-size: .95rem; }
+.ct-calc li { padding: 4px 8px; border-radius: 6px; background: var(--bg); }
+.ct-secs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media (min-width: 640px) { .ct-secs { grid-template-columns: repeat(9, 1fr); } }
+.ct-sbtn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 6px 2px; }
+.ct-sbtn b { font: 700 1rem var(--mono); }
+.ct-sbtn small { font: 600 .8rem/1.2 var(--mono); color: var(--muted); min-height: 1em; }
+.ct-sbtn[aria-pressed="true"] small { color: var(--accent); }
+.ct-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+.ct-stage { overflow-x: auto; padding: 0 8px; }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.ct-scrollhint { display: none; margin: 8px 16px 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .ct-scrollhint { display: block; } }
+svg.ct-fig { display: block; width: 100%; min-width: 720px; height: auto; }
+.ct-t { font: 700 22px var(--mono); fill: var(--ink); }
+.ct-tm { font: 500 20px var(--mono); fill: var(--muted); }
+.ct-tt { font: 700 22px var(--font); fill: var(--ink); }
+.ct-track { fill: var(--bg); stroke: var(--border); stroke-width: 2; }
+.ct-zone { fill: var(--zone); stroke: var(--accent); stroke-width: 2; }
+.ct-mark { stroke-width: 5; stroke-linecap: round; }
+.ct-mark-ok { stroke: var(--ok); fill: var(--ok); }
+.ct-mark-bad { stroke: var(--bad); fill: var(--bad); }
+.ct-mark-ib { stroke: var(--neutral); fill: var(--neutral); }
+.ct-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 4px 16px 10px; color: var(--muted); font-size: .9rem; }
+.ct-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.ct-legend i { display: inline-block; width: 22px; height: 14px; border-radius: 3px; background: var(--zone); border: 2px solid var(--accent); }
+.ct-note { margin: 0; padding: 8px 16px 14px; color: var(--muted); font-size: .9rem; }
+.ct-err { margin: 0; padding: 8px 16px; font-weight: 700; color: var(--bad); }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Izberi presek vodnika</h1>
+    <p class="ct-lead">Poskusi preseke enega za drugim. Vodnik ustreza samo, če izpolni vse tri pogoje. Najmanjši takšen presek je rešitev naloge.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: izbira preseka vodnika po treh pogojih">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip"></span>
+      <p id="status" aria-live="polite"></p>
+    </div>
+
+    <div class="ct-sec">
+      <h2 class="ct-h">1. Podatki naloge</h2>
+      <div class="ct-row" style="margin:0 0 10px" role="group" aria-label="Primeri">
+        <button class="ct-btn" type="button" data-pr="0">Primer: grelnik</button>
+        <button class="ct-btn" type="button" data-pr="1">Primer: dolg vod</button>
+        <button class="ct-btn" type="button" data-pr="2">Primer: motor v skupini</button>
+      </div>
+      <p class="ct-sum" id="povzetek"></p>
+      <details id="det"><summary class="ct-btn">Spremeni podatke naloge</summary>
+      <div class="ct-params">
+        <div class="ct-prm"><span class="ct-lab" id="l-faza">Omrežje</span>
+          <span class="ct-group" role="group" aria-labelledby="l-faza">
+            <button class="ct-btn" type="button" data-faza="1">1~ 230 V</button>
+            <button class="ct-btn" type="button" data-faza="3">3~ 400 V</button></span></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-cos">Faktor moči cos φ</span>
+          <span class="ct-group" role="group" aria-labelledby="l-cos">
+            <button class="ct-btn" type="button" data-cos="1">1</button>
+            <button class="ct-btn" type="button" data-cos="0.9">0,9</button>
+            <button class="ct-btn" type="button" data-cos="0.8">0,8</button></span></div>
+        <div class="ct-prm"><label class="ct-lab" for="rP">Moč bremena P</label>
+          <button class="ct-btn" type="button" id="pM" aria-label="Manjša moč">−</button>
+          <input type="range" id="rP" min="0" max="15" step="1"><button class="ct-btn" type="button" id="pP" aria-label="Večja moč">+</button>
+          <output for="rP" id="oP"></output></div>
+        <div class="ct-prm"><label class="ct-lab" for="rL">Dolžina voda l</label>
+          <button class="ct-btn" type="button" id="lM" aria-label="Krajša dolžina">−</button>
+          <input type="range" id="rL" min="0" max="11" step="1"><button class="ct-btn" type="button" id="lP" aria-label="Daljša dolžina">+</button>
+          <output for="rL" id="oL"></output></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-nac">Način polaganja</span>
+          <span class="ct-group" role="group" aria-labelledby="l-nac" id="gNac"></span></div>
+        <div class="ct-prm"><label class="ct-lab" for="rK">Tokokrogov v skupini</label>
+          <button class="ct-btn" type="button" id="kM" aria-label="Manj tokokrogov">−</button>
+          <input type="range" id="rK" min="1" max="6" step="1"><button class="ct-btn" type="button" id="kP" aria-label="Več tokokrogov">+</button>
+          <output for="rK" id="oK"></output></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-nap">Zaščita</span>
+          <span class="ct-group" role="group" aria-labelledby="l-nap">
+            <button class="ct-btn" type="button" data-nap="gG">varovalka gG</button>
+            <button class="ct-btn" type="button" data-nap="LS">inštal. odklopnik</button></span></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-du">Dopustni Δu (tabela 7)</span>
+          <span class="ct-group" role="group" aria-labelledby="l-du">
+            <button class="ct-btn" type="button" data-du="3">3 %</button>
+            <button class="ct-btn" type="button" data-du="5">5 %</button>
+            <button class="ct-btn" type="button" data-du="8">8 %</button></span></div>
+      </div>
+      </details>
+    </div>
+
+    <div class="ct-sec">
+      <h2 class="ct-h">2. Najprej izračunaj tokove</h2>
+      <ul class="ct-calc" id="calc"></ul>
+    </div>
+
+    <div class="ct-sec">
+      <h2 class="ct-h">3. Izberi presek (mm²)</h2>
+      <p class="ct-hint" style="margin:0 0 8px;color:var(--muted);font-size:.9rem">Pod preseki vidiš rezultate preizkušenih presekov: prvi znak je pogoj 1, drugi pogoj 2, tretji pogoj 3 (✓ ustreza, ✗ ne ustreza).</p>
+      <div class="ct-secs" id="secs" role="group" aria-label="Preseki v mm²"></div>
+      <div class="ct-row">
+        <button class="ct-btn" type="button" id="manj">◀ Manjši presek</button>
+        <button class="ct-btn" type="button" id="vec">Večji presek ▶</button>
+        <button class="ct-btn" type="button" id="play" aria-pressed="false">▶ Predvajaj preizkus</button>
+        <button class="ct-btn" type="button" id="vse" aria-pressed="false">Pokaži vse preseke</button>
+      </div>
+    </div>
+
+    <div class="ct-sec" style="padding-left:0;padding-right:0">
+      <h2 class="ct-h" style="padding:0 16px">4. Preveri tri pogoje</h2>
+      <p class="ct-scrollhint">Slika je širša od zaslona – povleci jo levo in desno.</p>
+      <div class="ct-stage" tabindex="0" aria-label="Slika treh pogojev – s puščicami jo premikaš levo in desno">
+        <svg class="ct-fig" id="svg" viewBox="0 0 900 350" role="img" aria-label="Trije pogoji za izbrani presek"></svg>
+      </div>
+      <div class="ct-legend"><span><i></i>dovoljeno območje: kazalec mora biti v njem</span></div>
+    </div>
+    <p class="ct-err" id="err" hidden></p>
+    <p class="ct-note" id="note">Poenostavitve: delovna moč P, baker (λ = 56 S·m/mm²), brez induktivnosti voda. I<sub>n</sub> je prva višja vrednost iz tabele 4 (gG) ali 5 (odklopnik). Tabeli 1 in 3 sta do 50 mm² in do 6 tokokrogov. Kratkega stika (toplotna preverba) animacija ne obravnava.</p>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* ---- tabele s formul na poklicni maturi ---- */
+  var G = ['A1', 'A2', 'B1', 'B2', 'C', 'D'];
+  var TAB3 = { // presek: [A1, A2, B1, B2, C, D] kot [2 obr., 3 obr.]
+    1.5: [[14.5, 13.5], [14, 13], [17.5, 15.5], [16.5, 15], [19.5, 17.5], [22, 18]],
+    2.5: [[19.5, 18], [18.5, 17.5], [24, 21], [23, 20], [27, 24], [29, 24]],
+    4: [[26, 24], [25, 23], [32, 28], [30, 27], [36, 32], [37, 30]],
+    6: [[34, 31], [32, 29], [41, 36], [38, 34], [46, 41], [46, 38]],
+    10: [[46, 42], [43, 39], [57, 50], [52, 46], [63, 57], [60, 50]],
+    16: [[61, 56], [57, 52], [76, 68], [69, 62], [85, 76], [78, 64]],
+    25: [[80, 73], [75, 68], [101, 89], [90, 80], [112, 96], [99, 82]],
+    35: [[99, 89], [92, 83], [125, 110], [111, 99], [138, 119], [119, 98]],
+    50: [[119, 108], [110, 99], [151, 134], [133, 118], [168, 144], [140, 116]]
+  };
+  var SECS = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50];
+  var PF = { 1: 1, 2: 0.8, 3: 0.7, 4: 0.65, 5: 0.6, 6: 0.55 };
+  var GG = [2, 4, 6, 8, 10, 13, 16, 20, 25, 32, 35, 40, 50, 63, 80, 100, 125, 160, 200];
+  var LS = [6, 8, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+  var LAMBDA = 56;
+  var PS = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7.5, 9, 10, 12, 15, 20];
+  var LSV = [5, 10, 15, 20, 25, 30, 40, 50, 60, 80, 100, 150];
+  var PRIMERI = [
+    { faza: 1, cos: 1, pi: 4, li: 3, nac: 'A2', k: 1, nap: 'gG', du: 5 },
+    { faza: 1, cos: 1, pi: 3, li: 8, nac: 'B2', k: 1, nap: 'gG', du: 3 },
+    { faza: 3, cos: 0.9, pi: 11, li: 5, nac: 'B2', k: 5, nap: 'gG', du: 5 }
+  ];
+
+  /* ---- izračun (čista funkcija, preizkušena proti Pythonu) ---- */
+  function izracun(s) {
+    var U = s.faza === 1 ? 230 : 400, n = s.faza === 1 ? 2 : 3, P = PS[s.pi] * 1000, l = LSV[s.li];
+    var Ib = s.faza === 1 ? P / (U * s.cos) : P / (Math.sqrt(3) * U * s.cos);
+    var lst = s.nap === 'gG' ? GG : LS, In = null, i;
+    for (i = 0; i < lst.length; i++) { if (lst[i] >= Ib) { In = lst[i]; break; } }
+    var k = s.nap === 'LS' ? 1.45 : (In !== null && In <= 4 ? 2.1 : (In !== null && In <= 13 ? 1.9 : 1.6));
+    var pf = PF[s.k], rows = [];
+    SECS.forEach(function (A) {
+      var Iz = TAB3[A][G.indexOf(s.nac)][n === 2 ? 0 : 1], Izp = pf * Iz;
+      var du = (s.faza === 1 ? 200 : 100) * l * P / (LAMBDA * A * U * U);
+      var c1 = In !== null && Ib <= In && In <= Izp + 1e-9;
+      var c2 = In !== null && k * In <= 1.45 * Izp + 1e-9;
+      var c3 = du <= s.du + 1e-9;
+      rows.push({ A: A, Iz: Iz, Izp: Izp, du: du, c1: c1, c2: c2, c3: c3, ok: c1 && c2 && c3 });
+    });
+    var min = null;
+    for (i = 0; i < rows.length; i++) { if (rows[i].ok) { min = i; break; } }
+    return { U: U, n: n, P: P, l: l, Ib: Ib, In: In, k: k, pf: pf, rows: rows, min: min };
+  }
+  window.ctIzracun = function (faza, PkW, cos, l, nac, k, nap, du) {
+    var r = izracun({ faza: faza, cos: cos, pi: PS.indexOf(PkW), li: LSV.indexOf(l), nac: nac, k: k, nap: nap, du: du });
+    return { Ib: r.Ib, In: r.In, min: r.min === null ? null : SECS[r.min] };
+  };
+
+  /* ---- stanje ---- */
+  var S = JSON.parse(JSON.stringify(PRIMERI[0]));
+  var sel = 0, tested = {}, showAll = false, timer = null;
+
+  function f(x, d) { return (d === undefined ? x : x.toFixed(d)).toString().replace('.', ','); }
+  function f2(x) { return Math.abs(x - Math.round(x)) < 1e-9 ? String(Math.round(x)) : f(x, Math.abs(x * 10 - Math.round(x * 10)) < 1e-9 ? 1 : 2); }
+  function el(tag, attrs, txt) {
+    var e = document.createElementNS(NS, tag), k;
+    for (k in attrs) { e.setAttribute(k, attrs[k]); }
+    if (txt !== undefined) { e.textContent = txt; }
+    return e;
+  }
+
+  /* ---- gradnja kontrol ---- */
+  (function () {
+    var g = $('gNac');
+    G.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'ct-btn'; b.setAttribute('data-nac', c); b.textContent = c;
+      g.appendChild(b);
+    });
+    var secs = $('secs');
+    SECS.forEach(function (A, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'ct-btn ct-sbtn'; b.setAttribute('data-i', i);
+      b.innerHTML = '<b>' + f2(A) + '</b><small></small>';
+      secs.appendChild(b);
+    });
+  })();
+
+  /* ---- risanje slike s tremi pogoji ---- */
+  var svg = $('svg');
+  var X0 = 250, W = 560;
+  function vrstica(y, naslov, cond, tracks) {
+    // tracks: {max, zoneFrom, zoneTo, val, ok, valLabel, rangeLabel, unit}
+    var g = el('g', {});
+    g.appendChild(el('text', { class: 'ct-tt', x: 10, y: y }, naslov));
+    g.appendChild(el('text', { class: 'ct-tm', x: 10, y: y + 28 }, cond));
+    var sx = function (v) { return X0 + Math.max(0, Math.min(1, v / tracks.max)) * W; };
+    g.appendChild(el('rect', { class: 'ct-track', x: X0, y: y - 14, width: W, height: 36, rx: 6 }));
+    var zf = sx(tracks.zoneFrom), zt = sx(tracks.zoneTo);
+    g.appendChild(el('rect', { class: 'ct-zone', x: Math.min(zf, zt), y: y - 14, width: Math.max(2, Math.abs(zt - zf)), height: 36, rx: 4 }));
+    var vx = sx(tracks.val), cl = tracks.ok ? 'ct-mark-ok' : 'ct-mark-bad';
+    g.appendChild(el('line', { class: 'ct-mark ' + cl + ' ', x1: vx, x2: vx, y1: y - 22, y2: y + 30 }));
+    g.appendChild(el('polygon', { class: cl + ' ', points: (vx - 9) + ',' + (y - 34) + ' ' + (vx + 9) + ',' + (y - 34) + ' ' + vx + ',' + (y - 20) }));
+    if (tracks.ib !== undefined) {
+      var ix = sx(tracks.ib);
+      g.appendChild(el('line', { class: 'ct-mark ct-mark-ib ', x1: ix, x2: ix, y1: y - 14, y2: y + 22, 'stroke-dasharray': '4 5' }));
+    }
+    g.appendChild(el('text', { class: 'ct-t', x: X0, y: y + 58 }, tracks.valLabel));
+    g.appendChild(el('text', { class: 'ct-t', x: X0 + W, y: y + 58, 'text-anchor': 'end', fill: tracks.ok ? 'var(--ok)' : 'var(--bad)', style: 'fill:' + (tracks.ok ? 'var(--ok)' : 'var(--bad)') }, (tracks.ok ? '✓ ustreza' : '✗ NE ustreza')));
+    return g;
+  }
+  function narisi(r) {
+    while (svg.firstChild) { svg.removeChild(svg.firstChild); }
+    var row = r.rows[sel];
+    if (r.In === null) { svg.appendChild(el('text', { class: 'ct-t', x: 10, y: 60 }, 'Ni naprave z dovolj velikim In.')); return; }
+    var amax = Math.max(1.45 * row.Izp, r.k * r.In, r.In, r.Ib) * 1.08;
+    svg.appendChild(vrstica(50, 'Pogoj 1', 'Ib ≤ In ≤ Iz′', {
+      max: amax, zoneFrom: r.Ib, zoneTo: row.Izp, val: r.In, ok: row.c1,
+      valLabel: 'In = ' + f2(r.In) + ' A    območje ' + f(r.Ib, 1) + ' … ' + f(row.Izp, 1) + ' A'
+    }));
+    svg.appendChild(vrstica(155, 'Pogoj 2', 'k · In ≤ 1,45 · Iz′', {
+      max: amax, zoneFrom: 0, zoneTo: 1.45 * row.Izp, val: r.k * r.In, ok: row.c2,
+      valLabel: f(r.k, r.k === 1.45 ? 2 : 1) + ' · ' + f2(r.In) + ' = ' + f(r.k * r.In, 1) + ' A    meja ' + f(1.45 * row.Izp, 1) + ' A'
+    }));
+    var dmax = Math.max(row.du, S.du) * 1.15;
+    svg.appendChild(vrstica(260, 'Pogoj 3', 'Δu ≤ Δu dop.', {
+      max: dmax, zoneFrom: 0, zoneTo: S.du, val: row.du, ok: row.c3,
+      valLabel: 'Δu = ' + f(row.du, 2) + ' %    meja ' + f2(S.du) + ' %'
+    }));
+    svg.setAttribute('aria-label', 'Presek ' + f2(row.A) + ' mm². Pogoj 1: ' + (row.c1 ? 'ustreza' : 'ne ustreza') +
+      '. Pogoj 2: ' + (row.c2 ? 'ustreza' : 'ne ustreza') + '. Pogoj 3, padec napetosti: ' + (row.c3 ? 'ustreza' : 'ne ustreza') + '.');
+  }
+
+  /* ---- osvežitev vmesnika ---- */
+  function glifi(row) { return (row.c1 ? '✓' : '✗') + (row.c2 ? '✓' : '✗') + (row.c3 ? '✓' : '✗'); }
+  function imena(row) {
+    var n = [];
+    if (!row.c1) { n.push('1'); } if (!row.c2) { n.push('2'); } if (!row.c3) { n.push('3 (padec napetosti)'); }
+    if (n.length === 1) { return 'pogoja ' + n[0]; }
+    return 'pogojev ' + n.slice(0, -1).join(', ') + ' in ' + n[n.length - 1];
+  }
+  function render() {
+    var r = izracun(S), row = r.rows[sel];
+    // gumbi parametrov
+    document.querySelectorAll('[data-faza]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-faza') === S.faza)); });
+    document.querySelectorAll('[data-cos]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-cos') === S.cos)); });
+    document.querySelectorAll('[data-nac]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-nac') === S.nac)); });
+    document.querySelectorAll('[data-nap]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-nap') === S.nap)); });
+    document.querySelectorAll('[data-du]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-du') === S.du)); });
+    document.querySelectorAll('[data-pr]').forEach(function (b) {
+      var p = PRIMERI[+b.getAttribute('data-pr')];
+      b.setAttribute('aria-pressed', String(JSON.stringify(p) === JSON.stringify(S)));
+    });
+    $('rP').value = S.pi; $('rL').value = S.li; $('rK').value = S.k;
+    $('oP').textContent = f2(PS[S.pi]) + ' kW'; $('oL').textContent = LSV[S.li] + ' m'; $('oK').textContent = S.k;
+    $('pM').disabled = S.pi === 0; $('pP').disabled = S.pi === PS.length - 1;
+    $('lM').disabled = S.li === 0; $('lP').disabled = S.li === LSV.length - 1;
+    $('kM').disabled = S.k === 1; $('kP').disabled = S.k === 6;
+    $('povzetek').textContent = (S.faza === 1 ? '1~ 230 V' : '3~ 400 V') + ' · P = ' + f2(PS[S.pi]) + ' kW · cos φ = ' + f2(S.cos) + ' · l = ' + LSV[S.li] + ' m · polaganje ' + S.nac + ' · tokokrogov: ' + S.k + ' · ' + (S.nap === 'gG' ? 'varovalka gG' : 'inštal. odklopnik') + ' · Δu ≤ ' + S.du + ' %';
+    // izračun
+    var c = $('calc'); c.innerHTML = '';
+    var lines = [];
+    lines.push(S.faza === 1
+      ? 'Ib = P / (U · cos φ) = ' + Math.round(r.P) + ' / (230 · ' + f2(S.cos) + ') = ' + f(r.Ib, 2) + ' A'
+      : 'Ib = P / (√3 · U · cos φ) = ' + Math.round(r.P) + ' / (1,73 · 400 · ' + f2(S.cos) + ') = ' + f(r.Ib, 2) + ' A');
+    if (r.In === null) { lines.push('In: ni vrednosti v tabeli ' + (S.nap === 'gG' ? '4' : '5') + ', ki bi bila večja od Ib.'); }
+    else {
+      lines.push('In = ' + f2(r.In) + ' A (prva vrednost ≥ Ib v tabeli ' + (S.nap === 'gG' ? '4' : '5') + ')');
+      lines.push('k = ' + f(r.k, r.k === 1.45 ? 2 : 1) + ' (tabela 2) → I₂ = k · In = ' + f(r.k * r.In, 1) + ' A');
+    }
+    lines.push('pf = ' + f2(r.pf) + ' (tabela 1, ' + S.k + (S.k === 1 ? ' tokokrog' : ' tokokrogi') + '), obremenjenih vodnikov: ' + r.n + ' → Iz′ = pf · Iz');
+    lines.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; c.appendChild(li); });
+    // gumbi presekov
+    document.querySelectorAll('.ct-sbtn').forEach(function (b) {
+      var i = +b.getAttribute('data-i'), rw = r.rows[i], small = b.querySelector('small');
+      b.setAttribute('aria-pressed', String(i === sel));
+      var vid = showAll || tested[i];
+      small.textContent = vid && r.In !== null ? glifi(rw) : '';
+      b.setAttribute('aria-label', 'Presek ' + f2(rw.A) + ' mm²' + (vid && r.In !== null ? ': ' + (rw.ok ? 'ustreza' : 'ne ustreza') : ''));
+    });
+    $('manj').disabled = sel === 0; $('vec').disabled = sel === SECS.length - 1;
+    $('vse').setAttribute('aria-pressed', String(showAll));
+    // stanje
+    var chip = $('chip'), st = $('status');
+    $('err').hidden = true;
+    if (r.In === null) {
+      chip.className = 'ct-chip ct-bad'; chip.textContent = '✗ ni zaščitne naprave';
+      st.textContent = 'Tok Ib je prevelik za izbrano zaščito. Zmanjšaj moč ali povečaj cos φ.';
+    } else {
+      chip.className = 'ct-chip ' + (row.ok ? 'ct-ok' : 'ct-bad');
+      chip.textContent = (row.ok ? '✓ ' : '✗ ') + f2(row.A) + ' mm² ' + (row.ok ? 'USTREZA' : 'NE USTREZA');
+      var t;
+      if (!row.ok) {
+        t = 'Presek ' + f2(row.A) + ' mm² ne ustreza: ne izpolni ' + imena(row) + '. ' + (r.min === null ? '' : 'Poskusi večji presek.');
+        t = t.replace(/\s+$/, '');
+      } else if (r.min === sel) {
+        t = 'Presek ' + f2(row.A) + ' mm² izpolni vse tri pogoje.';
+        t += sel > 0 ? ' Manjši presek (' + f2(SECS[sel - 1]) + ' mm²) ne izpolni ' + imena(r.rows[sel - 1]) + '. To je najmanjši ustrezen presek.' : ' To je najmanjši presek v tabeli.';
+      } else {
+        t = 'Presek ' + f2(row.A) + ' mm² ustreza, vendar ni najmanjši. Poskusi manjši presek.';
+      }
+      if (r.min === null) { t += ' Noben presek do 50 mm² ne ustreza vsem trem pogojem. Zmanjšaj moč ali dolžino.'; }
+      st.textContent = t;
+    }
+    narisi(r);
+  }
+
+  /* ---- dogodki ---- */
+  function reset() { tested = {}; tested[sel] = true; stop(); }
+  function spremeni(fn) { fn(); reset(); render(); }
+  document.querySelectorAll('[data-faza]').forEach(function (b) { b.addEventListener('click', function () { spremeni(function () { S.faza = +b.getAttribute('data-faza'); }); }); });
+  document.querySelectorAll('[data-cos]').forEach(function (b) { b.addEventListener('click', function () { spremeni(function () { S.cos = +b.getAttribute('data-cos'); }); }); });
+  document.querySelectorAll('[data-nac]').forEach(function (b) { b.addEventListener('click', function () { spremeni(function () { S.nac = b.getAttribute('data-nac'); }); }); });
+  document.querySelectorAll('[data-nap]').forEach(function (b) { b.addEventListener('click', function () { spremeni(function () { S.nap = b.getAttribute('data-nap'); }); }); });
+  document.querySelectorAll('[data-du]').forEach(function (b) { b.addEventListener('click', function () { spremeni(function () { S.du = +b.getAttribute('data-du'); }); }); });
+  document.querySelectorAll('[data-pr]').forEach(function (b) { b.addEventListener('click', function () { spremeni(function () { S = JSON.parse(JSON.stringify(PRIMERI[+b.getAttribute('data-pr')])); sel = 0; }); }); });
+  function sl(id, key, minus, plus, max, min) {
+    $(id).addEventListener('input', function () { spremeni(function () { S[key] = +$(id).value; }); });
+    $(minus).addEventListener('click', function () { spremeni(function () { S[key] = Math.max(min, S[key] - 1); }); });
+    $(plus).addEventListener('click', function () { spremeni(function () { S[key] = Math.min(max, S[key] + 1); }); });
+  }
+  sl('rP', 'pi', 'pM', 'pP', PS.length - 1, 0);
+  sl('rL', 'li', 'lM', 'lP', LSV.length - 1, 0);
+  sl('rK', 'k', 'kM', 'kP', 6, 1);
+  document.querySelectorAll('.ct-sbtn').forEach(function (b) {
+    b.addEventListener('click', function () { stop(); sel = +b.getAttribute('data-i'); tested[sel] = true; render(); });
+  });
+  $('manj').addEventListener('click', function () { stop(); if (sel > 0) { sel--; tested[sel] = true; render(); } });
+  $('vec').addEventListener('click', function () { stop(); if (sel < SECS.length - 1) { sel++; tested[sel] = true; render(); } });
+  $('vse').addEventListener('click', function () { showAll = !showAll; render(); });
+
+  /* ---- predvajanje: od najmanjšega preseka do prvega ustreznega ---- */
+  function stop() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    $('play').setAttribute('aria-pressed', 'false');
+    $('play').textContent = '▶ Predvajaj preizkus';
+  }
+  function korak() {
+    var r = izracun(S);
+    if (r.rows[sel].ok || sel >= SECS.length - 1 || r.In === null) { stop(); return; }
+    sel++; tested[sel] = true; render();
+    timer = setTimeout(korak, 2500);
+  }
+  $('play').addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    var r = izracun(S);
+    if (sel > 0 && r.rows[sel].ok) { sel = 0; }       // ponovitev po koncu
+    else if (r.rows[sel].ok === false && sel === SECS.length - 1) { sel = 0; }
+    tested[sel] = true; render();
+    $('play').setAttribute('aria-pressed', 'true');
+    $('play').textContent = '❚❚ Ustavi predvajanje';
+    timer = setTimeout(korak, 2500);
+  });
+
+  tested[0] = true;
+  render();
+})();
+</script>
+</body>
+</html>

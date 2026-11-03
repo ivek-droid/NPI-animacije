@@ -15,7 +15,7 @@ Pod vdelavo gumb »Odpri … v celem oknu« (oblika kot drugi gumbi, brez razred
 - V animacijah formule z besedilnimi oznakami; LaTeX le tu ali kot slika (na Arnesu MathJax ni mogoč).
 
 ## Orodja
-Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menjalna in enopolna sta samostojni datoteki. Testi `orodja/test_*.js` (Playwright, poženi iz korena repozitorija).
+Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menjalna in enopolna sta samostojni datoteki. Testi `orodja/test_*.js` (Playwright, poženi iz korena repozitorija). `izberi-presek.html` je samostojna datoteka; model preverja `orodja/ref_presek.py` (tabele 1–7 na maturi): `python3 orodja/ref_presek.py /tmp/ref.json && node orodja/test_presek.js /tmp/ref.json`.
 
 ## Vdelane animacije
 | Animacija | iframe višina | stran |
@@ -28,4 +28,5 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | trifazni-sistem.html | 780 | Trifazni izmenični sistem (89) |
 | vodne-turbine.html | 620 | Pridobivanje el. energije (82) |
 | hidroelektrarna.html | 730 | Pridobivanje el. energije (82) |
+| izberi-presek.html | 1220 (pri 480 px 1530) | še ni vdelana; predlog: Dimenzioniranje vodnika (1338) |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |

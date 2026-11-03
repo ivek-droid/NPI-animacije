@@ -10,7 +10,7 @@
 
 ## Naslednje
 - Zbirka po temah objavljena 3. 11. 2026 na strani 185 (generator `orodja/lekcija_zbirka.py`, osnutek `slog/osnutki/zbirka-po-temah.txt`); stari razdelki so pod »Izvirne table in PDF-ji«. Manjkajo uradne rešitve točk 5.1, 5.2, 5.4 pri nalogah z razsvetljavo. Datoteki »zimski 2020« in »zimski 2021« sta ista pola (P203); opomba na strani 185 še pravi »2021« (čaka odločitev).
-- Zbirka nalog (stran 185); po želji animacija »izberi presek«. Podmeniji pod 188.
+- Zbirka nalog (stran 185); animacija »izberi presek« je izdelana (`izberi-presek.html`, 3. 11. 2026), čaka potrditev mesta vdelave. Podmeniji pod 188.
 - Stran 185: opomba k nalogi 5.4 (zimski 2021) objavljena 1. 11. 2026 (okvir »Pozor« pod gumboma za zimski 2021; napaka v faktorju 2 in varovalka 10 A). Slika table ni zamenjana. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
 
 ## Odprto
