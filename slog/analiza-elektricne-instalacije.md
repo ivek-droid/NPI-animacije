@@ -15,7 +15,7 @@ Zbirka slik in PDF-jev, brez besedila: Ohmov zakon (animacija), maturitetne nalo
 6. **Dopustni padec napetosti:** učbenik 3 % do najbolj oddaljenega porabnika (+0,5 % do števca), tabela 7 na maturi 3 / 5 / 8 % glede na vrsto in napajanje. Dijak naj uporabi vrednost iz naloge, sicer tabelo 7.
 7. **Specifična prevodnost:** učbenik 57,1·10⁶ S/m (str. 376) in ρ = 0,018 (str. 377), matura 56 S·m/mm². Pri maturi vedno 56.
 8. **Temperaturni faktor f₁:** učbenik ga uporablja (tabela 20.3), formule na maturi nimajo tabele zanj. Če ga naloga ne poda, ga na maturi ni mogoče uporabiti.
-9. **Poprava testa, naloga 3:** po moji kontroli je I = 1,5·56,5·1·230 / (200·20) = 4,87 A, na tabli je prebrano 4,83 A (nejasna pisava, preveri v izvirniku).
+9. **Poprava testa, naloga 3 (popravek 3. 11. 2026):** z λ = 56 Sm/mm², kot piše v nalogi, je I = 1,5·56·1·230 / (200·20) = 4,83 A. Tabla je pravilna. Prejšnja navedba 4,87 A je nastala z napačnim λ = 56,5.
 
 ## Vrzeli glede na formule na maturi
 V učbeniku (pogl. 20) in na strani ni: toplotna preverba kratkega stika (I_k²·t ≤ k²·A²), več porabnikov na enem vodu (Σ P_i·l_i), razsvetljava (E = Φ/A, η), pogoj samodejnega odklopa Z_k·I_a ≤ U₀ z odklopnimi toki B/C/D (tabela 6; učbenik ima B/C/D v pogl. 20.2.3.3 in TN zaščito v pogl. 21). Ali se te teme na maturi res pojavljajo, nisem preveril (izpitne pole niso dosegljive).
