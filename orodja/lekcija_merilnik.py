@@ -100,6 +100,9 @@ out = sec(
   + row(col('1_2', text(kaj) + text(skale)) + col('1_2', img(SLIKA, 'Analogni univerzalni merilnik Iskra MI 7043: zgoraj skale s kazalcem (črni 0–5 in 0–15, rdeči 0–10 in 0–30), pod njimi drsnik ~ / = in vrtljivo stikalo z območji za napetost (levo) in tok (desno).') + cap('Univerzalni merilnik Iskra MI 7043.')), '1_2,1_2')
   + row(col('1_2', text(navodila)) + col('1_2', text(pozor)), '1_2,1_2')
   + row(col('1_2', text(p1)) + col('1_2', text(p2)), '1_2,1_2'))
+out += sec(row(col('4_4', text(H2 + 'Preizkusi sam: priključitev merilnikov</h2>\n<p>Priključi ampermeter in voltmeter v tokokrog. Tok merimo zaporedno: najprej odstrani mostiček, nato vstavi ampermeter na njegovo mesto. Napetost merimo vzporedno s porabnikom. Uporabiš lahko tudi tipko Tab in Enter.</p>\n'
+    + f'[iframe src="{GH}priklop-merilnikov.html?kompakt" width="100%" height="1220" title="Animacija: priključitev voltmetra in ampermetra"]')
+    + f'[et_pb_button button_url="{GH}priklop-merilnikov.html" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button]')), '#f5f3ef')
 out += sec(row(col('4_4', anim('odcitavanje-instrumenta.html', 'odčitavanje univerzalnega instrumenta',
     'Nastavi merilnik, preštej razdelke in izračunaj vrednost. Nato preveri rezultat.', 1450))), '#f5f3ef')
 out += sec(row(col('1_2', text(preveri)) + col('1_2', text(kratko)), '1_2,1_2'))

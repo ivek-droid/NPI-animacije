@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priključitev voltmetra in ampermetra – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --ok: #0b6b3a; --ok-bg: #e3f3e9; --bad: #a3001b; --bad-bg: #fbe6e9;
+  --accent: #4b1585; --row: #efe8f8;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 260px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 2px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-sec { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-sec:last-child { border-bottom: 0; }
+.ct-task { margin: 0 0 10px; font-weight: 700; }
+.ct-prm { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-height: 44px; }
+.ct-prm > .ct-lab { flex: 0 0 110px; font-weight: 600; line-height: 1.25; }
+.ct-group { display: inline-flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn-main { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ct-btn-main:hover { border-color: var(--ink); }
+.ct-btn:focus-visible, .ct-sel:focus-visible, summary:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+.ct-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+details > summary { list-style: none; display: inline-flex; align-items: center; margin-bottom: 8px; }
+details > summary::-webkit-details-marker { display: none; }
+
+.ct-fig { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 12px; }
+@media (min-width: 900px) { .ct-fig { grid-template-columns: 1.05fr 1fr; align-items: start; } }
+.ct-stage svg { display: block; width: 100%; height: auto; max-width: 640px; margin: 0 auto; }
+.ct-cap { margin: 0; padding: 0 16px 10px; color: var(--muted); font-size: .92rem; }
+
+fieldset.ct-step { margin: 0 0 10px; padding: 10px 12px 10px; border: 2px solid var(--border); border-radius: 10px; min-width: 0; background: var(--panel); }
+fieldset.ct-step.ct-done { border-color: var(--ok); background: var(--ok-bg); }
+fieldset.ct-step:disabled { background: var(--bg); }
+fieldset.ct-step:disabled legend { color: var(--muted); }
+fieldset.ct-step legend { font-weight: 700; padding: 0 6px; }
+.ct-lock { display: none; font-weight: 400; color: var(--muted); font-size: .9rem; }
+fieldset.ct-step:disabled .ct-lock { display: inline; }
+.ct-sel { font: 600 1rem var(--font); min-height: 44px; padding: 6px 10px; border: 2px solid var(--border); border-radius: 8px; background: #fff; color: var(--ink); min-width: 150px; }
+.ct-fb { margin: 8px 0 0; font-weight: 600; }
+.ct-fb:empty { display: none; }
+.ct-fb.ct-ok { color: var(--ok); }
+.ct-fb.ct-bad { color: var(--bad); }
+.ct-calc { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-family: var(--mono); font-size: .95rem; }
+.ct-calc li { padding: 4px 8px; border-radius: 6px; background: var(--bg); }
+.ct-list { margin: 0; padding-left: 20px; }
+.ct-note { margin: 0; padding: 8px 16px 14px; color: var(--muted); font-size: .9rem; }
+
+/* SVG */
+.ct-pl { font: 700 20px var(--font); fill: #1b1e28; text-anchor: middle; }
+.ct-rl { font: 700 19px var(--mono); fill: #1b1e28; }
+.ct-ti { font: 700 19px var(--font); fill: #1b1e28; text-anchor: middle; }
+.ct-ro { font: 700 22px var(--mono); fill: #1b1e28; text-anchor: middle; }
+.ct-tt { font: 700 22px var(--font); fill: #fff; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+g.ct-hot { cursor: pointer; }
+g.ct-hot:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+g.ct-hot[aria-disabled="true"] { cursor: not-allowed; opacity: .45; }
+.ct-hit { fill: transparent; }
+.ct-vis { fill: #fff; stroke: #1b1e28; stroke-width: 3; }
+.ct-sel-on .ct-vis { stroke: var(--accent); stroke-width: 6; }
+.ct-target .ct-vis { stroke: var(--accent); stroke-dasharray: 4 3; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Priključitev voltmetra in ampermetra</h1>
+    <p class="ct-lead">Vključi merilnika v tokokrog tako, da pravilno izmerita tok in napetost.</p>
+  </header>
+  <section class="ct-panel" aria-label="Animacija: priključitev voltmetra in ampermetra v tokokrog">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip">Naloga 1</span>
+      <span class="ct-chip" id="chip2">Rešeno: 0</span>
+      <p id="status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="ct-sec">
+      <p class="ct-task" id="task"></p>
+      <details id="det"><summary class="ct-btn">Nastavitve vaje</summary>
+        <div class="ct-prm"><span class="ct-lab" id="l-mode">Način</span>
+          <span class="ct-group" role="group" aria-labelledby="l-mode">
+            <button class="ct-btn" type="button" data-set="mode" data-val="vodeno" aria-pressed="true">Vodeno (korak za korakom)</button>
+            <button class="ct-btn" type="button" data-set="mode" data-val="samo" aria-pressed="false">Samostojno (vse naenkrat)</button></span></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-lev">Stopnja</span>
+          <span class="ct-group" role="group" aria-labelledby="l-lev">
+            <button class="ct-btn" type="button" data-set="level" data-val="1" aria-pressed="true">1: en upor</button>
+            <button class="ct-btn" type="button" data-set="level" data-val="2" aria-pressed="false">2: dva upora zaporedno</button>
+            <button class="ct-btn" type="button" data-set="level" data-val="3" aria-pressed="false">3: vzporedni veji</button></span></div>
+      </details>
+      <div class="ct-row">
+        <button class="ct-btn ct-btn-main" type="button" id="novaBtn">Nova naloga</button>
+        <button class="ct-btn" type="button" id="clrBtn">Počisti žice</button>
+        <button class="ct-btn" type="button" id="pauseBtn" aria-pressed="false">Ustavi tok</button>
+      </div>
+    </div>
+
+    <div class="ct-fig">
+      <div class="ct-stage">
+        <svg id="sv" viewBox="0 0 520 420" role="img" aria-label="Shema tokokroga z virom 12 V, uporom ali upori, mostički in dvema merilnikoma pod shemo. Žice priključuj s seznomi na desni ali s klikom na sponko in nato na točko."></svg>
+      </div>
+      <div id="ctl">
+        <fieldset class="ct-step" id="fsJ"><legend>Krog: mostički</legend>
+          <div class="ct-row" id="jbtns"></div>
+          <p class="ct-cap" style="padding:8px 0 0">Mostiček je kos žice. Ko ga odstraniš, je krog na tem mestu prekinjen.</p>
+        </fieldset>
+        <fieldset class="ct-step" id="fsA"><legend>1. Ampermeter</legend>
+          <div class="ct-prm"><label class="ct-lab" for="sel-Ap">Sponka +</label><select class="ct-sel" id="sel-Ap" data-t="Ap"></select></div>
+          <div class="ct-prm"><label class="ct-lab" for="sel-Am">Sponka −</label><select class="ct-sel" id="sel-Am" data-t="Am"></select></div>
+          <p class="ct-fb" id="fbA"></p>
+        </fieldset>
+        <fieldset class="ct-step" id="fsV"><legend>2. Voltmeter <span class="ct-lock">(najprej popravi ampermeter)</span></legend>
+          <div class="ct-prm"><label class="ct-lab" for="sel-Vp">Sponka +</label><select class="ct-sel" id="sel-Vp" data-t="Vp"></select></div>
+          <div class="ct-prm"><label class="ct-lab" for="sel-Vm">Sponka −</label><select class="ct-sel" id="sel-Vm" data-t="Vm"></select></div>
+          <p class="ct-fb" id="fbV"></p>
+        </fieldset>
+        <div class="ct-row">
+          <button class="ct-btn ct-btn-main" type="button" id="chkBtn">Preveri</button>
+          <button class="ct-btn" type="button" id="resBtn">Pokaži rešitev</button>
+        </div>
+        <ul class="ct-calc" id="calc" hidden style="margin-top:10px"></ul>
+      </div>
+    </div>
+    <p class="ct-cap">Pike kažejo smer toka: od plusa vira skozi porabnike do minusa. Žico priključiš z izbirnimi seznami ali s klikom: najprej sponka merilnika, nato točka v krogu. Mostiček odstraniš s klikom nanj ali z gumbom.</p>
+
+    <div class="ct-sec">
+      <details><summary class="ct-btn">Kaj velja za merilnika</summary>
+        <ul class="ct-list">
+          <li><strong>Ampermeter</strong> ima zelo majhno upornost. Vključiš ga <strong>zaporedno</strong>: krog prekineš in merilnik vstaviš vmes.</li>
+          <li><strong>Voltmeter</strong> ima zelo veliko upornost. Priključiš ga <strong>vzporedno</strong> s porabnikom, krog ostane nespremenjen.</li>
+          <li>Sponko <strong>+</strong> priključi na stran z višjim potencialom (bližje plusu vira). Sicer kazalec zaide v levo.</li>
+        </ul>
+      </details>
+    </div>
+    <p class="ct-note">Poenostavitve: vir je idealen (12 V enosmerno), merilnika imata številčni prikaz namesto kazalca, ampermeter ima upornost 0,001 Ω, voltmeter 100 kΩ. Merilna območja niso upoštevana (glej animacijo odčitavanja).</p>
+  </section>
+</div>
+
+<script>
+(function () {
+'use strict';
+var NS = 'http://www.w3.org/2000/svg';
+var UV = 12, RA = 0.001, RV = 1e5;
+var INK = '#1b1e28', ACC = '#4b1585', RED = '#b3122a';
+function $(s, r) { return (r || document).querySelector(s); }
+function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+function fmt(x, n) { n = n === undefined ? 2 : n; var s = Math.abs(x).toFixed(n).replace('.', ','); return (x < 0 && Math.abs(x) >= Math.pow(10, -n) / 2 ? '−' : '') + s; }
+function el(name, attrs, parent, text) {
+  var e = document.createElementNS(NS, name);
+  for (var k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function poly(g, pts, w) { return el('polyline', { points: pts.map(function (p) { return p.join(','); }).join(' '), fill: 'none', stroke: INK, 'stroke-width': w || 3, 'stroke-linejoin': 'round' }, g); }
+function txt(g, x, y, s, cls, anchor) { var t = el('text', { x: x, y: y, 'class': cls }, g, s); if (anchor) t.setAttribute('style', 'text-anchor:' + anchor); return t; }
+function rbox(g, x, y, w, h) { return el('rect', { x: x, y: y, width: w, height: h, rx: 4, fill: '#fff', stroke: INK, 'stroke-width': 3 }, g); }
+function source(g) {
+  poly(g, [[50, 80], [50, 148]]); poly(g, [[50, 172], [50, 260]]);
+  el('line', { x1: 28, y1: 148, x2: 72, y2: 148, stroke: INK, 'stroke-width': 4 }, g);
+  el('line', { x1: 38, y1: 172, x2: 62, y2: 172, stroke: INK, 'stroke-width': 8 }, g);
+  txt(g, 82, 166, '12 V', 'ct-rl', 'start');
+  txt(g, 20, 142, '+', 'ct-pl'); txt(g, 20, 190, '−', 'ct-pl');
+}
+function rlab(R) { return fmt(R, 0) + ' Ω'; }
+
+/* ---------- stopnje ---------- */
+var LV = {
+  1: {
+    posts: { A: [100, 80, 'p', 't'], B: [300, 80, 'b', 't'], C: [300, 260, 'c', 'b'], D: [100, 260, 'm', 'b'] },
+    jumps: { J1: ['A', 'B'], J2: ['D', 'C'] },
+    vals: function () { return { R: pick([12, 24, 48]) }; },
+    res: function (v) { return [{ id: 'R', a: 'b', b: 'c', R: v.R }]; },
+    tgt: function (v) { var I = UV / v.R; return { I: I, Itot: I, U: UV, Uother: null, Rname: 'R' }; },
+    task: function () { return 'Izmeri tok v tokokrogu in napetost na uporu R.'; },
+    sol: function () { return { J: 'J1', Ap: 'A', Am: 'B', Vp: 'B', Vm: 'C' }; },
+    draw: function (g, v) {
+      source(g);
+      poly(g, [[50, 80], [100, 80]]); poly(g, [[300, 80], [400, 80], [400, 125]]);
+      rbox(g, 380, 125, 40, 90); poly(g, [[400, 215], [400, 260], [300, 260]]); poly(g, [[100, 260], [50, 260]]);
+      txt(g, 372, 176, 'R = ' + rlab(v.R), 'ct-rl', 'end');
+    },
+    paths: ['M50,80 H400 V260 H50 V80'],
+    act: function (S) { return [Math.abs(S.I.R) > 0.05]; }
+  },
+  2: {
+    posts: { A: [100, 80, 'p', 't'], B: [200, 80, 'b', 't'], C: [320, 80, 'c', 't'], D: [320, 260, 'd', 'b'], E: [100, 260, 'm', 'b'] },
+    jumps: { J1: ['A', 'B'], J2: ['E', 'D'] },
+    vals: function () { var p = pick([[8, 16], [4, 8], [6, 18], [24, 24], [12, 36]]); return { R1: p[0], R2: p[1], which: pick(['R1', 'R2']) }; },
+    res: function (v) { return [{ id: 'R1', a: 'b', b: 'c', R: v.R1 }, { id: 'R2', a: 'c', b: 'd', R: v.R2 }]; },
+    tgt: function (v) {
+      var I = UV / (v.R1 + v.R2), U1 = I * v.R1, U2 = I * v.R2;
+      return { I: I, Itot: I, U: v.which === 'R1' ? U1 : U2, Uother: v.which === 'R1' ? U2 : U1, Rname: v.which };
+    },
+    task: function (v) { return 'Izmeri tok v tokokrogu in napetost na uporu ' + v.which + '.'; },
+    sol: function (v) { return v.which === 'R1' ? { J: 'J1', Ap: 'A', Am: 'B', Vp: 'B', Vm: 'C' } : { J: 'J1', Ap: 'A', Am: 'B', Vp: 'C', Vm: 'D' }; },
+    draw: function (g, v) {
+      source(g);
+      poly(g, [[50, 80], [100, 80]]); poly(g, [[200, 80], [225, 80]]); rbox(g, 225, 60, 70, 40); poly(g, [[295, 80], [420, 80], [420, 130]]);
+      rbox(g, 400, 130, 40, 60); poly(g, [[420, 190], [420, 260], [320, 260]]); poly(g, [[100, 260], [50, 260]]);
+      txt(g, 260, 132, 'R1 = ' + rlab(v.R1), 'ct-rl', 'middle');
+      txt(g, 392, 166, 'R2 = ' + rlab(v.R2), 'ct-rl', 'end');
+    },
+    paths: ['M50,80 H420 V260 H50 V80'],
+    act: function (S) { return [Math.abs(S.I.R1) > 0.05]; }
+  },
+  3: {
+    posts: { P: [100, 80, 'p', 't'], A: [200, 80, 'r', 't'], H: [400, 80, 'r', 't'], B: [400, 150, 'b', 'r'], Q: [200, 260, 'm', 'b'], E: [400, 260, 'm', 'b'] },
+    jumps: { J1: ['P', 'A'], J2: ['H', 'B'] },
+    vals: function () { return { R1: pick([6, 12, 24, 48]), R2: pick([6, 12, 24, 48]) }; },
+    res: function (v) { return [{ id: 'R1', a: 'r', b: 'm', R: v.R1 }, { id: 'R2', a: 'b', b: 'm', R: v.R2 }]; },
+    tgt: function (v) { return { I: UV / v.R2, Itot: UV / v.R1 + UV / v.R2, U: UV, Uother: null, Rname: 'R2' }; },
+    task: function () { return 'Izmeri tok skozi upor R2 in napetost na uporu R2.'; },
+    sol: function () { return { J: 'J2', Ap: 'H', Am: 'B', Vp: 'B', Vm: 'E' }; },
+    draw: function (g, v) {
+      source(g);
+      poly(g, [[50, 80], [100, 80]]); poly(g, [[200, 80], [400, 80]]);
+      poly(g, [[300, 80], [300, 130]]); rbox(g, 280, 130, 40, 70); poly(g, [[300, 200], [300, 260]]);
+      poly(g, [[400, 150], [400, 175]]); rbox(g, 380, 175, 40, 60); poly(g, [[400, 235], [400, 260]]);
+      poly(g, [[50, 260], [400, 260]]);
+      txt(g, 272, 170, 'R1 = ' + rlab(v.R1), 'ct-rl', 'end');
+      txt(g, 430, 200, 'R2 =', 'ct-rl', 'start'); txt(g, 430, 224, rlab(v.R2), 'ct-rl', 'start');
+    },
+    paths: ['M50,80 H300 V260 H50 V80', 'M50,80 H400 V260 H50 V80'],
+    act: function (S) { return [Math.abs(S.I.R1) > 0.05, Math.abs(S.I.R2) > 0.05]; }
+  }
+};
+var INST = { Ap: [80, 322], Am: [200, 322], Vp: [320, 322], Vm: [440, 322] };
+var TNAME = { Ap: 'ampermeter, sponka +', Am: 'ampermeter, sponka −', Vp: 'voltmeter, sponka +', Vm: 'voltmeter, sponka −' };
+
+/* ---------- stanje ---------- */
+var st = { level: 1, mode: 'vodeno', phase: 0, n: 1, solved: 0, v: null, T: null, J: {}, w: { Ap: null, Am: null, Vp: null, Vm: null },
+  sel: null, done: false, shown: false, paused: false, S: null, nodes: {}, g: {}, dots: [] };
+var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var svg = $('#sv');
+function say(s) { $('#status').textContent = s; }
+function L() { return LV[st.level]; }
+
+/* ---------- električni model (vozliščna analiza) ---------- */
+function solveNet() {
+  var lv = L(), par = {};
+  function f(x) { while (par[x] !== undefined && par[x] !== x) x = par[x]; return x; }
+  function un(a, b) { a = f(a); b = f(b); if (a !== b) par[a] = b; }
+  function nodeOf(p) { return lv.posts[p][2]; }
+  Object.keys(lv.jumps).forEach(function (j) { if (st.J[j]) un(nodeOf(lv.jumps[j][0]), nodeOf(lv.jumps[j][1])); });
+  var els = lv.res(st.v).map(function (r) { return { id: r.id, a: r.a, b: r.b, R: r.R }; });
+  var aOn = st.w.Ap && st.w.Am, vOn = st.w.Vp && st.w.Vm;
+  if (aOn) els.push({ id: 'A', a: nodeOf(st.w.Ap), b: nodeOf(st.w.Am), R: RA });
+  if (vOn) els.push({ id: 'V', a: nodeOf(st.w.Vp), b: nodeOf(st.w.Vm), R: RV });
+  var gnd = f('m'), src = f('p'), names = {}, idx = {}, n = 0;
+  Object.keys(lv.posts).forEach(function (p) { names[f(nodeOf(p))] = 1; });
+  els.forEach(function (e) { names[f(e.a)] = 1; names[f(e.b)] = 1; });
+  Object.keys(names).forEach(function (k) { if (k !== gnd && k !== src) idx[k] = n++; });
+  var G = [], rhs = [], i, j;
+  for (i = 0; i < n; i++) { G.push(new Array(n).fill(0)); G[i][i] = 1e-9; rhs.push(0); }
+  els.forEach(function (e) {
+    var x = f(e.a), y = f(e.b); if (x === y) return;
+    var g = 1 / e.R;
+    [[x, y], [y, x]].forEach(function (pr) {
+      var u = pr[0], w = pr[1];
+      if (idx[u] === undefined) return;
+      G[idx[u]][idx[u]] += g;
+      if (idx[w] !== undefined) G[idx[u]][idx[w]] -= g; else if (w === src) rhs[idx[u]] += g * UV;
+    });
+  });
+  var A = G.map(function (r, k) { return r.concat([rhs[k]]); }), k, m, t;
+  for (i = 0; i < n; i++) {
+    m = i; for (k = i + 1; k < n; k++) if (Math.abs(A[k][i]) > Math.abs(A[m][i])) m = k;
+    t = A[i]; A[i] = A[m]; A[m] = t;
+    for (k = i + 1; k < n; k++) { var q = A[k][i] / A[i][i]; for (j = i; j <= n; j++) A[k][j] -= q * A[i][j]; }
+  }
+  var X = new Array(n).fill(0);
+  for (i = n - 1; i >= 0; i--) { var s = A[i][n]; for (j = i + 1; j < n; j++) s -= A[i][j] * X[j]; X[i] = s / A[i][i]; }
+  function V(name) { var r = f(name); return r === gnd ? 0 : r === src ? UV : X[idx[r]]; }
+  var S = { I: {}, V: V, f: f, Isrc: 0, Ia: 0, Uv: 0, Ivm: 0, aOn: !!aOn, vOn: !!vOn, nA: aOn ? f(nodeOf(st.w.Ap)) === f(nodeOf(st.w.Am)) : false, nV: vOn ? f(nodeOf(st.w.Vp)) === f(nodeOf(st.w.Vm)) : false };
+  els.forEach(function (e) {
+    var x = f(e.a), y = f(e.b), c = x === y ? 0 : (V(e.a) - V(e.b)) / e.R;
+    S.I[e.id] = c;
+    if (x !== y) { if (x === src) S.Isrc += c; if (y === src) S.Isrc -= c; }
+  });
+  if (aOn) S.Ia = S.I.A;
+  if (vOn) { S.Uv = V(nodeOf(st.w.Vp)) - V(nodeOf(st.w.Vm)); S.Ivm = S.I.V; }
+  return S;
+}
+
+/* ---------- presoja ---------- */
+function tol(x) { return Math.max(0.02 * Math.abs(x), 0.01); }
+function jumperBetween(p, q) {
+  var lv = L(), r = null;
+  Object.keys(lv.jumps).forEach(function (j) { var a = lv.jumps[j]; if ((a[0] === p && a[1] === q) || (a[0] === q && a[1] === p)) r = j; });
+  return r;
+}
+function judge(S) {
+  var T = st.T, w = st.w, out = { amm: { ok: false, msg: '' }, vol: { ok: false, msg: '' } };
+  var short = S.aOn && Math.abs(S.Ia) > 10;
+  var vSeries = S.vOn && S.Isrc > 1e-6 && Math.abs(S.Ivm) > 0.9 * S.Isrc && !S.nV;
+  var Rn = T.Rname;
+  // ampermeter
+  var a = out.amm;
+  if (!S.aOn) a.msg = 'Ampermeter še ni priključen. Poveži obe sponki (+ in −) s točkama v krogu.';
+  else if (short) a.msg = 'Kratek stik! Ampermeter ima zelo majhno upornost, zato vzporedno s porabnikom ali virom odvzame skoraj ves tok (tu več kot 10 A). V resnici bi pregorela varovalka ali instrument. Ampermeter vključi zaporedno: odstrani mostiček in merilnik vstavi na njegovo mesto.';
+  else if (S.nA) {
+    var jb = jumperBetween(w.Ap, w.Am);
+    a.msg = jb && st.J[jb] ? 'Ampermeter je vzporedno z mostičkom ' + jb + ', zato gre ves tok po mostičku in ampermeter kaže 0. Odstrani mostiček, da gre tok skozi ampermeter.'
+      : 'Obe sponki ampermetra sta na točkah z isto napetostjo, zato tok ne gre skozenj. Izberi točki na obeh straneh prekinjenega mesta.';
+  }
+  else if (vSeries) a.msg = 'Tok je skoraj 0, ker je v krogu zaporedno vključen voltmeter. Najprej popravi voltmeter.';
+  else if (S.Isrc < 1e-6) a.msg = 'Krog je prekinjen, zato tok ne teče. Mostiček si odstranil, ampermetra pa nisi vključil na njegovo mesto.';
+  else if (S.Ia < -0.005) a.msg = 'Kazalec zaide v levo: sponki sta zamenjani. Sponko + priključi na stran, od koder v ampermeter priteka tok (bližje plusu vira).';
+  else if (Math.abs(S.Ia - T.I) <= tol(T.I)) a.ok = true, a.msg = 'Pravilno. Ampermeter je zaporedno v krogu in kaže ' + fmt(S.Ia) + ' A.';
+  else if (Math.abs(S.Ia - T.Itot) <= tol(T.Itot) && T.Itot !== T.I) a.msg = 'Ampermeter kaže ' + fmt(S.Ia) + ' A. To je skupni tok vira. Iščemo tok skozi R2: ampermeter vključi v vejo z R2 (mostiček J2).';
+  else a.msg = 'Ampermeter kaže ' + fmt(S.Ia) + ' A. To ni iskani tok. Ampermeter mora biti zaporedno v isti veji kot ' + (st.level === 3 ? 'R2.' : 'porabnika, ne vzporedno z njim.');
+  // voltmeter
+  var v = out.vol;
+  if (!S.vOn) v.msg = 'Voltmeter še ni priključen. Poveži obe sponki (+ in −) s točkama v krogu.';
+  else if (short) v.msg = 'V krogu je kratek stik, zato voltmetra ne moreš pravilno brati. Najprej popravi ampermeter.';
+  else if (S.nV) v.msg = 'Obe sponki voltmetra sta na točkah z isto napetostjo (povezani z žico ali mostičkom), zato kaže 0 V. Voltmeter priključi na dve točki, med katerima je porabnik ' + Rn + '.';
+  else if (vSeries) v.msg = 'Voltmeter je zaporedno v krogu: tok skoraj ne teče, voltmeter pa kaže skoraj napetost vira. Ima zelo veliko upornost, zato ga priključi vzporedno s porabnikom ' + Rn + ', brez prekinitve kroga.';
+  else if (S.Uv < -0.005) v.msg = 'Kazalec zaide v levo: sponki sta zamenjani. Sponko + priključi na točko z višjim potencialom (bližje plusu vira).';
+  else if (Math.abs(S.Uv - T.U) <= tol(T.U)) v.ok = true, v.msg = 'Pravilno. Voltmeter je vzporedno z ' + Rn + ' in kaže ' + fmt(S.Uv) + ' V.';
+  else if (T.Uother !== null && Math.abs(S.Uv - T.Uother) <= tol(T.Uother)) v.msg = 'Voltmeter kaže ' + fmt(S.Uv) + ' V. To je napetost na drugem uporu. Sponki priključi na obe strani upora ' + Rn + '.';
+  else if (Math.abs(S.Uv - UV) <= tol(UV)) v.msg = 'Voltmeter kaže ' + fmt(S.Uv) + ' V. To je napetost vira. Sponki priključi na obe strani upora ' + Rn + '.';
+  else v.msg = 'Voltmeter kaže ' + fmt(S.Uv) + ' V. To ni napetost na ' + Rn + '. Sponki priključi na obe strani tega upora.';
+  return out;
+}
+
+/* ---------- risanje ---------- */
+var gC, gD, gJ, gW, gP, gI, readA, readV, boxA, boxV, termEls = {}, postEls = {}, jEls = {};
+function hot(parent, label, fn) {
+  var g = el('g', { 'class': 'ct-hot', tabindex: 0, role: 'button', 'aria-label': label }, parent);
+  g.addEventListener('click', fn);
+  g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+  return g;
+}
+function drawAll() {
+  var lv = L();
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  gC = el('g', {}, svg); gD = el('g', {}, svg); gJ = el('g', {}, svg); gW = el('g', {}, svg); gP = el('g', {}, svg); gI = el('g', {}, svg);
+  lv.draw(gC, st.v);
+  // pike (poti)
+  st.dots = lv.paths.map(function (d) {
+    var p = el('path', { d: d, fill: 'none', stroke: 'none' }, gD), len = p.getTotalLength(), n = Math.floor(len / 38), c = [];
+    for (var i = 0; i < n; i++) c.push(el('circle', { r: 5.5, fill: ACC, stroke: '#fff', 'stroke-width': 1.5 }, gD));
+    return { p: p, len: len, c: c, on: false };
+  });
+  // mostički
+  jEls = {};
+  Object.keys(lv.jumps).forEach(function (j) {
+    var a = lv.posts[lv.jumps[j][0]], b = lv.posts[lv.jumps[j][1]], mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+    var g = hot(gJ, 'Mostiček ' + j, function () { toggleJ(j); });
+    el('circle', { cx: mx, cy: my, r: 22, 'class': 'ct-hit' }, g);
+    var thick = el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: INK, 'stroke-width': 8, 'stroke-linecap': 'round' }, g);
+    var dash = el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: '#8a8f9c', 'stroke-width': 2, 'stroke-dasharray': '5 6' }, g);
+    var h = el('rect', { x: mx - 9, y: my - 9, width: 18, height: 18, rx: 3, fill: '#fff', stroke: INK, 'stroke-width': 3 }, g);
+    var horiz = a[1] === b[1];
+    var lab = el('text', { x: horiz ? mx : mx + 16, y: horiz ? (a[3] === 't' ? my - 20 : my + 34) : my + 6, 'class': 'ct-pl' }, g, j);
+    if (!horiz) lab.setAttribute('style', 'text-anchor:start');
+    jEls[j] = { g: g, thick: thick, dash: dash, h: h };
+  });
+  // točke
+  postEls = {};
+  Object.keys(lv.posts).forEach(function (p) {
+    var q = lv.posts[p], g = hot(gP, 'Točka ' + p, function () { clickPost(p); });
+    el('circle', { cx: q[0], cy: q[1], r: 22, 'class': 'ct-hit' }, g);
+    el('circle', { cx: q[0], cy: q[1], r: 9, 'class': 'ct-vis' }, g);
+    var side = q[3];
+    el('text', { x: side === 'r' ? q[0] + 22 : q[0], y: side === 't' ? q[1] - 20 : side === 'b' ? q[1] + 36 : q[1] + 6, 'class': 'ct-pl', style: side === 'r' ? 'text-anchor:start' : '' }, g, p);
+    postEls[p] = g;
+  });
+  // merilnika
+  [['A', 30, 'Ampermeter'], ['V', 270, 'Voltmeter']].forEach(function (m) {
+    var b = el('rect', { x: m[1], y: 322, width: 220, height: 88, rx: 10, fill: '#fff', stroke: INK, 'stroke-width': 3 }, gI);
+    el('text', { x: m[1] + 110, y: 360, 'class': 'ct-ti' }, gI, m[2]);
+    var r = el('text', { x: m[1] + 110, y: 394, 'class': 'ct-ro' }, gI, '—');
+    if (m[0] === 'A') { boxA = b; readA = r; } else { boxV = b; readV = r; }
+  });
+  termEls = {};
+  Object.keys(INST).forEach(function (t) {
+    var pos = INST[t], plus = t.charAt(1) === 'p', g = hot(gI, 'Sponka: ' + TNAME[t], function () { clickTerm(t); });
+    el('circle', { cx: pos[0], cy: pos[1], r: 24, 'class': 'ct-hit' }, g);
+    el('circle', { cx: pos[0], cy: pos[1], r: 15, 'class': 'ct-vis', fill: plus ? RED : INK, style: 'fill:' + (plus ? RED : INK) }, g);
+    el('text', { x: pos[0], y: pos[1] + 1, 'class': 'ct-tt' }, g, plus ? '+' : '−');
+    termEls[t] = g;
+  });
+}
+function drawWires() {
+  while (gW.firstChild) gW.removeChild(gW.firstChild);
+  var lv = L();
+  Object.keys(st.w).forEach(function (t) {
+    var p = st.w[t]; if (!p) return;
+    var a = INST[t], b = lv.posts[p], k = (a[1] - b[1]) * 0.5;
+    el('path', { d: 'M' + a[0] + ',' + a[1] + ' C' + a[0] + ',' + (a[1] - k) + ' ' + b[0] + ',' + (b[1] + k) + ' ' + b[0] + ',' + b[1], fill: 'none',
+      stroke: t.charAt(1) === 'p' ? RED : INK, 'stroke-width': 3.5, 'stroke-linecap': 'round', 'stroke-dasharray': t.charAt(1) === 'p' ? '' : '9 4' }, gW);
+  });
+}
+
+/* ---------- obnovitev ---------- */
+function setupSelects() {
+  var lv = L();
+  document.querySelectorAll('.ct-sel').forEach(function (s) {
+    s.innerHTML = '';
+    var o = document.createElement('option'); o.value = ''; o.textContent = '— ni priključena —'; s.appendChild(o);
+    Object.keys(lv.posts).forEach(function (p) { var q = document.createElement('option'); q.value = p; q.textContent = 'točka ' + p; s.appendChild(q); });
+  });
+  var jb = $('#jbtns'); jb.innerHTML = '';
+  Object.keys(lv.jumps).forEach(function (j) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'ct-btn'; b.id = 'jb-' + j; b.dataset.j = j;
+    b.addEventListener('click', function () { toggleJ(j); });
+    jb.appendChild(b);
+  });
+}
+function refresh() {
+  var lv = L(), S = st.S = solveNet();
+  st.done = false;
+  drawWires();
+  Object.keys(lv.jumps).forEach(function (j) {
+    var on = st.J[j], e = jEls[j], b = $('#jb-' + j);
+    e.thick.style.display = on ? '' : 'none'; e.dash.style.display = on ? 'none' : '';
+    e.g.setAttribute('aria-label', 'Mostiček ' + j + ': ' + (on ? 'vstavljen' : 'odstranjen') + '. Pritisni za preklop.');
+    b.textContent = 'Mostiček ' + j + ': ' + (on ? 'vstavljen' : 'odstranjen'); b.setAttribute('aria-pressed', on ? 'false' : 'true');
+    b.setAttribute('aria-label', 'Mostiček ' + j + ' je ' + (on ? 'vstavljen' : 'odstranjen') + '. Pritisni za preklop.');
+  });
+  Object.keys(st.w).forEach(function (t) {
+    $('#sel-' + t).value = st.w[t] || '';
+    termEls[t].classList.toggle('ct-sel-on', st.sel === t);
+    var lockV = st.phase === 0 && t.charAt(0) === 'V';
+    termEls[t].setAttribute('aria-disabled', lockV ? 'true' : 'false');
+    termEls[t].setAttribute('aria-label', 'Sponka: ' + TNAME[t] + ', ' + (st.w[t] ? 'priključena na točko ' + st.w[t] : 'ni priključena') + (st.sel === t ? ', izbrana' : ''));
+  });
+  Object.keys(postEls).forEach(function (p) { postEls[p].classList.toggle('ct-target', !!st.sel); });
+  $('#fsV').disabled = st.phase === 0;
+  $('#sel-Vp').disabled = $('#sel-Vm').disabled = st.phase === 0;
+  $('#fsA').classList.remove('ct-done'); $('#fsV').classList.remove('ct-done');
+  // prikazi
+  var over = S.aOn && Math.abs(S.Ia) > 10;
+  readA.textContent = !S.aOn ? '—' : over ? 'PREOBREMENJEN' : fmt(S.Ia) + ' A';
+  readA.setAttribute('style', over ? 'font-size:17px;fill:' + RED : '');
+  boxA.setAttribute('stroke', over ? RED : INK); boxA.setAttribute('stroke-width', over ? 6 : 3);
+  readV.textContent = !S.vOn ? '—' : fmt(S.Uv) + ' V';
+  // pike
+  var act = lv.act(S);
+  st.dots.forEach(function (d, i) { d.on = !!act[i] && !over; d.c.forEach(function (c) { c.style.display = d.on ? '' : 'none'; }); });
+  placeDots(0);
+  $('#chkBtn').textContent = st.mode === 'vodeno' ? (st.phase === 0 ? 'Preveri ampermeter' : 'Preveri voltmeter') : 'Preveri';
+  $('#chip').textContent = 'Naloga ' + st.n; $('#chip2').textContent = 'Rešeno: ' + st.solved;
+}
+var off = 0;
+function placeDots(o) {
+  st.dots.forEach(function (d) {
+    if (!d.on) return;
+    d.c.forEach(function (c, i) { var pt = d.p.getPointAtLength((i * 38 + o) % d.len); c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); });
+  });
+}
+var last = 0;
+function tick(ts) {
+  if (!st.paused && !RM) { if (last) off += (ts - last) * 0.05; placeDots(off); }
+  last = ts; requestAnimationFrame(tick);
+}
+
+/* ---------- dejanja ---------- */
+function toggleJ(j) { st.J[j] = !st.J[j]; st.shown = false; clearFb(); refresh(); say('Mostiček ' + j + (st.J[j] ? ' vstavljen.' : ' odstranjen.')); }
+function setWire(t, p) { st.w[t] = p || null; st.sel = null; st.shown = false; clearFb(); refresh(); }
+function clickTerm(t) {
+  if (st.phase === 0 && t.charAt(0) === 'V') { say('Najprej priključi in preveri ampermeter.'); return; }
+  st.sel = st.sel === t ? null : t; refresh();
+  say(st.sel ? 'Izbrana je sponka: ' + TNAME[t] + '. Zdaj izberi točko v krogu.' : 'Izbira preklicana.');
+}
+function clickPost(p) {
+  if (!st.sel) { say('Najprej izberi sponko merilnika.'); return; }
+  var t = st.sel; setWire(t, p); say('Sponka ' + TNAME[t] + ' je priključena na točko ' + p + '.');
+}
+function clearFb() { ['fbA', 'fbV'].forEach(function (id) { var e = $('#' + id); e.textContent = ''; e.className = 'ct-fb'; }); $('#calc').hidden = true; }
+function showFb(id, o) { var e = $('#' + id); e.textContent = (o.ok ? '✔ ' : '✘ ') + o.msg; e.className = 'ct-fb ' + (o.ok ? 'ct-ok' : 'ct-bad'); $('#' + (id === 'fbA' ? 'fsA' : 'fsV')).classList.toggle('ct-done', o.ok); }
+function calcLines() {
+  var T = st.T, v = st.v, c = [];
+  if (st.level === 1) { c.push('I = U / R = ' + fmt(UV, 0) + ' V / ' + fmt(v.R, 0) + ' Ω = ' + fmt(T.I) + ' A'); c.push('Napetost na R je enaka napetosti vira: ' + fmt(T.U) + ' V'); }
+  else if (st.level === 2) {
+    c.push('I = U / (R1 + R2) = ' + fmt(UV, 0) + ' V / ' + fmt(v.R1 + v.R2, 0) + ' Ω = ' + fmt(T.I) + ' A');
+    c.push('U' + v.which.charAt(1) + ' = I · ' + v.which + ' = ' + fmt(T.I) + ' A · ' + fmt(v[v.which], 0) + ' Ω = ' + fmt(T.U) + ' V');
+    c.push('Preverim: U1 + U2 = ' + fmt(T.U + T.Uother) + ' V = napetost vira');
+  } else {
+    c.push('I2 = U / R2 = ' + fmt(UV, 0) + ' V / ' + fmt(v.R2, 0) + ' Ω = ' + fmt(T.I) + ' A');
+    c.push('Vzporedni veji imata isto napetost: U2 = ' + fmt(T.U) + ' V');
+    c.push('Skupni tok vira: I = I1 + I2 = ' + fmt(UV / v.R1) + ' A + ' + fmt(T.I) + ' A = ' + fmt(T.Itot) + ' A');
+  }
+  var ul = $('#calc'); ul.innerHTML = ''; c.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; ul.appendChild(li); }); ul.hidden = false;
+}
+function check() {
+  var S = st.S = solveNet(), r = judge(S);
+  if (st.mode === 'vodeno' && st.phase === 0) {
+    showFb('fbA', r.amm);
+    if (r.amm.ok) { st.phase = 1; refresh(); $('#fsA').classList.add('ct-done'); say('Ampermeter je pravilno vključen. Zdaj priključi voltmeter.'); }
+    else say('Ampermeter ni pravilno vključen. Preberi napotek.');
+    return;
+  }
+  showFb('fbA', r.amm); showFb('fbV', r.vol);
+  if (r.amm.ok && r.vol.ok) {
+    if (!st.done && !st.shown) { st.solved++; $('#chip2').textContent = 'Rešeno: ' + st.solved; }
+    st.done = true; calcLines(); say('Naloga je rešena. Klikni Nova naloga za naslednjo.');
+  } else say(r.amm.ok ? 'Ampermeter je v redu, voltmeter ni.' : 'Popravi vezavo po napotkih pod seznami.');
+}
+function applySol() {
+  var s = L().sol(st.v);
+  Object.keys(L().jumps).forEach(function (j) { st.J[j] = j !== s.J; });
+  st.w = { Ap: s.Ap, Am: s.Am, Vp: s.Vp, Vm: s.Vm }; st.sel = null; st.phase = 1;
+}
+function newTask(keepN) {
+  var lv = L();
+  st.v = lv.vals(); st.T = lv.tgt(st.v);
+  st.J = {}; Object.keys(lv.jumps).forEach(function (j) { st.J[j] = true; });
+  st.w = { Ap: null, Am: null, Vp: null, Vm: null }; st.sel = null; st.shown = false; st.done = false;
+  st.phase = st.mode === 'vodeno' ? 0 : 1;
+  if (!keepN) st.n++;
+  $('#task').textContent = lv.task(st.v);
+  drawAll(); setupSelects(); clearFb(); refresh();
+  say('Nova naloga. ' + lv.task(st.v));
+}
+
+/* ---------- vmesnik ---------- */
+document.querySelectorAll('.ct-sel').forEach(function (s) { s.addEventListener('change', function () { setWire(s.dataset.t, s.value); say('Sponka ' + TNAME[s.dataset.t] + (s.value ? ' je priključena na točko ' + s.value + '.' : ' ni priključena.')); }); });
+document.querySelectorAll('[data-set]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var k = b.dataset.set, v = b.dataset.val;
+    document.querySelectorAll('[data-set="' + k + '"]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    if (k === 'mode') { st.mode = v; st.phase = v === 'vodeno' ? 0 : 1; clearFb(); refresh(); say(v === 'vodeno' ? 'Vodeni način: najprej ampermeter, nato voltmeter.' : 'Samostojni način: priključi oba merilnika, nato preveri.'); }
+    else { st.level = +v; st.n--; newTask(); }
+  });
+});
+$('#novaBtn').addEventListener('click', function () { newTask(); });
+$('#clrBtn').addEventListener('click', function () {
+  st.w = { Ap: null, Am: null, Vp: null, Vm: null }; Object.keys(L().jumps).forEach(function (j) { st.J[j] = true; });
+  st.sel = null; st.phase = st.mode === 'vodeno' ? 0 : 1; clearFb(); refresh(); say('Žice so odstranjene, mostički vstavljeni.');
+});
+$('#pauseBtn').addEventListener('click', function () {
+  st.paused = !st.paused; this.setAttribute('aria-pressed', st.paused ? 'true' : 'false'); this.textContent = st.paused ? 'Nadaljuj tok' : 'Ustavi tok';
+  say(st.paused ? 'Gibanje pik je ustavljeno.' : 'Gibanje pik teče.');
+});
+$('#chkBtn').addEventListener('click', check);
+$('#resBtn').addEventListener('click', function () {
+  applySol(); st.shown = true; refresh(); clearFb();
+  var S = st.S, r = judge(S); showFb('fbA', r.amm); showFb('fbV', r.vol); calcLines();
+  say('Prikazana je ena od pravilnih rešitev. Naloga ni všteta kot rešena.');
+});
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && st.sel) { st.sel = null; refresh(); say('Izbira preklicana.'); } });
+if (RM) { $('#pauseBtn').hidden = true; }
+
+window.ct = { st: st, LV: LV, solveNet: solveNet, judge: judge, newTask: newTask, check: check, applySol: applySol, refresh: refresh, setWire: setWire, toggleJ: toggleJ, fmt: fmt, UV: UV };
+newTask(true);
+requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
