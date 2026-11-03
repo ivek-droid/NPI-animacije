@@ -1,6 +1,6 @@
 /* =====================================================================
    POMOŽNA GRADIVA – globalni slog (Divi → Možnosti teme → Splošno → Lasten CSS)
-   Različica 1 · 31. 10. 2026
+   Različica 2 · 3. 11. 2026 (dodano: oddelka 10 in 11)
    Ta CSS NADOMESTI obstoječi blok v »Lasten CSS« (keyframes bounce + utripanje-gumba).
    ===================================================================== */
 
@@ -193,3 +193,16 @@ body #page-container .et_pb_button.pg-btn:hover { background: var(--primary-dark
   .pg-kartice { grid-template-columns: 1fr; }
   body #page-container .et_pb_button { display: block; text-align: center; }
 }
+
+/* ---------- 10. Dolžina vrstice (največ ~68 znakov, berljivost) ---------- */
+#page-container .et_pb_text_inner p,
+#page-container .et_pb_text_inner li { max-width: var(--measure); }
+#page-container .pg-kartica__telo li { max-width: none; }
+
+/* ---------- 11. Gumb »na vrh strani« (vklopljen v Divi → Možnosti teme → Splošno) ---------- */
+body #page-container .et_pb_scroll_top.et-pb-icon {
+  right: 16px; bottom: 16px; width: 56px; height: 56px; padding: 0;
+  background: var(--primary); color: #fff; border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card); line-height: 56px; text-align: center; font-size: 28px;
+}
+body #page-container .et_pb_scroll_top.et-pb-icon:hover { background: var(--primary-dark); }
