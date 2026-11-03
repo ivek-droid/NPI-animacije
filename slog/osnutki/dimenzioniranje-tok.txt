@@ -35,16 +35,16 @@
 <p class="pg-okvir__oznaka">Rešen primer 1</p>
 <p style="margin-top:0">Grelnik vode ima moč 2 kW in je priključen na fazno napetost 230 V. Vodnik je v kabelski cevi neposredno v toplotni izolaciji (način A2), z dvema obremenjenima vodnikoma. Zaščita je taljiva varovalka.</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 2000 W, U<sub>f</sub> = 230 V, način A2, 2 obremenjena vodnika, taljiva varovalka</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 2000 W, U<sub>f</sub> = 230 V, način A2, 2 obremenjena vodnika, taljiva varovalka</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>I<sub>b</sub>, I<sub>n</sub>, presek A</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>I<sub>b</sub> = P / U<sub>f</sub></span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>I<sub>b</sub> = 2000 W / 230 V = 8,70 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Varovalka</span>I<sub>n</sub> = 10 A (najmanjša, ki je ≥ 8,70 A; tabela 4)</span></li>
-<li><span><span class="pg-koraki__oznaka">Vodnik</span>1,5 mm², A2, 2 vodnika: I<sub>z</sub> = 14 A (tabela 3)</span></li>
-<li><span><span class="pg-koraki__oznaka">1. pogoj</span>8,70 A ≤ 10 A ≤ 14 A ✓</span></li>
-<li><span><span class="pg-koraki__oznaka">2. pogoj</span>k = 1,9, ker je I<sub>n</sub> ≤ 13 A. 1,9 · 10 A = 19 A. 1,45 · 14 A = 20,3 A. 19 A ≤ 20,3 A ✓</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 1,5 mm², I<sub>n</sub> = 10 A</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Varovalka je med porabnikom (8,70 A) in vodnikom (14 A).</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>I<sub>b</sub> = P / U<sub>f</sub></span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>I<sub>b</sub> = 2000 W / 230 V = 8,70 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Varovalka</span>I<sub>n</sub> = 10 A (najmanjša, ki je ≥ 8,70 A; tabela 4)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vodnik</span>1,5 mm², A2, 2 vodnika: I<sub>z</sub> = 14 A (tabela 3)</span></li>
+<li><span><span class="pg-koraki__oznaka">1. pogoj</span>8,70 A ≤ 10 A ≤ 14 A ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">2. pogoj</span>k = 1,9, ker je I<sub>n</sub> ≤ 13 A. 1,9 · 10 A = 19 A. 1,45 · 14 A = 20,3 A. 19 A ≤ 20,3 A ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 1,5 mm², I<sub>n</sub> = 10 A</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Varovalka je med porabnikom (8,70 A) in vodnikom (14 A).</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
@@ -54,17 +54,17 @@
 <p class="pg-okvir__oznaka">Rešen primer 2</p>
 <p style="margin-top:0">Trifazni porabnik ima moč 38 kW, napetost 400 V in cos φ = 1. Kabel je v zemlji (način D), z tremi obremenjenimi vodniki. Zaščita je taljiva varovalka.</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 38 000 W, U = 400 V, cos φ = 1, način D, 3 vodniki, taljiva varovalka</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 38 000 W, U = 400 V, cos φ = 1, način D, 3 vodniki, taljiva varovalka</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>I<sub>b</sub>, I<sub>n</sub>, presek A</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>I<sub>b</sub> = P / (√3 · U · cos φ)</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>I<sub>b</sub> = 38 000 W / (√3 · 400 V · 1) = 54,85 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Varovalka</span>I<sub>n</sub> = 63 A (tabela 4)</span></li>
-<li><span><span class="pg-koraki__oznaka">16 mm², 1. pogoj</span>I<sub>z</sub> = 64 A. 54,85 A ≤ 63 A ≤ 64 A ✓</span></li>
-<li><span><span class="pg-koraki__oznaka">16 mm², 2. pogoj</span>k = 1,6. 1,6 · 63 A = 100,8 A. 1,45 · 64 A = 92,8 A. 100,8 A &gt; 92,8 A ✗</span></li>
-<li><span><span class="pg-koraki__oznaka">25 mm², 1. pogoj</span>I<sub>z</sub> = 82 A. 54,85 A ≤ 63 A ≤ 82 A ✓</span></li>
-<li><span><span class="pg-koraki__oznaka">25 mm², 2. pogoj</span>1,45 · 82 A = 118,9 A. 100,8 A ≤ 118,9 A ✓</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 25 mm², I<sub>n</sub> = 63 A</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Pri 16 mm² drži le 1. pogoj. Zato potrebujemo večji presek.</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>I<sub>b</sub> = P / (√3 · U · cos φ)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>I<sub>b</sub> = 38 000 W / (√3 · 400 V · 1) = 54,85 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Varovalka</span>I<sub>n</sub> = 63 A (tabela 4)</span></li>
+<li><span><span class="pg-koraki__oznaka">16 mm², 1. pogoj</span>I<sub>z</sub> = 64 A. 54,85 A ≤ 63 A ≤ 64 A ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">16 mm², 2. pogoj</span>k = 1,6. 1,6 · 63 A = 100,8 A. 1,45 · 64 A = 92,8 A. 100,8 A &gt; 92,8 A ✗</span></li>
+<li><span><span class="pg-koraki__oznaka">25 mm², 1. pogoj</span>I<sub>z</sub> = 82 A. 54,85 A ≤ 63 A ≤ 82 A ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">25 mm², 2. pogoj</span>1,45 · 82 A = 118,9 A. 100,8 A ≤ 118,9 A ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 25 mm², I<sub>n</sub> = 63 A</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Pri 16 mm² drži le 1. pogoj. Zato potrebujemo večji presek.</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">

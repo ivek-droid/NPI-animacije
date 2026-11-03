@@ -42,13 +42,13 @@
 <p class="pg-okvir__oznaka">Rešen primer 1: potreben presek</p>
 <p style="margin-top:0">Fazni porabnik je napajan po vodniku dolžine 14 m. Specifična prevodnost je λ = 56 S·m/mm², tok je 10 A, padec napetosti 2 V. Izračunaj presek vodnika.</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>l = 14 m, I = 10 A, ΔU = 2 V, λ = 56 S·m/mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>l = 14 m, I = 10 A, ΔU = 2 V, λ = 56 S·m/mm²</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>presek A</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>ΔU = 2 · l · I / (λ · A), zato A = 2 · l · I / (λ · ΔU)</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>A = 2 · 14 m · 10 A / (56 S·m/mm² · 2 V)</span></li>
-<li><span><span class="pg-koraki__oznaka">Izračunam</span>A = 280 / 112 = 2,50 mm²</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 2,5 mm² (standardni presek)</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Tok 10 A, vodnik 2,5 mm²: ΔU = 2 · 14 · 10 / (56 · 2,5) = 2 V ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>ΔU = 2 · l · I / (λ · A), zato A = 2 · l · I / (λ · ΔU)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>A = 2 · 14 m · 10 A / (56 S·m/mm² · 2 V)</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>A = 280 / 112 = 2,50 mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">A = 2,5 mm² (standardni presek)</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Tok 10 A, vodnik 2,5 mm²: ΔU = 2 · 14 · 10 / (56 · 2,5) = 2 V ✓</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
@@ -58,12 +58,12 @@
 <p class="pg-okvir__oznaka">Rešen primer 2: preveri padec</p>
 <p style="margin-top:0">Grelnik moči 2,5 kW je priključen na 230 V z vodnikom 1,5 mm², dolgim 20 m. Ali je padec napetosti pod 3 %?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 2500 W, U<sub>f</sub> = 230 V, l = 20 m, A = 1,5 mm², λ = 56 S·m/mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 2500 W, U<sub>f</sub> = 230 V, l = 20 m, A = 1,5 mm², λ = 56 S·m/mm²</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>Δu</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>Δu = 200 · l · P / (λ · A · U<sub>f</sub>²)</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>Δu = 200 · 20 · 2500 / (56 · 1,5 · 230²)</span></li>
-<li><span><span class="pg-koraki__oznaka">Izračunam</span>Δu = 10 000 000 / 4 443 600 = 2,25 %</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">Δu = 2,25 % ≤ 3 % ✓</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>Δu = 200 · l · P / (λ · A · U<sub>f</sub>²)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>Δu = 200 · 20 · 2500 / (56 · 1,5 · 230²)</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>Δu = 10 000 000 / 4 443 600 = 2,25 %</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">Δu = 2,25 % ≤ 3 % ✓</span></span></li>
 <li><span><span class="pg-koraki__oznaka">Preverim</span>Vodnik je kratek, tok majhen: pričakujemo manj kot 3 %.</span></li>
 </ol>
 
@@ -74,13 +74,13 @@
 <p class="pg-okvir__oznaka">Rešen primer 3: največja dolžina</p>
 <p style="margin-top:0">Trifazni porabnik 38 kW na 400 V je priključen s kablom 25 mm². Dopustni padec je 1,5 %. Kako dolg je lahko kabel?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 38 000 W, U = 400 V, A = 25 mm², Δu = 1,5 %, λ = 56 S·m/mm²</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>P = 38 000 W, U = 400 V, A = 25 mm², Δu = 1,5 %, λ = 56 S·m/mm²</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>dolžina l</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>l = λ · A · Δu · U² / (100 · P)</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>l = 56 · 25 · 1,5 · 400² / (100 · 38 000)</span></li>
-<li><span><span class="pg-koraki__oznaka">Izračunam</span>l = 336 000 000 / 3 800 000 = 88,4 m</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">l = 88,4 m</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Δu pri 88,4 m: 100 · 88,4 · 38 000 / (56 · 25 · 400²) = 1,5 % ✓</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>l = λ · A · Δu · U² / (100 · P)</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>l = 56 · 25 · 1,5 · 400² / (100 · 38 000)</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>l = 336 000 000 / 3 800 000 = 88,4 m</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">l = 88,4 m</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Δu pri 88,4 m: 100 · 88,4 · 38 000 / (56 · 25 · 400²) = 1,5 % ✓</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">

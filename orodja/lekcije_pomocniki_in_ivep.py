@@ -31,7 +31,10 @@ def anim(file, title, intro, h):
 VID = H2 + 'Poglej video</h2>\n<p>Klikni sliko. Video se odpre v novem oknu.</p>'
 ELBI = '»Ničelni vodnik« je starejše ime za nevtralni vodnik (N). Vir: trgovina-elbi.si'
 
+import sys as _sys; _sys.path.insert(0, '/home/claude/npi-animacije/orodja')
+from koraki_nbsp import nb_koraki
 def write(name, out):
+    out = nb_koraki(out)
     open(f'/home/claude/npi-animacije/slog/osnutki/{name}.txt', 'w').write(out)
     print(name, len(out))
 

@@ -31,12 +31,12 @@
 <p class="pg-okvir__oznaka">Rešen primer</p>
 <p style="margin-top:0">Hodnik ima 5 mest, kjer želimo prižigati luč. Koliko križnih stikal potrebujemo?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>število mest = 5, menjalni stikali = 2</span></li>
-<li><span><span class="pg-koraki__oznaka">Iskano</span>število križnih stikal k = ?</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>k = število mest − 2</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 5 − 2</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">k = 3 križna stikala</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>2 menjalni + 3 križna = 5 stikal = 5 mest.</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>število mest = 5, menjalni stikali = 2</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>število križnih stikal k = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>k = število mest − 2</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 5 − 2</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">k = 3 križna stikala</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>2 menjalni + 3 križna = 5 stikal = 5 mest.</span></li>
 </ol>
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
 <p class="pg-okvir__oznaka">Pogosta napaka</p>

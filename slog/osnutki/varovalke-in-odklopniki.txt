@@ -51,13 +51,13 @@
 <p class="pg-okvir__oznaka">Rešen primer 1: odklopni tok</p>
 <p style="margin-top:0">V tokokrogu je odklopnik 16 A. Ob kratkem stiku teče 100 A. Ali tip B ali tip C zanesljivo sproži hitri magnetni del?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>I<sub>n</sub> = 16 A, tok kratkega stika 100 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>I<sub>n</sub> = 16 A, tok kratkega stika 100 A</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>zgornja meja magnetnega sprožnika I<sub>a</sub> za tip B in tip C</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>B: I<sub>a</sub> = (3 … 5) · I<sub>n</sub>, C: I<sub>a</sub> = (5 … 10) · I<sub>n</sub></span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>B: 3 · 16 = 48 A … 5 · 16 = 80 A, C: 5 · 16 = 80 A … 10 · 16 = 160 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Primerjam</span>B: 100 A &gt; 80 A, to je nad zgornjo mejo. C: 100 A &lt; 160 A, to je pod zgornjo mejo.</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>B: I<sub>a</sub> = (3 … 5) · I<sub>n</sub>, C: I<sub>a</sub> = (5 … 10) · I<sub>n</sub></span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>B: 3 · 16 = 48 A … 5 · 16 = 80 A, C: 5 · 16 = 80 A … 10 · 16 = 160 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Primerjam</span>B: 100 A &gt; 80 A, to je nad zgornjo mejo. C: 100 A &lt; 160 A, to je pod zgornjo mejo.</span></li>
 <li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">tip B zanesljivo sproži, tip C ne</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Tip C ima višje meje, zato potrebuje večji tok. 100 A je v njegovem območju 80 … 160 A, kjer sprožitev ni zagotovljena.</span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Tip C ima višje meje, zato potrebuje večji tok. 100 A je v njegovem območju 80 … 160 A, kjer sprožitev ni zagotovljena.</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
@@ -67,14 +67,14 @@
 <p class="pg-okvir__oznaka">Rešen primer 2: samodejni odklop</p>
 <p style="margin-top:0">Zanka okvare ima impedanco Z<sub>k</sub> = 1,2 Ω, napetost proti zemlji je U<sub>0</sub> = 230 V. Za zaščito s samodejnim odklopom mora veljati Z<sub>k</sub> · I<sub>a</sub> ≤ U<sub>0</sub>. Kateri od odklopnikov B16, C16 in D16 ustreza?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>Z<sub>k</sub> = 1,2 Ω, U<sub>0</sub> = 230 V, odklopniki B16, C16, D16</span></li>
-<li><span><span class="pg-koraki__oznaka">Iskano</span>ali velja Z<sub>k</sub> · I<sub>a</sub> ≤ U<sub>0</sub></span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>I<sub>a</sub> ≤ U<sub>0</sub> / Z<sub>k</sub></span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>I<sub>a</sub> ≤ 230 / 1,2 = 191,7 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Zgornje meje</span>B16: 5 · 16 = 80 A, C16: 10 · 16 = 160 A, D16: 20 · 16 = 320 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Primerjam</span>80 A ≤ 191,7 A ✓, 160 A ≤ 191,7 A ✓, 320 A &gt; 191,7 A ✗</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>Z<sub>k</sub> = 1,2 Ω, U<sub>0</sub> = 230 V, odklopniki B16, C16, D16</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>ali velja Z<sub>k</sub> · I<sub>a</sub> ≤ U<sub>0</sub></span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>I<sub>a</sub> ≤ U<sub>0</sub> / Z<sub>k</sub></span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>I<sub>a</sub> ≤ 230 / 1,2 = 191,7 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Zgornje meje</span>B16: 5 · 16 = 80 A, C16: 10 · 16 = 160 A, D16: 20 · 16 = 320 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Primerjam</span>80 A ≤ 191,7 A ✓, 160 A ≤ 191,7 A ✓, 320 A &gt; 191,7 A ✗</span></li>
 <li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">ustrezata B16 in C16, D16 ne ustreza</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Pri D16 bi moral teči vsaj 320 A, zanka pa pri 230 V dovoli največ 191,7 A. Odklopnik ne bi sprožil zanesljivo.</span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Pri D16 bi moral teči vsaj 320 A, zanka pa pri 230 V dovoli največ 191,7 A. Odklopnik ne bi sprožil zanesljivo.</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
@@ -84,12 +84,12 @@
 <p class="pg-okvir__oznaka">Rešen primer 3: selektivnost</p>
 <p style="margin-top:0">Pred porabnikom je varovalka gG 25 A. Kakšna sme biti varovalka pred njo: 40 A, 63 A ali 80 A?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>manjša varovalka 25 A, kandidati 40 A, 63 A, 80 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>manjša varovalka 25 A, kandidati 40 A, 63 A, 80 A</span></li>
 <li><span><span class="pg-koraki__oznaka">Iskano</span>razmerje nazivnih tokov vsaj 1 : 1,6</span></li>
-<li><span><span class="pg-koraki__oznaka">Najmanjša vrednost</span>25 · 1,6 = 40 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Razmerja</span>40 / 25 = 1,60, 63 / 25 = 2,52, 80 / 25 = 3,20</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">ustrezajo vse tri (40 A je prav na meji)</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Vsi presegajo 1,6. Najmanjša ustrezna je 40 A, ker je v tabeli 4.</span></li>
+<li><span><span class="pg-koraki__oznaka">Najmanjša vrednost</span>25 · 1,6 = 40 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Razmerja</span>40 / 25 = 1,60, 63 / 25 = 2,52, 80 / 25 = 3,20</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">ustrezajo vse tri (40 A je prav na meji)</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Vsi presegajo 1,6. Najmanjša ustrezna je 40 A, ker je v tabeli 4.</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">

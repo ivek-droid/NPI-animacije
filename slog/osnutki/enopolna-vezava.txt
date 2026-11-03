@@ -44,14 +44,14 @@
 <p class="pg-okvir__oznaka">Rešen primer</p>
 <p style="margin-top:0">Tri žarnice po 60 W so vezane vzporedno na 230 V. Kolikšen tok teče skozi eno žarnico? Kolikšen je skupni tok?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>U = 230 V, P = 60 W, 3 žarnice</span></li>
-<li><span><span class="pg-koraki__oznaka">Iskano</span>I₁ = ?, I = ?</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>I₁ = P / U, I = 3 · I₁</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>I₁ = 60 W / 230 V</span></li>
-<li><span><span class="pg-koraki__oznaka">Izračunam</span>I₁ ≈ 0,26 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>I = 3 · 0,26 A</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">I₁ ≈ 0,26 A, I ≈ 0,78 A</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>W / V = A. Animacija spodaj pokaže enak skupni tok.</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>U = 230 V, P = 60 W, 3 žarnice</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>I₁ = ?, I = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>I₁ = P / U, I = 3 · I₁</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>I₁ = 60 W / 230 V</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>I₁ ≈ 0,26 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>I = 3 · 0,26 A</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">I₁ ≈ 0,26 A, I ≈ 0,78 A</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>W / V = A. Animacija spodaj pokaže enak skupni tok.</span></li>
 </ol>
 </div>
 <div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">

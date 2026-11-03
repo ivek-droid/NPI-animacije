@@ -73,16 +73,16 @@
 <p class="pg-okvir__oznaka">Rešen primer</p>
 <p style="margin-top:0">Pretočna hidroelektrarna na reki ima padec 8 m. Pretok vode skozi turbine je 500 m³/s. Izkoristek elektrarne je 0,85. Kolikšna je moč generatorjev? Katero turbino uporablja?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>Δh = 8 m, Q = 500 m³/s, η = 0,85</span></li>
-<li><span><span class="pg-koraki__oznaka">Iskano</span>P<sub>vode</sub> = ?, P = ?, vrsta turbine</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>P<sub>vode</sub> = 9,81 · Q · Δh</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>P<sub>vode</sub> = 9,81 · 500 · 8</span></li>
-<li><span><span class="pg-koraki__oznaka">Izračunam</span>P<sub>vode</sub> = 39 240 kW</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>P = η · P<sub>vode</sub></span></li>
-<li><span><span class="pg-koraki__oznaka">Izračunam</span>P = 0,85 · 39 240 kW = 33 354 kW</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">P ≈ 33,4 MW</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Turbina</span>Majhen padec, velik pretok, pretočna HE → Kaplanova turbina.</span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>P je manjša od P<sub>vode</sub>, ker je η manjši od 1. Enote: kN/m³ · m³/s · m = kN · m/s = kW.</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>Δh = 8 m, Q = 500 m³/s, η = 0,85</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>P<sub>vode</sub> = ?, P = ?, vrsta turbine</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>P<sub>vode</sub> = 9,81 · Q · Δh</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>P<sub>vode</sub> = 9,81 · 500 · 8</span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>P<sub>vode</sub> = 39 240 kW</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>P = η · P<sub>vode</sub></span></li>
+<li><span><span class="pg-koraki__oznaka">Izračunam</span>P = 0,85 · 39 240 kW = 33 354 kW</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">P ≈ 33,4 MW</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Turbina</span>Majhen padec, velik pretok, pretočna HE → Kaplanova turbina.</span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>P je manjša od P<sub>vode</sub>, ker je η manjši od 1. Enote: kN/m³ · m³/s · m = kN · m/s = kW.</span></li>
 </ol>
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
 <p class="pg-okvir__oznaka">Pogosta napaka</p>

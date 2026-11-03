@@ -31,13 +31,13 @@
 <p class="pg-okvir__oznaka">Rešen primer 1: enosmerna napetost</p>
 <p style="margin-top:0">Merilnik je na območju 15 V =. Kazalec je na črni skali 0–15 na 45. razdelku. Koliko voltov kaže?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>drsnik =, stikalo 15 V (bel napis), črna skala 0–15, N = 75, α = 45</span></li>
-<li><span><span class="pg-koraki__oznaka">Iskano</span>napetost U = ?</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>k = območje / N in U = α · k</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 15 V / 75 = 0,2 V na razdelek</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>U = 45 · 0,2 V</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">U = 9,0 V</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Kazalec je 5 razdelkov pred številko 10. Torej 10 V − 5 · 0,2 V = 9,0 V. Rezultat je manjši od območja 15 V.</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>drsnik =, stikalo 15 V (bel napis), črna skala 0–15, N = 75, α = 45</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>napetost U = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>k = območje / N in U = α · k</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 15 V / 75 = 0,2 V na razdelek</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>U = 45 · 0,2 V</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">U = 9,0 V</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Kazalec je 5 razdelkov pred številko 10. Torej 10 V − 5 · 0,2 V = 9,0 V. Rezultat je manjši od območja 15 V.</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:10px 0 0">
@@ -47,13 +47,13 @@
 <p class="pg-okvir__oznaka">Rešen primer 2: izmenična napetost</p>
 <p style="margin-top:0">Merilnik je na območju 300 V ~. Kazalec je na rdeči skali 0–30 na 23. razdelku. Koliko voltov kaže?</p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>drsnik ~, stikalo 300 V (rdeč napis), rdeča skala 0–30, N = 30, α = 23</span></li>
-<li><span><span class="pg-koraki__oznaka">Iskano</span>napetost U = ?</span></li>
-<li><span><span class="pg-koraki__oznaka">Formula</span>k = območje / N in U = α · k</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 300 V / 30 = 10 V na razdelek</span></li>
-<li><span><span class="pg-koraki__oznaka">Vstavim</span>U = 23 · 10 V</span></li>
-<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">U = 230 V</span></span></li>
-<li><span><span class="pg-koraki__oznaka">Preverim</span>Kazalec je 3 razdelke za številko 20, ki pomeni 200 V. Torej 200 V + 3 · 10 V = 230 V. To je običajna napetost omrežja.</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki</span>drsnik ~, stikalo 300 V (rdeč napis), rdeča skala 0–30, N = 30, α = 23</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>napetost U = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>k = območje / N in U = α · k</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 300 V / 30 = 10 V na razdelek</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>U = 23 · 10 V</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">U = 230 V</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Kazalec je 3 razdelke za številko 20, ki pomeni 200 V. Torej 200 V + 3 · 10 V = 230 V. To je običajna napetost omrežja.</span></li>
 </ol>
 
 </div><div class="pg-okvir pg-okvir--pozor" style="margin:10px 0 0">
