@@ -1,4 +1,4 @@
-# Stanje strani (1. 11. 2026)
+# Stanje strani (3. 11. 2026)
 
 ## Objavljeno v novem slogu
 - IVEp: menjalna (809), enopolna (798), serijska (804), križna (813), impulzni rele (1075).
@@ -11,7 +11,8 @@
 ## Naslednje
 - Zbirka po temah objavljena 3. 11. 2026 na strani 185 (generator `orodja/lekcija_zbirka.py`); stari razdelki so pod »Izvirne table in PDF-ji«. Razsvetljava: 5.1 in 5.2 po uradnih navodilih za spom 2020, jesen 2021, spom 2023. Manjkajo navodila za jesen 2020 (P202) in jesen 2022 (P222) ter risbe 5.4. Opomba pri nalogi zimski 2020 5.4 popravljena (prej napačno »2021«; datoteki »zimski 2020/2021« sta ista pola P203).
 - Zbirka nalog (stran 185); animacija »izberi presek« je izdelana (`izberi-presek.html`, 3. 11. 2026), vdelana na stran 1338 (3. 11. 2026). Višine iframa ni bilo mogoče izmeriti v izrisu (pane skrit): preveri vizualno. Podmeniji pod 188.
-- Stran 185: opomba k nalogi 5.4 (zimski 2021) objavljena 1. 11. 2026 (okvir »Pozor« pod gumboma za zimski 2021; napaka v faktorju 2 in varovalka 10 A). Slika table ni zamenjana. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
+- Stran 185: opomba k nalogi 5.4 (zimski 2020) objavljena 1. 11., popravljena 3. 11. 2026 (okvir »Pozor«; napaka v faktorju 2 in varovalka 10 A). Slika table ni zamenjana. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
+- Okvir »Matura« na straneh 1338 in 1344 popravljen v »zimski rok 2020 in 2022« (3. 11. 2026).
 
 ## Odprto
 - INEp: Nadtokovna zaščita (619), Izvedba električnih inštalacij (662), Nevarnosti el. toka (995).
