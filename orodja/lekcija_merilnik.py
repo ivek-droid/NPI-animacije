@@ -21,13 +21,10 @@ assert f(23 / 30 * 100, 0) == '77'
 assert f(5 / 50) == '0,1' and f(32 * 5 / 50) == '3,2'
 assert f(100 / 50, 0) == '2' and f(37 * 100 / 50, 0) == '74'
 
-# zgoščen zapis rešenih primerov (tabela namesto številčnih krogcev): ena vrstica na korak, korakov ne združujemo
-KT = 'padding:3px 10px 3px 0;border-top:1px solid #d9d3c8;vertical-align:baseline;line-height:1.35;'
 def korak(oznaka, vsebina, rez=False):
-    v = f'<strong>{vsebina}</strong>' if rez else vsebina
-    return (f'<tr><td style="{KT}width:92px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--primer-edge)">{oznaka}</td>'
-            f'<td style="{KT}font-size:17px">{v}</td></tr>')
-def koraki(items): return '<table style="width:100%;border-collapse:collapse;margin:0">' + ''.join(items) + '</table>'
+    v = f'<span class="pg-rezultat">{vsebina}</span>' if rez else vsebina
+    return f'<li><span><span class="pg-koraki__oznaka">{oznaka}</span>{v}</span></li>'
+def koraki(items): return '<ol class="pg-koraki">\n' + '\n'.join(items) + '\n</ol>'
 
 TD = 'style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top"'
 def tr(c, th=False):
