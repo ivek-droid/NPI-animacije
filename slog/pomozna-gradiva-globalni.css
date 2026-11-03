@@ -160,12 +160,11 @@ body #page-container .et_pb_button.pg-btn:hover { background: var(--primary-dark
   --ikona: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linejoin='round'%3E%3Cpath d='M2 9l10-5 10 5-10 5L2 9z'/%3E%3Cpath d='M6 11v5c3 2.5 9 2.5 12 0v-5'/%3E%3C/svg%3E"); }
 
 .pg-koraki { list-style: none !important; margin: 0 !important; padding: 0 !important; }
-.pg-koraki > li { display: block; padding: 3px 0 !important; border-top: 1px solid var(--line); }
+.pg-koraki > li { display: block; padding: 4px 0 4px 132px !important; text-indent: -132px; line-height: 1.4; border-top: 1px solid var(--line); }
 .pg-koraki > li:first-child { border-top: 0; }
-.pg-koraki > li > span { display: grid; grid-template-columns: 120px 1fr; gap: 0 10px; align-items: baseline; line-height: 1.35; }
-.pg-koraki__oznaka { display: block; font-size: 14px; font-weight: 700; color: var(--primer-edge); text-transform: uppercase; letter-spacing: .03em; line-height: 1.25; }
-.pg-rezultat { display: inline-block; margin: 0; padding: 0 8px; background: #fff; border: 2px solid var(--primer-edge); border-radius: var(--radius-sm); font-weight: 700; }
-@media (max-width: 560px) { .pg-koraki > li > span { grid-template-columns: 1fr; } .pg-koraki__oznaka { padding-top: 2px; } }
+.pg-koraki__oznaka { display: inline-block; width: 120px; margin-right: 12px; text-indent: 0; vertical-align: top; font-size: 14px; font-weight: 700; color: var(--primer-edge); text-transform: uppercase; letter-spacing: .03em; line-height: 1.5; }
+.pg-rezultat { display: inline-block; margin: 0; padding: 0 8px; background: #fff; border: 2px solid var(--primer-edge); border-radius: var(--radius-sm); font-weight: 700; text-indent: 0; }
+@media (max-width: 560px) { .pg-koraki > li { padding-left: 0 !important; text-indent: 0; } .pg-koraki__oznaka { display: block; width: auto; margin: 0; } }
 
 .pg-kartice { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 .pg-kartica { display: flex; flex-direction: column; min-height: 180px; background: #fff; color: var(--ink) !important; text-decoration: none !important; border: 2px solid var(--line); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); }
