@@ -186,15 +186,18 @@ sekcija_B = (H2 + 'Dimenzioniranje vodnika in varovalke</h2>\n<p>Vedno preveri o
              + b1 + b2 + b3 + b4 + btn(LEK_DIM, 'Lekcija: dimenzioniranje vodnika'))
 
 # ---------- C: razsvetljava ----------
-c1 = naloga('Matura 2020, spomladanski rok, 2. pola, naloga 5.3: dve žarnici na hodniku',
-    'Na hodniku sta dve žarnici. Fazna napetost je 230 V, moč vsake žarnice 100 W. Izračunaj tok skozi tokokrog žarnic.',
-    koraki([korak('Podatki', 'U<sub>f</sub> = 230 V, P<sub>Ž</sub> = 100 W, 2 žarnici'),
+c1 = naloga('Matura 2020, spomladanski rok, 2. pola, naloga 5: dve žarnici na hodniku',
+    'Na načrtu hodnika s štirimi stikali (S1 do S4) vklapljamo in izklapljamo dve žarnici. Zapiši vrsto in število stikal (5.1) in način polaganja (5.2). Izračunaj tok skozi tokokrog žarnic (5.3): fazna napetost je 230 V, moč vsake žarnice 100 W.',
+    koraki([korak('5.1 Stikala', 'dve menjalni stikali (S1 in S4, na začetku in koncu) in dve križni stikali (S2 in S3, vmes)'),
+            korak('5.2 Polaganje', 'inštalacija je položena v omet'),
+            korak('Podatki za 5.3', 'U<sub>f</sub> = 230 V, P<sub>Ž</sub> = 100 W, 2 žarnici'),
             korak('Skupna moč', 'P = 2 · 100 W = 200 W'),
             korak('Formula', 'I = P / U<sub>f</sub>'),
             korak('Vstavim', 'I = 200 W / 230 V'),
             korak('Rezultat', 'I = 0,87 A', True),
             korak('Preverim', 'ena žarnica vleče 100 / 230 = 0,43 A, dve vlečeta dvakrat toliko ✓')]),
-    napaka('Vstaviš moč ene žarnice in dobiš 0,43 A. V tokokrogu sta dve žarnici.'))
+    napaka('Pri 5.3 vstaviš moč ene žarnice in dobiš 0,43 A. V tokokrogu sta dve žarnici. Pri 5.1 zapišeš samo »stikala« brez vrste in števila.'),
+    povezave(('lekcija: križna vezava', SITE + '?page_id=813')))
 c2 = naloga('Matura 2020, jesenski rok, 2. pola, naloga 5.3: žarnica 75 W',
     'S stikaloma vklapljamo žarnico z dveh mest. Fazna napetost je 230 V, moč žarnice P<sub>Ž</sub> = 75 W. Izračunaj tok skozi žarnico.',
     koraki([korak('Podatki', 'U<sub>f</sub> = 230 V, P<sub>Ž</sub> = 75 W'),
@@ -203,17 +206,20 @@ c2 = naloga('Matura 2020, jesenski rok, 2. pola, naloga 5.3: žarnica 75 W',
             korak('Rezultat', 'I = 0,33 A', True),
             korak('Preverim', '0,33 A · 230 V = 75 W ✓')]),
     napaka('Zamenjaš vrstni red in delš 230 / 75. Moč delimo z napetostjo, ne obratno.'))
-c3 = naloga('Matura 2021, jesenski rok, 2. pola, naloga 5.3: tri žarnice, iščemo moč',
-    'Na načrtu so tri žarnice enakih moči (Ž1, Ž2, Ž3). Fazna napetost je 230 V, tok skozi tokokrog žarnic je 1,57 A. Izračunaj moč ene žarnice.',
-    koraki([korak('Podatki', 'U<sub>f</sub> = 230 V, I = 1,57 A, 3 žarnice enakih moči'),
+c3 = naloga('Matura 2021, jesenski rok, 2. pola, naloga 5: tri žarnice na hodniku',
+    'Na načrtu hodnika s štirimi stikali (S1 do S4) vklapljamo in izklapljamo tri žarnice enakih moči (Ž1, Ž2, Ž3). Zapiši vrsti stikal (5.1) in način polaganja (5.2). Izračunaj moč ene žarnice (5.3): fazna napetost je 230 V, tok skozi tokokrog žarnic je 1,57 A.',
+    koraki([korak('5.1 Stikala', 'menjalno in križno stikalo'),
+            korak('5.2 Polaganje', 'inštalacija je položena pod ometom'),
+            korak('Podatki za 5.3', 'U<sub>f</sub> = 230 V, I = 1,57 A, 3 žarnice enakih moči'),
             korak('Skupna moč', 'P = U<sub>f</sub> · I = 230 V · 1,57 A = 361,1 W'),
             korak('Moč ene žarnice', 'P<sub>Ž</sub> = P / 3 = 361,1 W / 3'),
             korak('Rezultat', 'P<sub>Ž</sub> = 120 W (120,4 W)', True),
             korak('Preverim', '3 · 120 W / 230 V = 1,57 A ✓')]),
     napaka('Skupno moč pustiš kot moč ene žarnice. Število žarnic preberi iz načrta.'))
-c4 = naloga('Matura 2023, spomladanski rok, 2. pola, naloga 5.3: tri žarnice, iščemo moč',
-    'Na načrtu so tri žarnice enakih moči (Ž1, Ž2, Ž3). Fazna napetost je 230 V, tok skozi tokokrog žarnic je 2,61 A. Izračunaj moč ene žarnice.',
-    koraki([korak('Podatki', 'U<sub>f</sub> = 230 V, I = 2,61 A, 3 žarnice enakih moči'),
+c4 = naloga('Matura 2023, spomladanski rok, 2. pola, naloga 5: tri žarnice na hodniku',
+    'Na načrtu hodnika vklapljamo in izklapljamo tri žarnice enakih moči (Ž1, Ž2, Ž3). Zapiši vrsti stikal (5.1). Izračunaj moč ene žarnice (5.3): fazna napetost je 230 V, tok skozi tokokrog žarnic je 2,61 A.',
+    koraki([korak('5.1 Stikala', 'menjalno in križno stikalo'),
+            korak('Podatki za 5.3', 'U<sub>f</sub> = 230 V, I = 2,61 A, 3 žarnice enakih moči'),
             korak('Skupna moč', 'P = U<sub>f</sub> · I = 230 V · 2,61 A = 600,3 W'),
             korak('Moč ene žarnice', 'P<sub>Ž</sub> = P / 3 = 600,3 W / 3'),
             korak('Rezultat', 'P<sub>Ž</sub> = 200 W (200,1 W)', True),
@@ -222,7 +228,7 @@ c4 = naloga('Matura 2023, spomladanski rok, 2. pola, naloga 5.3: tri žarnice, i
 assert f(230 * 1.57, 1) == '361,1' and f(230 * 2.61, 1) == '600,3' and f(3 * 120 / 230) == '1,57' and f(3 * 200 / 230) == '2,61'
 assert f(100 / 230) == '0,43'
 
-sekcija_C = (H2 + 'Razsvetljava: tok in moč žarnic</h2>\n<p>V nalogah z razsvetljavo je točka 5.3 račun. Ostale točke (vrsta stikal, način polaganja, vezalni načrt) rešuješ iz načrta. Za to uporabi lekcije: '
+sekcija_C = (H2 + 'Razsvetljava: tok in moč žarnic</h2>\n<p>V nalogah z razsvetljavo je točka 5.3 račun. Vrsto stikal (5.1) in način polaganja (5.2) preberi iz načrta, vezalni načrt (5.4) narišeš po pravilih iz lekcij: '
              f'<a href="{SITE}?page_id=809">menjalna vezava</a>, <a href="{SITE}?page_id=813">križna vezava</a>, <a href="{SITE}?page_id=804">serijska vezava</a> in <a href="{SITE}?page_id=798">enopolna vezava</a>.</p>\n'
              + c1 + c2 + c3 + c4)
 

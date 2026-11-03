@@ -146,12 +146,14 @@
 <p class="pg-okvir__oznaka">Pogosta napaka</p>
 <p>Izbereš odklopnik 13 A, ker je najbližji. Odklopnik mora imeti nazivni tok večji ali enak toku porabnika.</p>
 </div><p style="font-size:17px;margin-top:14px"><a href="https://npi.splet.arnes.si/files/2024/01/SOLSKA-NALOGA-ponovitev-15-1-2024.pdf" target="_blank" rel="noopener">naloge (PDF)</a> · <a href="https://npi.splet.arnes.si/files/2024/01/poprava-ponovitve-testa-scaled-e1705491362804.jpg" target="_blank" rel="noopener">zapis s table</a> · <a href="https://npi.splet.arnes.si/varovalke-in-odklopniki/" target="_blank" rel="noopener">lekcija: varovalke in odklopniki</a></p></details>[et_pb_button button_url="https://npi.splet.arnes.si/dimenzioniranje-vodnika/" url_new_window="on" button_text="Lekcija: dimenzioniranje vodnika" module_class="pg-btn" _builder_version="4.27.9" custom_margin="0||12px||false|false"][/et_pb_button][/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row module_id="razsvetljava-naloge" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Razsvetljava: tok in moč žarnic</h2>
-<p>V nalogah z razsvetljavo je točka 5.3 račun. Ostale točke (vrsta stikal, način polaganja, vezalni načrt) rešuješ iz načrta. Za to uporabi lekcije: <a href="https://npi.splet.arnes.si/?page_id=809">menjalna vezava</a>, <a href="https://npi.splet.arnes.si/?page_id=813">križna vezava</a>, <a href="https://npi.splet.arnes.si/?page_id=804">serijska vezava</a> in <a href="https://npi.splet.arnes.si/?page_id=798">enopolna vezava</a>.</p>
-<details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2020, spomladanski rok, 2. pola, naloga 5.3: dve žarnici na hodniku</summary>
-<p style="margin-top:12px"><strong>Naloga.</strong> Na hodniku sta dve žarnici. Fazna napetost je 230 V, moč vsake žarnice 100 W. Izračunaj tok skozi tokokrog žarnic.</p>
+<p>V nalogah z razsvetljavo je točka 5.3 račun. Vrsto stikal (5.1) in način polaganja (5.2) preberi iz načrta, vezalni načrt (5.4) narišeš po pravilih iz lekcij: <a href="https://npi.splet.arnes.si/?page_id=809">menjalna vezava</a>, <a href="https://npi.splet.arnes.si/?page_id=813">križna vezava</a>, <a href="https://npi.splet.arnes.si/?page_id=804">serijska vezava</a> in <a href="https://npi.splet.arnes.si/?page_id=798">enopolna vezava</a>.</p>
+<details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2020, spomladanski rok, 2. pola, naloga 5: dve žarnici na hodniku</summary>
+<p style="margin-top:12px"><strong>Naloga.</strong> Na načrtu hodnika s štirimi stikali (S1 do S4) vklapljamo in izklapljamo dve žarnici. Zapiši vrsto in število stikal (5.1) in način polaganja (5.2). Izračunaj tok skozi tokokrog žarnic (5.3): fazna napetost je 230 V, moč vsake žarnice 100 W.</p>
 <p><strong>Rešitev.</strong></p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>U<sub>f</sub> = 230 V, P<sub>Ž</sub> = 100 W, 2 žarnici</span></li>
+<li><span><span class="pg-koraki__oznaka">5.1 Stikala</span>dve menjalni stikali (S1 in S4, na začetku in koncu) in dve križni stikali (S2 in S3, vmes)</span></li>
+<li><span><span class="pg-koraki__oznaka">5.2 Polaganje</span>inštalacija je položena v omet</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki za 5.3</span>U<sub>f</sub> = 230 V, P<sub>Ž</sub> = 100 W, 2 žarnici</span></li>
 <li><span><span class="pg-koraki__oznaka">Skupna moč</span>P = 2 · 100 W = 200 W</span></li>
 <li><span><span class="pg-koraki__oznaka">Formula</span>I = P / U<sub>f</sub></span></li>
 <li><span><span class="pg-koraki__oznaka">Vstavim</span>I = 200 W / 230 V</span></li>
@@ -160,8 +162,8 @@
 </ol>
 <div class="pg-okvir pg-okvir--pozor" style="margin:14px 0 0">
 <p class="pg-okvir__oznaka">Pogosta napaka</p>
-<p>Vstaviš moč ene žarnice in dobiš 0,43 A. V tokokrogu sta dve žarnici.</p>
-</div></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2020, jesenski rok, 2. pola, naloga 5.3: žarnica 75 W</summary>
+<p>Pri 5.3 vstaviš moč ene žarnice in dobiš 0,43 A. V tokokrogu sta dve žarnici. Pri 5.1 zapišeš samo »stikala« brez vrste in števila.</p>
+</div><p style="font-size:17px;margin-top:14px"><a href="https://npi.splet.arnes.si/?page_id=813" target="_blank" rel="noopener">lekcija: križna vezava</a></p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2020, jesenski rok, 2. pola, naloga 5.3: žarnica 75 W</summary>
 <p style="margin-top:12px"><strong>Naloga.</strong> S stikaloma vklapljamo žarnico z dveh mest. Fazna napetost je 230 V, moč žarnice P<sub>Ž</sub> = 75 W. Izračunaj tok skozi žarnico.</p>
 <p><strong>Rešitev.</strong></p>
 <ol class="pg-koraki">
@@ -174,11 +176,13 @@
 <div class="pg-okvir pg-okvir--pozor" style="margin:14px 0 0">
 <p class="pg-okvir__oznaka">Pogosta napaka</p>
 <p>Zamenjaš vrstni red in delš 230 / 75. Moč delimo z napetostjo, ne obratno.</p>
-</div></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2021, jesenski rok, 2. pola, naloga 5.3: tri žarnice, iščemo moč</summary>
-<p style="margin-top:12px"><strong>Naloga.</strong> Na načrtu so tri žarnice enakih moči (Ž1, Ž2, Ž3). Fazna napetost je 230 V, tok skozi tokokrog žarnic je 1,57 A. Izračunaj moč ene žarnice.</p>
+</div></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2021, jesenski rok, 2. pola, naloga 5: tri žarnice na hodniku</summary>
+<p style="margin-top:12px"><strong>Naloga.</strong> Na načrtu hodnika s štirimi stikali (S1 do S4) vklapljamo in izklapljamo tri žarnice enakih moči (Ž1, Ž2, Ž3). Zapiši vrsti stikal (5.1) in način polaganja (5.2). Izračunaj moč ene žarnice (5.3): fazna napetost je 230 V, tok skozi tokokrog žarnic je 1,57 A.</p>
 <p><strong>Rešitev.</strong></p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>U<sub>f</sub> = 230 V, I = 1,57 A, 3 žarnice enakih moči</span></li>
+<li><span><span class="pg-koraki__oznaka">5.1 Stikala</span>menjalno in križno stikalo</span></li>
+<li><span><span class="pg-koraki__oznaka">5.2 Polaganje</span>inštalacija je položena pod ometom</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki za 5.3</span>U<sub>f</sub> = 230 V, I = 1,57 A, 3 žarnice enakih moči</span></li>
 <li><span><span class="pg-koraki__oznaka">Skupna moč</span>P = U<sub>f</sub> · I = 230 V · 1,57 A = 361,1 W</span></li>
 <li><span><span class="pg-koraki__oznaka">Moč ene žarnice</span>P<sub>Ž</sub> = P / 3 = 361,1 W / 3</span></li>
 <li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">P<sub>Ž</sub> = 120 W (120,4 W)</span></span></li>
@@ -187,11 +191,12 @@
 <div class="pg-okvir pg-okvir--pozor" style="margin:14px 0 0">
 <p class="pg-okvir__oznaka">Pogosta napaka</p>
 <p>Skupno moč pustiš kot moč ene žarnice. Število žarnic preberi iz načrta.</p>
-</div></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2023, spomladanski rok, 2. pola, naloga 5.3: tri žarnice, iščemo moč</summary>
-<p style="margin-top:12px"><strong>Naloga.</strong> Na načrtu so tri žarnice enakih moči (Ž1, Ž2, Ž3). Fazna napetost je 230 V, tok skozi tokokrog žarnic je 2,61 A. Izračunaj moč ene žarnice.</p>
+</div></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">Matura 2023, spomladanski rok, 2. pola, naloga 5: tri žarnice na hodniku</summary>
+<p style="margin-top:12px"><strong>Naloga.</strong> Na načrtu hodnika vklapljamo in izklapljamo tri žarnice enakih moči (Ž1, Ž2, Ž3). Zapiši vrsti stikal (5.1). Izračunaj moč ene žarnice (5.3): fazna napetost je 230 V, tok skozi tokokrog žarnic je 2,61 A.</p>
 <p><strong>Rešitev.</strong></p>
 <ol class="pg-koraki">
-<li><span><span class="pg-koraki__oznaka">Podatki</span>U<sub>f</sub> = 230 V, I = 2,61 A, 3 žarnice enakih moči</span></li>
+<li><span><span class="pg-koraki__oznaka">5.1 Stikala</span>menjalno in križno stikalo</span></li>
+<li><span><span class="pg-koraki__oznaka">Podatki za 5.3</span>U<sub>f</sub> = 230 V, I = 2,61 A, 3 žarnice enakih moči</span></li>
 <li><span><span class="pg-koraki__oznaka">Skupna moč</span>P = U<sub>f</sub> · I = 230 V · 2,61 A = 600,3 W</span></li>
 <li><span><span class="pg-koraki__oznaka">Moč ene žarnice</span>P<sub>Ž</sub> = P / 3 = 600,3 W / 3</span></li>
 <li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">P<sub>Ž</sub> = 200 W (200,1 W)</span></span></li>
