@@ -1,0 +1,74 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Uporaba univerzalnega merilnika</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>izbrati veličino, vrsto toka in merilno območje,</li>
+<li>pravilno priključiti voltmeter in ampermeter,</li>
+<li>odčitati kazalec in izračunati izmerjeno vrednost.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kaj kaže kazalec</h2>
+<p>Pomisli na kuhinjsko tehtnico s kazalcem. Na njej piše 0–5 kg. Kazalec ti pove samo, kje je. Koliko to je, ti pove skala.</p>
+<p>Univerzalni merilnik je enak. S stikalom izbereš <strong>merilno območje</strong>. To je vrednost, ki jo kaže kazalec na koncu skale. Ko območje spremeniš, se spremeni tudi vrednost vsakega razdelka.</p>
+<p>Merilnik meri napetost (V), tok (A), enosmerno (=) in izmenično (~).</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Skale na merilniku</h2>
+<p>Enosmerne vrednosti (=) odčitavaš na <strong>črni</strong> skali, izmenične (~) na <strong>rdeči</strong>.</p>
+<table style="width:100%;border-collapse:collapse;font-size:18px"><tr><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">Skala</th><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">Razdelkov (N)</th><th style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">Med številkama</th></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">črna 0–5</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">50</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">10</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">črna 0–15</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">75</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">25</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">rdeča 0–10</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">50</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">10</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">rdeča 0–30</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">30</td><td style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top">10</td></tr></table>
+<p style="margin-top:10px">Preveri, ali ima tvoj merilnik enake skale in barve.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kako izmeriš</h2>
+<ol>
+<li>Ugotovi, kaj meriš: <strong>napetost</strong> ali <strong>tok</strong>, <strong>enosmerno</strong> (=) ali <strong>izmenično</strong> (~).</li>
+<li>Če vrednosti ne poznaš, izberi <strong>največje</strong> območje. Nato preklopi na manjše, dokler kazalec ni v drugi polovici skale.</li>
+<li><strong>Voltmeter</strong> priključiš <strong>vzporedno</strong> s porabnikom. <strong>Ampermeter</strong> priključiš <strong>zaporedno</strong>: krog prekineš in merilnik vključiš vmes.</li>
+<li>Izberi skalo, ki ustreza območju. Končna številka skale in območje se razlikujeta največ za faktor 10 (območje 15 V → skala 0–15, območje 300 V → skala 0–30).</li>
+<li>Preštej razdelke <strong>α</strong> od ničle do kazalca. Glej naravnost nanj. Če ima skala zrcalo, se morata kazalec in njegova slika pokrivati.</li>
+<li>Izračunaj: <strong>k = območje / N</strong> in <strong>X = α · k</strong>. Napiši enoto.</li>
+</ol>
+<p><strong>k</strong> je vrednost enega razdelka. <strong>N</strong> je število razdelkov na skali.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--pozor" style="margin:0">
+<p class="pg-okvir__oznaka">Pozor</p>
+<p>Ampermetra nikoli ne priključi vzporedno z virom ali porabnikom. Nastane kratek stik.</p>
+<p>Pred priključitvijo ampermetra izklopi napajanje.</p>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pozor</p>
+<p>Napetost omrežja (230 V) je nevarna. Meri jo samo ob učitelju.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer 1: enosmerna napetost</p>
+<p style="margin-top:0">Merilnik je na območju 15 V =. Kazalec je na črni skali 0–15 na 45. razdelku. Koliko voltov kaže?</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>območje 15 V =, črna skala 0–15, N = 75, α = 45</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>napetost U = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>k = območje / N in U = α · k</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 15 V / 75 = 0,2 V na razdelek</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>U = 45 · 0,2 V</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">U = 9,0 V</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Kazalec je 5 razdelkov pred številko 10. Torej 10 V − 5 · 0,2 V = 9,0 V. Rezultat je manjši od območja 15 V.</span></li>
+</ol>
+
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Odčitaš napačno skalo. Kazalec je pri 60 % skale. Na skali 0–5 bi prebral 3,0 V namesto 9,0 V.</p>
+</div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer 2: izmenična napetost</p>
+<p style="margin-top:0">Merilnik je na območju 300 V ~. Kazalec je na rdeči skali 0–30 na 23. razdelku. Koliko voltov kaže?</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>območje 300 V ~, rdeča skala 0–30, N = 30, α = 23</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>napetost U = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>k = območje / N in U = α · k</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>k = 300 V / 30 = 10 V na razdelek</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>U = 23 · 10 V</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">U = 230 V</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>Kazalec je 3 razdelke za številko 20, ki pomeni 200 V. Torej 200 V + 3 · 10 V = 230 V. To je običajna napetost omrežja.</span></li>
+</ol>
+
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Odčitaš 23 in pozabiš na faktor 10. Napišeš 23 V namesto 230 V. Vedno izračunaj k.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi sam</h2>
+<p>Nastavi merilnik, preštej razdelke in izračunaj vrednost. Nato preveri rezultat. Uporabiš lahko tudi tipko Tab in Enter.</p>
+[iframe src="https://ivek-droid.github.io/NPI-animacije/odcitavanje-instrumenta.html?kompakt" width="100%" height="1450" title="Animacija: odčitavanje univerzalnega instrumenta"][/et_pb_text][et_pb_button button_url="https://ivek-droid.github.io/NPI-animacije/odcitavanje-instrumenta.html" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. Območje 5 V =, črna skala 0–5, kazalec na 32. razdelku. Koliko voltov kaže?</summary><p style="margin-top:12px">k = 5 V / 50 = 0,1 V na razdelek. U = 32 · 0,1 V = 3,2 V.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. Območje 100 V ~. Katero skalo uporabiš in koliko voltov kaže kazalec na 37. razdelku?</summary><p style="margin-top:12px">Izmenično → rdeča skala 0–10 (N = 50). k = 100 V / 50 = 2 V na razdelek. U = 37 · 2 V = 74 V.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. Kako priključiš ampermeter?</summary><p style="margin-top:12px">Zaporedno. Krog prekineš in merilnik vključiš vmes, da gre skozenj ves tok. Voltmeter priključiš vzporedno.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>= → črna skala, ~ → rdeča skala.</li>
+<li>k = območje / N, X = α · k.</li>
+<li>Ne poznaš vrednosti? Začni z največjim območjem.</li>
+<li>Voltmeter vzporedno, ampermeter zaporedno.</li>
+<li>Rezultat mora biti manjši od območja.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
