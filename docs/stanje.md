@@ -15,7 +15,7 @@
 - Okvir »Matura« na straneh 1338 in 1344 popravljen v »zimski rok 2020 in 2022« (3. 11. 2026).
 
 - IVEp: stran »Uporaba univerzalnega merilnika« (1367, meni 1369 pod IVEp, `/uporaba-univerzalnega-merilnika/`) objavljena 3. 11. 2026; generator `orodja/lekcija_merilnik.py`, animacija `odcitavanje-instrumenta.html`, slika instrumenta Iskra MI 7043 (medij 1366). Skale in območja potrjene s fotografijo. Okvir »Matura« manjka (ni potrjeno, ali je tema v katalogu). Višine iframa (1450) po objavi ni vizualno preverjena.
-- IVEp, stran 1367: dodana animacija »Priključitev voltmetra in ampermetra« (`priklop-merilnikov.html`, 3. 11. 2026, iframe 1220, nov razdelek »Preizkusi sam: priključitev merilnikov« pred animacijo odčitavanja). Okvir »Matura« po dogovoru ni dodan. Višina iframa na telefonu (potrebnih ~1700 px) ni vizualno preverjena v izrisu strani.
+- IVEp, stran 1367: dodana animacija »Priključitev voltmetra in ampermetra« (`priklop-merilnikov.html`, 3. 11. 2026, iframe 1220, nov razdelek »Preizkusi sam: priključitev merilnikov« pred animacijo odčitavanja). Okvir »Matura« po dogovoru ni dodan. Rešena primera 1 in 2 na strani 1367 zgoščena 3. 11. 2026 (tabela namesto `pg-koraki`, 831 → 431 px pri 618 px; samo ta dva primera, globalni CSS nespremenjen). Višina iframa na telefonu (potrebnih ~1700 px) ni vizualno preverjena v izrisu strani.
 
 ## Odprto
 - INEp: Nadtokovna zaščita (619), Izvedba električnih inštalacij (662), Nevarnosti el. toka (995).
