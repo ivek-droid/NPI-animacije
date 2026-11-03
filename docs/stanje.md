@@ -19,4 +19,4 @@
 - IVEp: Vezave za razsvetljavo – uvod (764), Zaključno delo in dokumentacija (1123).
 - IEKp (44), STR (145), VUI (58), Pomoč (822): še stari slog.
 - Domača stran s karticami predmetov (IVE, INE, IEK, STR, VUI; polna imena za `aria-label` manjkajo).
-- Čakajo potrditev: omejitev širine odstavkov (~68 znakov) v globalnem CSS, naslov »TRIFAZNI IZMENIČNI SISTEM« z velikimi črkami (vpliva na meni), gumb »na vrh strani«.
+- Globalni CSS v2 (3. 11. 2026): odstavki in seznami največ 68 znakov (`--measure`), gumb »na vrh strani« vklopljen (Divi → Splošno) in oblikovan (56 px). Naslov strani 89 in postavka menija 161 sta zdaj »Trifazni izmenični sistem«. Pri shranjevanju CSS prek JS uporabi CodeMirror (`.CodeMirror.CodeMirror.setValue`, nato `#epanel-save`); sama sprememba `textarea.value` se ne shrani. Gumb »na vrh« nima besedilne oznake za bralnik zaslona (Divi ga ne doda).
