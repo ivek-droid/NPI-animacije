@@ -46,7 +46,7 @@ navodila = H2 + 'Kako izmeriš</h2>\n' + ol([
     'Ugotovi, kaj meriš: <strong>napetost</strong> ali <strong>tok</strong>, <strong>enosmerno</strong> (=) ali <strong>izmenično</strong> (~).',
     'Če vrednosti ne poznaš, izberi <strong>največje</strong> območje. Nato preklopi na manjše, dokler kazalec ni v drugi polovici skale.',
     '<strong>Voltmeter</strong> priključiš <strong>vzporedno</strong> s porabnikom. <strong>Ampermeter</strong> priključiš <strong>zaporedno</strong>: krog prekineš in merilnik vključiš vmes.',
-    'Izberi skalo, ki ustreza območju. Končna številka skale in območje se razlikujeta največ za faktor 10 (območje 15 V → skala 0–15, območje 300 V → skala 0–30).',
+    'Izberi skalo, ki ustreza območju. Območje je končna številka skale ali njen večkratnik z 10, 100 … (območje 15 V → skala 0–15, območje 300 V → skala 0–30).',
     'Preštej razdelke <strong>α</strong> od ničle do kazalca. Glej naravnost nanj. Če ima skala zrcalo, se morata kazalec in njegova slika pokrivati.',
     'Izračunaj: <strong>k = območje / N</strong> in <strong>X = α · k</strong>. Napiši enoto.']) \
     + '\n<p><strong>k</strong> je vrednost enega razdelka. <strong>N</strong> je število razdelkov na skali.</p>'

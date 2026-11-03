@@ -17,7 +17,7 @@
 <li>Ugotovi, kaj meriš: <strong>napetost</strong> ali <strong>tok</strong>, <strong>enosmerno</strong> (=) ali <strong>izmenično</strong> (~).</li>
 <li>Če vrednosti ne poznaš, izberi <strong>največje</strong> območje. Nato preklopi na manjše, dokler kazalec ni v drugi polovici skale.</li>
 <li><strong>Voltmeter</strong> priključiš <strong>vzporedno</strong> s porabnikom. <strong>Ampermeter</strong> priključiš <strong>zaporedno</strong>: krog prekineš in merilnik vključiš vmes.</li>
-<li>Izberi skalo, ki ustreza območju. Končna številka skale in območje se razlikujeta največ za faktor 10 (območje 15 V → skala 0–15, območje 300 V → skala 0–30).</li>
+<li>Izberi skalo, ki ustreza območju. Območje je končna številka skale ali njen večkratnik z 10, 100 … (območje 15 V → skala 0–15, območje 300 V → skala 0–30).</li>
 <li>Preštej razdelke <strong>α</strong> od ničle do kazalca. Glej naravnost nanj. Če ima skala zrcalo, se morata kazalec in njegova slika pokrivati.</li>
 <li>Izračunaj: <strong>k = območje / N</strong> in <strong>X = α · k</strong>. Napiši enoto.</li>
 </ol>
