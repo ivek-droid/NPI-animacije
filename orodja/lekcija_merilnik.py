@@ -1,6 +1,8 @@
 src = open('/home/claude/npi-animacije/orodja/lekcije_pomocniki_in_ivep.py').read().split('# ======================================================== SERIJSKA')[0]
 exec(src)
 
+import sys
+SLIKA = sys.argv[1] if len(sys.argv) > 1 else '2026/11/iskra-mi7043.jpg'
 def f(x, n=1): return f'{x:.{n}f}'.replace('.', ',')
 
 # ---- preračun vseh števil (skale iz odcitavanje-instrumenta.html) ----
@@ -39,12 +41,11 @@ kaj = H2 + '''Kaj kaže kazalec</h2>
 skale = H2 + '''Skale na merilniku</h2>
 <p>Enosmerne vrednosti (=) odčitavaš na <strong>črni</strong> skali, izmenične (~) na <strong>rdeči</strong>.</p>
 ''' + tab([['črna 0–5', '50', '10'], ['črna 0–15', '75', '25'], ['rdeča 0–10', '50', '10'], ['rdeča 0–30', '30', '10']],
-          ['Skala', 'Razdelkov (N)', 'Med številkama']) + '''
-<p style="margin-top:10px">Preveri, ali ima tvoj merilnik enake skale in barve.</p>'''
+          ['Skala', 'Razdelkov (N)', 'Med številkama'])
 
 navodila = H2 + 'Kako izmeriš</h2>\n' + ol([
-    'Ugotovi, kaj meriš: <strong>napetost</strong> ali <strong>tok</strong>, <strong>enosmerno</strong> (=) ali <strong>izmenično</strong> (~).',
-    'Če vrednosti ne poznaš, izberi <strong>največje</strong> območje. Nato preklopi na manjše, dokler kazalec ni v drugi polovici skale.',
+    'Ugotovi, kaj meriš: <strong>napetost</strong> ali <strong>tok</strong>, <strong>enosmerno</strong> (=) ali <strong>izmenično</strong> (~). Drsnik nad stikalom postavi na ~ ali =.',
+    'Z vrtljivim stikalom izberi območje. Beli napisi so za enosmerno, rdeči za izmenično. Če vrednosti ne poznaš, izberi <strong>največje</strong> območje. Nato preklopi na manjše, dokler kazalec ni v drugi polovici skale.',
     '<strong>Voltmeter</strong> priključiš <strong>vzporedno</strong> s porabnikom. <strong>Ampermeter</strong> priključiš <strong>zaporedno</strong>: krog prekineš in merilnik vključiš vmes.',
     'Izberi skalo, ki ustreza območju. Območje je končna številka skale ali njen večkratnik z 10, 100 … (območje 15 V → skala 0–15, območje 300 V → skala 0–30).',
     'Preštej razdelke <strong>α</strong> od ničle do kazalca. Glej naravnost nanj. Če ima skala zrcalo, se morata kazalec in njegova slika pokrivati.',
@@ -56,7 +57,7 @@ pozor = box('pozor', 'Pozor', '<p>Ampermetra nikoli ne priključi vzporedno z vi
 
 p1 = box('primer', 'Rešen primer 1: enosmerna napetost', '''<p style="margin-top:0">Merilnik je na območju 15 V =. Kazalec je na črni skali 0–15 na 45. razdelku. Koliko voltov kaže?</p>
 ''' + koraki([
-    korak('Podatki', 'območje 15 V =, črna skala 0–15, N = 75, α = 45'),
+    korak('Podatki', 'drsnik =, stikalo 15 V (bel napis), črna skala 0–15, N = 75, α = 45'),
     korak('Iskano', 'napetost U = ?'),
     korak('Formula', 'k = območje / N in U = α · k'),
     korak('Vstavim', 'k = 15 V / 75 = 0,2 V na razdelek'),
@@ -67,7 +68,7 @@ p1 = box('primer', 'Rešen primer 1: enosmerna napetost', '''<p style="margin-to
 
 p2 = box('primer', 'Rešen primer 2: izmenična napetost', '''<p style="margin-top:0">Merilnik je na območju 300 V ~. Kazalec je na rdeči skali 0–30 na 23. razdelku. Koliko voltov kaže?</p>
 ''' + koraki([
-    korak('Podatki', 'območje 300 V ~, rdeča skala 0–30, N = 30, α = 23'),
+    korak('Podatki', 'drsnik ~, stikalo 300 V (rdeč napis), rdeča skala 0–30, N = 30, α = 23'),
     korak('Iskano', 'napetost U = ?'),
     korak('Formula', 'k = območje / N in U = α · k'),
     korak('Vstavim', 'k = 300 V / 30 = 10 V na razdelek'),
@@ -96,7 +97,7 @@ out = sec(
         'izbrati veličino, vrsto toka in merilno območje,',
         'pravilno priključiti voltmeter in ampermeter,',
         'odčitati kazalec in izračunati izmerjeno vrednost.']))))
-  + row(col('1_2', text(kaj)) + col('1_2', text(skale)), '1_2,1_2')
+  + row(col('1_2', text(kaj) + text(skale)) + col('1_2', img(SLIKA, 'Analogni univerzalni merilnik Iskra MI 7043: zgoraj skale s kazalcem (črni 0–5 in 0–15, rdeči 0–10 in 0–30), pod njimi drsnik ~ / = in vrtljivo stikalo z območji za napetost (levo) in tok (desno).') + cap('Univerzalni merilnik Iskra MI 7043.')), '1_2,1_2')
   + row(col('1_2', text(navodila)) + col('1_2', text(pozor)), '1_2,1_2')
   + row(col('1_2', text(p1)) + col('1_2', text(p2)), '1_2,1_2'))
 out += sec(row(col('4_4', anim('odcitavanje-instrumenta.html', 'odčitavanje univerzalnega instrumenta',
