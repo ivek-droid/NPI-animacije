@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odčitavanje univerzalnega instrumenta – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f5f3ef; --panel: #ffffff; --ink: #1b1e28; --muted: #4a4f5c; --border: #c9c4bb;
+  --ok: #0b6b3a; --ok-bg: #e3f3e9; --bad: #a3001b; --bad-bg: #fbe6e9;
+  --accent: #4b1585; --row: #efe8f8; --zone: #dcd0ee;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 14px 20px; background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font); }
+.ct-kompakt body { padding: 0; }
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.ct-kompakt .ct-wrap > header { display: none; }
+h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+.ct-lead { margin: 0; color: var(--muted); }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.ct-status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-status p { margin: 0; flex: 1 1 260px; }
+.ct-chip { display: inline-flex; align-items: center; gap: 8px; font: 700 .95rem/1 var(--mono); padding: 8px 12px; border-radius: 999px; border: 2px solid var(--border); background: var(--bg); white-space: nowrap; }
+.ct-chip.ct-ok { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
+.ct-sec { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.ct-sec:last-child { border-bottom: 0; }
+.ct-h { margin: 0 0 8px; font-size: 1rem; font-weight: 700; }
+.ct-prm { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-height: 44px; }
+.ct-prm > .ct-lab { flex: 0 0 120px; font-weight: 600; line-height: 1.25; }
+.ct-group { display: inline-flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.ct-btn { font: 600 1rem/1.2 var(--font); color: var(--ink); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; min-height: 44px; min-width: 44px; cursor: pointer; }
+.ct-btn:hover { border-color: var(--muted); }
+.ct-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-btn:disabled { opacity: .45; cursor: not-allowed; }
+.ct-btn-main { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ct-btn-main:hover { border-color: var(--ink); }
+.ct-btn:focus-visible, .ct-in:focus-visible, .ct-sel:focus-visible, summary:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+.ct-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+details > summary { list-style: none; display: inline-flex; align-items: center; margin-bottom: 8px; }
+details > summary::-webkit-details-marker { display: none; }
+
+.ct-fig { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 12px 12px 4px; }
+@media (min-width: 900px) { .ct-fig { grid-template-columns: 1.12fr 1fr; align-items: start; } }
+.ct-stage { overflow-x: auto; border-radius: 10px; }
+.ct-stage:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ct-stage svg { display: block; width: 100%; height: auto; }
+.ct-zoom .ct-stage svg { min-width: 1040px; }
+.ct-figbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 12px 12px; }
+.ct-cap { margin: 0; padding: 0 16px 10px; color: var(--muted); font-size: .92rem; }
+
+.ct-sn { font: 700 18px var(--font); fill: #1b1e28; text-anchor: middle; dominant-baseline: central; }
+.ct-sr { font: 700 18px var(--font); fill: #b3122a; text-anchor: middle; dominant-baseline: central; }
+.ct-kl { font: 700 17px var(--mono); dominant-baseline: central; }
+.ct-kdc { fill: #ffffff; }
+.ct-kac { fill: #ff7070; }
+
+#steps { display: grid; grid-template-columns: 1fr; gap: 0 12px; align-items: start; }
+@media (min-width: 900px) { #steps { grid-template-columns: 1fr 1fr; } }
+fieldset.ct-step { margin: 0 0 10px; padding: 10px 12px 10px; border: 2px solid var(--border); border-radius: 10px; min-width: 0; background: var(--panel); }
+fieldset.ct-step.ct-done { border-color: var(--ok); background: var(--ok-bg); }
+fieldset.ct-step:disabled { background: var(--bg); }
+fieldset.ct-step:disabled legend { color: var(--muted); }
+fieldset.ct-step legend { font-weight: 700; padding: 0 6px; }
+.ct-lock { display: none; font-weight: 400; color: var(--muted); font-size: .9rem; }
+fieldset.ct-step:disabled .ct-lock { display: inline; }
+.ct-eq { margin: 0 0 6px; font: 600 .95rem var(--mono); color: var(--muted); }
+.ct-opt { position: relative; display: inline-flex; }
+.ct-opt input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.ct-opt span { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 12px; border: 2px solid var(--border); border-radius: 8px; background: var(--bg); font-weight: 600; }
+.ct-opt input:checked + span { border-color: var(--accent); background: var(--row); color: var(--accent); }
+.ct-opt input:focus-visible + span { outline: 4px solid var(--accent); outline-offset: 2px; }
+fieldset:disabled .ct-opt span { opacity: .5; }
+.ct-in, .ct-sel { font: 600 1rem var(--font); min-height: 44px; padding: 6px 10px; border: 2px solid var(--border); border-radius: 8px; background: #fff; color: var(--ink); }
+.ct-in { width: 110px; font-family: var(--mono); }
+.ct-sel { min-width: 80px; }
+.ct-fb { margin: 8px 0 0; min-height: 0; font-weight: 600; }
+.ct-fb:empty { display: none; }
+.ct-fb.ct-ok { color: var(--ok); }
+.ct-fb.ct-bad { color: var(--bad); }
+.ct-hintp { margin: 8px 0 0; padding: 8px 10px; background: var(--row); border-radius: 8px; font-size: .95rem; }
+.ct-calc { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-family: var(--mono); font-size: .95rem; }
+.ct-calc li { padding: 4px 8px; border-radius: 6px; background: var(--bg); }
+.ct-calc li.ct-warn { background: var(--row); }
+table.ct-tab { border-collapse: collapse; font-size: .95rem; margin: 4px 0 8px; }
+table.ct-tab th, table.ct-tab td { border: 1px solid var(--border); padding: 4px 10px; text-align: left; }
+.ct-note { margin: 0; padding: 8px 16px 14px; color: var(--muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="ct-wrap">
+  <header>
+    <h1>Odčitavanje univerzalnega instrumenta</h1>
+    <p class="ct-lead">Poglej, kako je instrument nastavljen, in odčitaj merilni rezultat po korakih.</p>
+  </header>
+
+  <section class="ct-panel" aria-label="Animacija: odčitavanje analognega univerzalnega merilnega instrumenta">
+    <div class="ct-status">
+      <span class="ct-chip" id="chip">Naloga 1</span>
+      <span class="ct-chip" id="chip2">Rešeno: 0</span>
+      <p id="status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="ct-sec">
+      <details id="det"><summary class="ct-btn">Nastavitve vaje</summary>
+        <div class="ct-prm"><span class="ct-lab" id="l-mode">Način</span>
+          <span class="ct-group" role="group" aria-labelledby="l-mode">
+            <button class="ct-btn" type="button" data-set="mode" data-val="vodeno" aria-pressed="true">Vodeno (korak za korakom)</button>
+            <button class="ct-btn" type="button" data-set="mode" data-val="samo" aria-pressed="false">Samostojno (vse naenkrat)</button></span></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-form">Oblika</span>
+          <span class="ct-group" role="group" aria-labelledby="l-form">
+            <button class="ct-btn" type="button" data-set="form" data-val="dc" aria-pressed="false">Enosmerno ( = )</button>
+            <button class="ct-btn" type="button" data-set="form" data-val="ac" aria-pressed="false">Izmenično ( ~ )</button>
+            <button class="ct-btn" type="button" data-set="form" data-val="obe" aria-pressed="true">Obe</button></span></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-qty">Veličina</span>
+          <span class="ct-group" role="group" aria-labelledby="l-qty">
+            <button class="ct-btn" type="button" data-set="qty" data-val="U" aria-pressed="false">Napetost</button>
+            <button class="ct-btn" type="button" data-set="qty" data-val="I" aria-pressed="false">Tok</button>
+            <button class="ct-btn" type="button" data-set="qty" data-val="obe" aria-pressed="true">Obe</button></span></div>
+        <div class="ct-prm"><span class="ct-lab" id="l-fine">Odčitek</span>
+          <span class="ct-group" role="group" aria-labelledby="l-fine">
+            <button class="ct-btn" type="button" data-set="fine" data-val="celi" aria-pressed="true">Celi razdelki</button>
+            <button class="ct-btn" type="button" data-set="fine" data-val="pol" aria-pressed="false">Tudi pol razdelka</button></span></div>
+      </details>
+      <div class="ct-row">
+        <button class="ct-btn ct-btn-main" type="button" id="novaBtn">Nova naloga</button>
+        <button class="ct-btn" type="button" id="ponoviBtn">Ponovi premik kazalca</button>
+        <button class="ct-btn" type="button" id="zoomBtn" aria-pressed="false">Povečaj skalo</button>
+      </div>
+    </div>
+
+    <div class="ct-fig" id="fig">
+      <div class="ct-stage" id="stage" tabindex="0" aria-label="Merilna skala s kazalcem. Če je povečana, jo lahko premikaš s puščicama levo in desno.">
+        <svg id="meter" viewBox="0 0 520 345" role="img" aria-label="Shematski prikaz merilne skale analognega univerzalnega instrumenta s kazalcem. Naloga je odčitati število razdelkov, ki jih kaže kazalec."></svg>
+      </div>
+      <div class="ct-stage">
+        <svg id="knob" viewBox="0 0 520 290" role="img" aria-label="Shematski prikaz drsnika za obliko veličine in stikala za merilna območja. Naloga je ugotoviti, kako je instrument nastavljen."></svg>
+      </div>
+    </div>
+    <p class="ct-cap">Levo na stikalu so območja za napetost (V), desno za tok (A). Bele številke veljajo za enosmerno, rdeče za izmenično veličino. Drsnik je pri znaku oblike, ki jo meriš.</p>
+
+    <div class="ct-sec" id="steps"></div>
+
+    <div class="ct-sec">
+      <div class="ct-row">
+        <button class="ct-btn ct-btn-main" type="button" id="vseBtn" hidden>Preveri vse korake</button>
+        <button class="ct-btn" type="button" id="resBtn">Pokaži rešitev</button>
+      </div>
+      <ul class="ct-calc" id="calc" hidden style="margin-top:10px"></ul>
+    </div>
+
+    <div class="ct-sec">
+      <details><summary class="ct-btn">Skale: koliko razdelkov imajo</summary>
+        <table class="ct-tab">
+          <thead><tr><th>Skala</th><th>Število razdelkov</th><th>Razdelkov med dvema številkama</th></tr></thead>
+          <tbody>
+            <tr><td>črna 0–5</td><td>50</td><td>10</td></tr>
+            <tr><td>črna 0–15</td><td>75</td><td>25</td></tr>
+            <tr><td>rdeča 0–10</td><td>50</td><td>10</td></tr>
+            <tr><td>rdeča 0–30</td><td>30</td><td>10</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+    <p class="ct-note">Poenostavitve: instrument je narisan shematično (razporeditev območij na stikalu ni povsem enaka pravemu instrumentu), ni pogreška zaradi paralakse (zrcalo), ni merilnih območij 1000 V in 100 mV / 50 µA ter ni ohmmetra.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+/* ---------- podatki ---------- */
+var UN  = { 'V': 1, 'mV': 1e-3, 'A': 1, 'mA': 1e-3, 'µA': 1e-6 };
+var FAM = { 'V': 'U', 'mV': 'U', 'A': 'I', 'mA': 'I', 'µA': 'I' };
+var SC = {
+  c5:  { key: 'c5',  name: 'črna 0–5',   max: 5,  N: 50, ac: false, lab: 10, unit: 1,  R: 268, col: '#1b1e28' },
+  c15: { key: 'c15', name: 'črna 0–15',  max: 15, N: 75, ac: false, lab: 25, unit: 5,  R: 212, col: '#1b1e28' },
+  r10: { key: 'r10', name: 'rdeča 0–10', max: 10, N: 50, ac: true,  lab: 10, unit: 2,  R: 158, col: '#b3122a' },
+  r30: { key: 'r30', name: 'rdeča 0–30', max: 30, N: 30, ac: true,  lab: 10, unit: 10, R: 104, col: '#b3122a' }
+};
+var SCKEYS = ['c5', 'c15', 'r10', 'r30'];
+
+function clean(x) { return Number(x.toPrecision(10)); }
+function fmt(x) {
+  if (x === 0) return '0';
+  var s = String(clean(x));
+  if (/e/.test(s)) s = x.toFixed(8).replace(/0+$/, '').replace(/\.$/, '');
+  return s.replace('.', ',');
+}
+function parse(str) {
+  if (str == null) return NaN;
+  str = String(str).trim().replace(/\s+/g, '').replace(',', '.');
+  if (!/^[-+]?(\d+\.?\d*|\.\d+)$/.test(str)) return NaN;
+  return Number(str);
+}
+function close(a, b, rel) { return Math.abs(a - b) <= (rel || 1e-6) * Math.max(Math.abs(a), Math.abs(b), 1e-12); }
+function rl(v, u) { return fmt(v) + ' ' + u; }
+
+/* položaji stikala: levo napetost (zgoraj največje), desno tok */
+var POS = [];
+function P(side, row, dc, ac, extra) {
+  var o = { side: side, row: row, dc: dc ? { v: dc[0], u: dc[1], t: dc[2] || rl(dc[0], dc[1]) } : null,
+            ac: ac ? { v: ac[0], u: ac[1], t: ac[2] || rl(ac[0], ac[1]) } : null };
+  o.dcOK = !!dc; o.acOK = !!ac;
+  if (extra) for (var k in extra) o[k] = extra[k];
+  POS.push(o);
+}
+P('L', 0, [1000, 'V'], null, { dcOK: false });
+P('L', 1, [500, 'V'], null);
+P('L', 2, [150, 'V'], [1000, 'V'], { acOK: false });
+P('L', 3, [50, 'V'], [300, 'V']);
+P('L', 4, [15, 'V'], [100, 'V']);
+P('L', 5, [5, 'V'], [30, 'V']);
+P('L', 6, [1.5, 'V'], [10, 'V']);
+P('L', 7, [0.5, 'V'], [3, 'V']);
+P('R', 0, null, [10, 'A']);
+P('R', 1, [5, 'A'], null);
+P('R', 2, [0.5, 'A'], [3, 'A']);
+P('R', 3, [50, 'mA'], [0.3, 'A']);
+P('R', 4, [5, 'mA'], [30, 'mA']);
+P('R', 5, [0.5, 'mA'], [3, 'mA']);
+P('R', 6, null, [1, 'mA']);
+P('R', 7, [0.1, 'V', '100 mV / 50 µA'], null, { dcOK: false });
+
+/* ---------- stanje ---------- */
+var cfg = { mode: 'vodeno', form: 'obe', qty: 'obe', fine: 'celi' };
+var T = null, ok = [], solved = 0, taskNo = 0, helped = false, shown = false;
+var curDeg = -50, anim = 0;
+
+function rnd(n) { return Math.floor(Math.random() * n); }
+
+function scaleFor(rng, ac) {
+  var base = rng.v * UN[rng.u];
+  for (var i = 0; i < SCKEYS.length; i++) {
+    var s = SC[SCKEYS[i]];
+    if (s.ac !== ac) continue;
+    var ratio = base / s.max, n = Math.round(Math.log(ratio) / Math.LN10);
+    if (Math.abs(ratio / Math.pow(10, n) - 1) < 1e-9) return s;
+  }
+  return null;
+}
+function pool() {
+  var out = [];
+  POS.forEach(function (p) {
+    ['dc', 'ac'].forEach(function (f) {
+      if (!p[f] || !p[f + 'OK']) return;
+      if (cfg.form !== 'obe' && cfg.form !== f) return;
+      var q = p.side === 'L' ? 'U' : 'I';
+      if (cfg.qty !== 'obe' && cfg.qty !== q) return;
+      out.push({ p: p, form: f });
+    });
+  });
+  return out;
+}
+function makeTask(entry, alpha) {
+  var p = entry.p, f = entry.form, r = p[f], ac = f === 'ac';
+  var sc = scaleFor(r, ac);
+  var N = sc.N, lo = Math.ceil(0.1 * N), hi = Math.floor(0.95 * N);
+  if (alpha == null) alpha = cfg.fine === 'pol' ? (2 * lo + rnd(2 * (hi - lo) + 1)) / 2 : lo + rnd(hi - lo + 1);
+  var k = clean(r.v / N);
+  return { p: p, form: f, ac: ac, qty: p.side === 'L' ? 'U' : 'I', rng: r, sc: sc, N: N,
+           k: k, alpha: alpha, X: clean(alpha * k) };
+}
+
+/* ---------- risanje: skala ---------- */
+var PX = 260, PY = 335, SPAN = 50, NS = 'http://www.w3.org/2000/svg';
+function pt(R, d) { var a = d * Math.PI / 180; return [PX + R * Math.sin(a), PY - R * Math.cos(a)]; }
+function arcD(R) {
+  var a = pt(R, -SPAN), b = pt(R, SPAN);
+  return 'M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) + ' A' + R + ' ' + R + ' 0 0 1 ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
+}
+function buildMeter() {
+  var h = '<rect x="3" y="3" width="514" height="339" rx="12" fill="#f7f8fa" stroke="#7b7f8c" stroke-width="2"/>';
+  h += '<g id="band"></g>';
+  SCKEYS.forEach(function (k) {
+    var s = SC[k], cls = s.ac ? 'ct-sr' : 'ct-sn';
+    h += '<path d="' + arcD(s.R) + '" fill="none" stroke="' + s.col + '" stroke-width="2.6"/>';
+    for (var i = 0; i <= s.N; i++) {
+      var d = -SPAN + 2 * SPAN * i / s.N;
+      var major = i % s.lab === 0, mid = i % 5 === 0;
+      var len = major ? 20 : (mid ? 14 : 8);
+      var a = pt(s.R, d), b = pt(s.R + len, d);
+      h += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + b[0].toFixed(1) + '" y2="' + b[1].toFixed(1) +
+           '" stroke="' + s.col + '" stroke-width="' + (major ? 2.4 : 1.4) + '"/>';
+      if (major) {
+        var t = pt(s.R + len + 15, d);
+        h += '<text class="' + cls + '" x="' + t[0].toFixed(1) + '" y="' + t[1].toFixed(1) + '">' + fmt(i / s.lab * s.unit) + '</text>';
+      }
+    }
+  });
+  h += '<path d="M' + (PX - 46) + ' 342 A46 46 0 0 1 ' + (PX + 46) + ' 342 Z" fill="#2a2a2e"/>';
+  h += '<g id="ptr"><line x1="' + PX + '" y1="' + (PY + 22) + '" x2="' + PX + '" y2="' + (PY - 292) + '" stroke="#0b0b0f" stroke-width="2.6" stroke-linecap="round"/>' +
+       '<circle cx="' + PX + '" cy="' + PY + '" r="9" fill="#0b0b0f"/></g>';
+  $('#meter').innerHTML = h;
+}
+function setPtr(d) { curDeg = d; $('#ptr').setAttribute('transform', 'rotate(' + d.toFixed(3) + ' ' + PX + ' ' + PY + ')'); }
+function movePtr(target, animate) {
+  cancelAnimationFrame(anim);
+  var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!animate || rm) { setPtr(target); return; }
+  var from = -SPAN, t0 = null, dur = 750;
+  setPtr(from);
+  function step(ts) {
+    if (t0 === null) t0 = ts;
+    var u = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - u, 3);
+    setPtr(from + (target - from) * e);
+    if (u < 1) anim = requestAnimationFrame(step); else setPtr(target);
+  }
+  anim = requestAnimationFrame(step);
+}
+function showBand(key) {
+  var g = $('#band');
+  if (!key) { g.innerHTML = ''; return; }
+  var s = SC[key];
+  g.innerHTML = '<path d="' + arcD(s.R + 14) + '" fill="none" stroke="#dcd0ee" stroke-width="48" stroke-linecap="butt"/>';
+}
+
+/* ---------- risanje: stikalo in drsnik ---------- */
+var KX = 260, KY = 150, KR = 62;
+function dotAngle(side, row) { var a = 32 + row * (116 / 7); return side === 'L' ? -a : a; }
+function rowY(row) { return 62 + row * 29; }
+function buildKnob() {
+  var h = '<rect x="3" y="3" width="514" height="284" rx="14" fill="#26262b" stroke="#111" stroke-width="2"/>';
+  h += '<text class="ct-kl ct-kdc" x="22" y="26" style="font-size:24px">V</text>';
+  h += '<text class="ct-kl ct-kdc" x="498" y="26" style="font-size:24px;text-anchor:end">A</text>';
+  POS.forEach(function (p, i) {
+    var ang = dotAngle(p.side, p.row), rad = ang * Math.PI / 180;
+    var dx = KX + KR * Math.sin(rad), dy = KY - KR * Math.cos(rad), y = rowY(p.row), L = p.side === 'L';
+    var x0 = L ? (p.dc ? 176 : 108) : (p.dc ? 344 : 416);
+    h += '<line x1="' + x0 + '" y1="' + y + '" x2="' + dx.toFixed(1) + '" y2="' + dy.toFixed(1) + '" stroke="#7a7a86" stroke-width="1.5"/>';
+    h += '<circle cx="' + dx.toFixed(1) + '" cy="' + dy.toFixed(1) + '" r="6" fill="' + (p.dc ? '#ffffff' : '#ff7070') + '"/>';
+    if (p.dc) h += '<text class="ct-kl ct-kdc" x="' + (L ? 170 : 350) + '" y="' + y + '" style="text-anchor:' + (L ? 'end' : 'start') + '">' + p.dc.t + '</text>';
+    if (p.ac) h += '<text class="ct-kl ct-kac" x="' + (L ? 102 : 422) + '" y="' + y + '" style="text-anchor:' + (L ? 'end' : 'start') + '">' + p.ac.t + '</text>';
+  });
+  h += '<circle cx="' + KX + '" cy="' + KY + '" r="44" fill="#3b3b44" stroke="#0e0e10" stroke-width="3"/>';
+  h += '<g id="kptr"></g>';
+  h += '<circle cx="' + KX + '" cy="' + KY + '" r="12" fill="#26262b"/>';
+  /* drsnik */
+  h += '<rect x="200" y="8" width="120" height="34" rx="6" fill="#101014" stroke="#9a9aa4" stroke-width="2"/>';
+  h += '<rect id="thumb" x="204" y="12" width="60" height="26" rx="4" fill="#d9d9de" stroke="#6b6b75" stroke-width="2"/>';
+  h += '<g id="thumbr" stroke="#6b6b75" stroke-width="2"></g>';
+  h += '<text class="ct-kl ct-kac" x="230" y="60" style="font-size:26px;text-anchor:middle">~</text>';
+  h += '<line x1="276" y1="55" x2="304" y2="55" stroke="#fff" stroke-width="3"/>';
+  h += '<line x1="276" y1="63" x2="304" y2="63" stroke="#fff" stroke-width="3" stroke-dasharray="5 3"/>';
+  $('#knob').innerHTML = h;
+}
+function setKnob(t) {
+  var p = t.p, ang = dotAngle(p.side, p.row), rad = ang * Math.PI / 180;
+  var ex = KX + 52 * Math.sin(rad), ey = KY - 52 * Math.cos(rad);
+  $('#kptr').innerHTML = '<line x1="' + KX + '" y1="' + KY + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) +
+    '" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>';
+  var x = t.ac ? 204 : 256;
+  $('#thumb').setAttribute('x', x);
+  var r = '';
+  for (var i = 0; i < 5; i++) r += '<line x1="' + (x + 12 + i * 9) + '" y1="17" x2="' + (x + 12 + i * 9) + '" y2="33"/>';
+  $('#thumbr').innerHTML = r;
+}
+
+/* ---------- koraki ---------- */
+var STEPS = [
+  { id: 'q', title: '1. Katero veličino merim?', type: 'radio', name: 'q',
+    opts: [['U', 'Napetost U (V)'], ['I', 'Električni tok I (A)']],
+    hint: function () { return 'Poglej, na kateri strani stikala je kazalec. Na levi so območja za napetost (V), na desni za tok (A).'; } },
+  { id: 'f', title: '2. Kakšna je oblika veličine?', type: 'radio', name: 'f',
+    opts: [['dc', 'Enosmerna ( = )'], ['ac', 'Izmenična ( ~ )']],
+    hint: function () { return 'Poglej drsnik nad stikalom. Pri znaku ~ je izmenična veličina, pri znaku z ravno in črtkano črto enosmerna.'; } },
+  { id: 'r', title: '3. Katero merilno območje je nastavljeno?', type: 'val', eq: 'Preberi številko, kamor kaže stikalo.',
+    hint: function () { return 'Ob položaju stikala sta lahko dve številki. Za enosmerno veljajo bele, za izmenično rdeče. Pazi na enoto (V, mA, A).'; } },
+  { id: 's', title: '4. Na kateri skali beremo?', type: 'radio', name: 's',
+    opts: [['c5', 'črna 0–5'], ['c15', 'črna 0–15'], ['r10', 'rdeča 0–10'], ['r30', 'rdeča 0–30']],
+    hint: function () { return 'Enosmerne veličine beremo na črnih skalah, izmenične na rdečih. Največja vrednost skale mora biti enaka območju ali pa je območje 10-krat, 100-krat … večje ali manjše (npr. območje 50 V → skala 0–5).'; } },
+  { id: 'k', title: '5. Izračunaj merilno konstanto k', type: 'val', eq: 'k = merilno območje / število razdelkov skale',
+    hint: function () { return 'Delimo s številom razdelkov skale, ne z največjo vrednostjo na skali. Skala 0–15 ima 75 razdelkov, skala 0–30 ima 30, ostali dve imata 50.'; } },
+  { id: 'a', title: '6. Koliko razdelkov kaže kazalec?', type: 'num', unit: 'r',
+    hint: function () { var s = T.sc; return 'Poišči zadnjo številko levo od kazalca. Med dvema številkama je na skali ' + s.name + ' ' + s.lab + ' razdelkov. Od tiste številke štej črtice do kazalca.'; } },
+  { id: 'x', title: '7. Izračunaj merilni rezultat', type: 'val', eq: 'X = α · k',
+    hint: function () { return 'Število razdelkov pomnoži z merilno konstanto. Rezultat ima enako enoto kot k.'; } }
+];
+var UNITS = ['V', 'mV', 'A', 'mA', 'µA'];
+
+function buildSteps() {
+  var h = '';
+  STEPS.forEach(function (s, i) {
+    h += '<fieldset class="ct-step" id="st' + i + '"><legend>' + s.title + ' <span class="ct-lock">(najprej reši prejšnji korak)</span></legend>';
+    if (s.eq) h += '<p class="ct-eq">' + s.eq + '</p>';
+    h += '<div class="ct-row">';
+    if (s.type === 'radio') {
+      s.opts.forEach(function (o) {
+        h += '<label class="ct-opt"><input type="radio" name="' + s.name + '" value="' + o[0] + '"><span>' + o[1] + '</span></label>';
+      });
+    } else if (s.type === 'val') {
+      h += '<input class="ct-in" type="text" inputmode="decimal" autocomplete="off" id="in' + i + '" aria-label="Vrednost, korak ' + (i + 1) + '">' +
+           '<select class="ct-sel" id="un' + i + '" aria-label="Enota, korak ' + (i + 1) + '">' +
+           UNITS.map(function (u) { return '<option value="' + u + '">' + (i === 4 ? u + ' / r' : u) + '</option>'; }).join('') + '</select>';
+    } else {
+      h += '<input class="ct-in" type="text" inputmode="decimal" autocomplete="off" id="in' + i + '" aria-label="Število razdelkov"> <b>r</b>';
+    }
+    h += '<button class="ct-btn" type="button" data-chk="' + i + '">Preveri</button>' +
+         '<button class="ct-btn" type="button" data-hint="' + i + '">Namig</button></div>' +
+         '<p class="ct-fb" id="fb' + i + '" role="status" aria-live="polite"></p><p class="ct-hintp" id="hp' + i + '" hidden></p></fieldset>';
+  });
+  $('#steps').innerHTML = h;
+}
+
+/* ---------- preverjanje ---------- */
+function val(i) { return { v: parse($('#in' + i).value), u: $('#un' + i) ? $('#un' + i).value : '' }; }
+function radio(name) { var e = document.querySelector('input[name="' + name + '"]:checked'); return e ? e.value : null; }
+var FN = { dc: 'enosmerno', ac: 'izmenično' };
+
+var CHECK = [
+  function () {
+    var v = radio('q'); if (!v) return { ok: false, msg: 'Izberi eno možnost.' };
+    return v === T.qty ? { ok: true, msg: 'Pravilno.' }
+      : { ok: false, msg: 'Ni pravilno. Poglej, na kateri strani stikala je kazalec.' };
+  },
+  function () {
+    var v = radio('f'); if (!v) return { ok: false, msg: 'Izberi eno možnost.' };
+    return v === T.form ? { ok: true, msg: 'Pravilno.' }
+      : { ok: false, msg: 'Ni pravilno. Poglej, pri katerem znaku je drsnik.' };
+  },
+  function () {
+    var s = val(2); if (isNaN(s.v)) return { ok: false, msg: 'Vpiši število.' };
+    var tb = T.rng.v * UN[T.rng.u], sb = s.v * UN[s.u];
+    if (FAM[s.u] !== FAM[T.rng.u]) return { ok: false, msg: 'Enota ne ustreza veličini, ki jo meriš.' };
+    if (close(sb, tb)) return { ok: true, msg: s.v === T.rng.v ? 'Pravilno.' : 'Pravilno (na stikalu piše ' + T.rng.t + ').' };
+    var other = T.form === 'dc' ? T.p.ac : T.p.dc;
+    if (other && close(sb, other.v * UN[other.u])) return { ok: false, msg: 'To je območje za ' + FN[T.form === 'dc' ? 'ac' : 'dc'] + ' veličino. Poglej barvo številke.' };
+    if (close(sb, tb * 10) || close(sb, tb / 10)) return { ok: false, msg: 'Pozor na decimalno vejico ali enoto (npr. mA in A).' };
+    return { ok: false, msg: 'Ni pravilno. Preberi številko, kamor kaže stikalo.' };
+  },
+  function () {
+    var v = radio('s'); if (!v) return { ok: false, msg: 'Izberi eno skalo.' };
+    if (v === T.sc.key) return { ok: true, msg: 'Pravilno.' };
+    if (SC[v].ac !== T.ac) return { ok: false, msg: 'Barva skale ne ustreza obliki veličine.' };
+    return { ok: false, msg: 'Ni pravilno. Največja vrednost skale se mora ujemati z območjem (' + T.rng.t + ').' };
+  },
+  function () {
+    var s = val(4); if (isNaN(s.v)) return { ok: false, msg: 'Vpiši število.' };
+    if (FAM[s.u] !== FAM[T.rng.u]) return { ok: false, msg: 'Enota ne ustreza veličini, ki jo meriš.' };
+    var tb = T.k * UN[T.rng.u], sb = s.v * UN[s.u];
+    if (close(sb, tb)) return { ok: true, msg: 'Pravilno: k = ' + fmt(T.k) + ' ' + T.rng.u + ' / r.' };
+    var rb = T.rng.v * UN[T.rng.u];
+    if (close(sb, rb / T.sc.max)) return { ok: false, msg: 'Delil si z največjo vrednostjo skale. Deliti moraš s številom razdelkov skale (' + T.N + ').' };
+    if (T.N !== 50 && close(sb, rb / 50)) return { ok: false, msg: 'Skala ' + T.sc.name + ' nima 50 razdelkov, ampak ' + T.N + '.' };
+    if (close(sb, tb * 10) || close(sb, tb / 10)) return { ok: false, msg: 'Pozor na decimalno vejico ali enoto.' };
+    return { ok: false, msg: 'Ni pravilno. k = območje / število razdelkov.' };
+  },
+  function () {
+    var v = parse($('#in5').value); if (isNaN(v)) return { ok: false, msg: 'Vpiši število.' };
+    var tol = cfg.fine === 'pol' ? 0.25 : 0.01;
+    if (Math.abs(v - T.alpha) <= tol) return { ok: true, msg: 'Pravilno: kazalec kaže ' + fmt(T.alpha) + ' razdelkov.' };
+    if (Math.abs(v - T.alpha * T.sc.max / T.N) <= 0.05 * Math.max(1, T.sc.max / T.N)) return { ok: false, msg: 'To je vrednost na skali. Tu iščemo število razdelkov (črtic).' };
+    return { ok: false, msg: 'Ni pravilno. Poišči zadnjo številko levo od kazalca in štej črtice naprej.' };
+  },
+  function () {
+    var s = val(6); if (isNaN(s.v)) return { ok: false, msg: 'Vpiši število.' };
+    if (FAM[s.u] !== FAM[T.rng.u]) return { ok: false, msg: 'Enota ne ustreza veličini, ki jo meriš.' };
+    var tol = (cfg.fine === 'pol' ? 0.25 : 0.01) * T.k * UN[T.rng.u];
+    var tb = T.X * UN[T.rng.u], sb = s.v * UN[s.u];
+    if (Math.abs(sb - tb) <= tol + 2e-3 * Math.abs(tb)) return { ok: true, msg: 'Pravilno: ' + (T.qty === 'U' ? 'U' : 'I') + ' = ' + fmt(T.X) + ' ' + T.rng.u + '.' };
+    var a = parse($('#in5').value), k = val(4);
+    if (!isNaN(a) && !isNaN(k.v) && close(sb, a * k.v * UN[k.u], 2e-3)) return { ok: false, msg: 'Množenje je pravilno, vendar si uporabil napačen α ali k. Preveri korak 5 in 6.' };
+    return { ok: false, msg: 'Ni pravilno. Preveri množenje X = α · k in enoto.' };
+  }
+];
+
+function setFb(i, r) {
+  var e = $('#fb' + i);
+  e.className = 'ct-fb ' + (r.ok ? 'ct-ok' : 'ct-bad');
+  e.textContent = (r.ok ? '✔ ' : '✘ ') + r.msg;
+}
+function lockState() {
+  var guided = cfg.mode === 'vodeno';
+  STEPS.forEach(function (s, i) {
+    var f = $('#st' + i), locked = false;
+    if (guided) for (var j = 0; j < i; j++) if (!ok[j]) locked = true;
+    f.disabled = locked;
+    f.classList.toggle('ct-done', !!ok[i]);
+  });
+  $('#vseBtn').hidden = guided;
+}
+function checkStep(i) {
+  var r = CHECK[i]();
+  if (r.ok) { ok[i] = true; if (i === 3) showBand(T.sc.key); }
+  else ok[i] = false;
+  setFb(i, r); lockState();
+  if (r.ok && i < STEPS.length - 1 && cfg.mode === 'vodeno') {
+    var nx = $('#st' + (i + 1)), f = nx.querySelector('input,select');
+    if (f) f.focus({ preventScroll: false });
+  }
+  if (ok.every(Boolean)) finish();
+  return r.ok;
+}
+function finish() {
+  if (T.counted) return;
+  T.counted = true;
+  if (!helped) { solved++; }
+  $('#chip2').textContent = 'Rešeno: ' + solved;
+  $('#chip2').classList.add('ct-ok');
+  $('#status').textContent = 'Naloga rešena' + (helped ? ' (z rešitvijo).' : '. Nadaljuj z novo nalogo.');
+  $('#novaBtn').focus();
+}
+
+/* ---------- rešitev ---------- */
+function solution() {
+  var t = T, s = t.sc, q = t.qty === 'U' ? 'U' : 'I', ru = t.rng.u;
+  var pct = t.alpha / t.N * 100;
+  var warn = s.key === 'c15' ? 'Pogosta napaka: skala 0–15 ima 75 razdelkov, ne 50. Zato k ni območje / 50.' :
+             s.key === 'r30' ? 'Pogosta napaka: skala 0–30 ima 30 razdelkov, zato je k = območje / 30.' :
+             t.ac ? 'Pogosta napaka: izmenično beremo na rdečih skalah in z rdečimi številkami ob stikalu.' :
+             'Pogosta napaka: napačna enota (mA ali A) ali odčitek na napačni skali.';
+  var lines = [
+    '1. Veličina: ' + (t.qty === 'U' ? 'napetost (kazalec stikala je pri V)' : 'električni tok (kazalec stikala je pri A)'),
+    '2. Oblika: ' + FN[t.form] + (t.ac ? ' ( ~ ), drsnik je levo' : ' ( = ), drsnik je desno'),
+    '3. Območje: ' + t.rng.t,
+    '4. Skala: ' + s.name + ' (območje ' + t.rng.t + ' = največja vrednost skale ' + s.max + ' × ' + fmt(clean(t.rng.v * UN[ru] / s.max)) + ')',
+    '5. k = ' + t.rng.t + ' / ' + t.N + ' r = ' + fmt(t.k) + ' ' + ru + ' / r',
+    '6. α = ' + fmt(t.alpha) + ' r',
+    '7. ' + q + ' = α · k = ' + fmt(t.alpha) + ' r · ' + fmt(t.k) + ' ' + ru + ' / r = ' + fmt(t.X) + ' ' + ru,
+    'Smiselnost: kazalec je pri ' + fmt(clean(pct)) + ' % skale, ' + fmt(clean(pct)) + ' % od ' + t.rng.t + ' je ' + fmt(t.X) + ' ' + ru + '.'
+  ];
+  var h = lines.map(function (l, i) { return '<li' + (i === 7 ? ' class="ct-warn"' : '') + '>' + l + '</li>'; }).join('');
+  h += '<li class="ct-warn">' + warn + '</li>';
+  return h;
+}
+
+/* ---------- nova naloga ---------- */
+function newTask(entry, alpha) {
+  var pl = pool();
+  if (!entry) {
+    var prev = T ? T.rng.t + T.form : '';
+    var e, tries = 0;
+    do { e = pl[rnd(pl.length)]; tries++; } while (pl.length > 1 && (e.p[e.form].t + e.form) === prev && tries < 20);
+    entry = e;
+  }
+  T = makeTask(entry, alpha);
+  taskNo++; ok = STEPS.map(function () { return false; }); helped = false; shown = false;
+  $('#chip').textContent = 'Naloga ' + taskNo;
+  $('#chip2').classList.remove('ct-ok');
+  $('#status').textContent = 'Poglej, kako je instrument nastavljen, in reši korake.';
+  $('#calc').hidden = true; $('#calc').innerHTML = '';
+  $('#resBtn').textContent = 'Pokaži rešitev';
+  $$('#steps input[type=radio]').forEach(function (r) { r.checked = false; });
+  $$('#steps .ct-in').forEach(function (r) { r.value = ''; });
+  $$('#steps .ct-sel').forEach(function (r, ix) { r.selectedIndex = 0; });
+  $$('#steps .ct-fb').forEach(function (e) { e.textContent = ''; e.className = 'ct-fb'; });
+  $$('#steps .ct-hintp').forEach(function (e) { e.hidden = true; e.textContent = ''; });
+  showBand(null);
+  setKnob(T);
+  movePtr(-SPAN + 100 * T.alpha / T.N, true);
+  lockState();
+}
+
+/* ---------- pomočniki ---------- */
+function $(s, r) { return (r || document).querySelector(s); }
+function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+/* ---------- dogodki ---------- */
+function init() {
+  buildMeter(); buildKnob(); buildSteps();
+  $('#steps').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-chk')) checkStep(+b.getAttribute('data-chk'));
+    if (b.hasAttribute('data-hint')) {
+      var i = +b.getAttribute('data-hint'), p = $('#hp' + i);
+      p.hidden = !p.hidden; p.textContent = p.hidden ? '' : STEPS[i].hint();
+    }
+  });
+  $('#steps').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.matches('input.ct-in')) {
+      e.preventDefault();
+      var f = e.target.closest('fieldset'); checkStep(+f.id.slice(2));
+    }
+  });
+  $('#vseBtn').addEventListener('click', function () {
+    var allOk = true;
+    for (var i = 0; i < STEPS.length; i++) { if (!checkStep(i)) allOk = false; }
+    $('#status').textContent = allOk ? 'Vsi koraki so pravilni.' : 'Popravi korake z oznako ✘.';
+  });
+  $('#resBtn').addEventListener('click', function () {
+    shown = !shown; helped = helped || shown;
+    var c = $('#calc'); c.hidden = !shown; c.innerHTML = shown ? solution() : '';
+    this.textContent = shown ? 'Skrij rešitev' : 'Pokaži rešitev';
+  });
+  $('#novaBtn').addEventListener('click', function () { newTask(); });
+  $('#ponoviBtn').addEventListener('click', function () { movePtr(-SPAN + 100 * T.alpha / T.N, true); });
+  $('#zoomBtn').addEventListener('click', function () {
+    var on = this.getAttribute('aria-pressed') !== 'true';
+    this.setAttribute('aria-pressed', on);
+    $('#fig').classList.toggle('ct-zoom', on);
+    var st = $('#stage'); st.scrollLeft = (st.scrollWidth - st.clientWidth) / 2;
+  });
+  $$('[data-set]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var k = b.getAttribute('data-set'), v = b.getAttribute('data-val');
+      cfg[k] = v;
+      $$('[data-set="' + k + '"]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      if (k === 'mode') lockState(); else newTask();
+    });
+  });
+  newTask();
+}
+
+window.ct = {
+  get task() { return T; }, cfg: cfg, pool: pool, POS: POS, SC: SC,
+  newTask: newTask, scaleFor: scaleFor, makeTask: makeTask, curDeg: function () { return curDeg; }, SPAN: SPAN
+};
+init();
+})();
+</script>
+</body>
+</html>
