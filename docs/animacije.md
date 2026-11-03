@@ -29,5 +29,5 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | vodne-turbine.html | 620 | Pridobivanje el. energije (82) |
 | hidroelektrarna.html | 730 | Pridobivanje el. energije (82) |
 | izberi-presek.html | 1220 (pri 480 px 1530) | Dimenzioniranje vodnika (1338), razdelek »Izberi presek sam« pred »Preveri se« |
-| odcitavanje-instrumenta.html | 1450 (pri 480 px 2300) | IVEp, stran »Uporaba univerzalnega merilnika« (še ni objavljena); test `orodja/test_odcitavanje.js` |
+| odcitavanje-instrumenta.html | 1450 (pri 480 px 2300) | IVEp, stran »Uporaba univerzalnega merilnika« (1367); test `orodja/test_odcitavanje.js` |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |

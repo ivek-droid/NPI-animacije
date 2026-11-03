@@ -14,7 +14,7 @@
 - Stran 185: opomba k nalogi 5.4 (zimski 2020) objavljena 1. 11., popravljena 3. 11. 2026 (okvir »Pozor«; napaka v faktorju 2 in varovalka 10 A). Slika table ni zamenjana. Analiza: `slog/analiza-elektricne-instalacije.md`, preračuni `orodja/preveri_dimenzioniranje.py`.
 - Okvir »Matura« na straneh 1338 in 1344 popravljen v »zimski rok 2020 in 2022« (3. 11. 2026).
 
-- IVEp: animacija »odčitavanje instrumenta« (`odcitavanje-instrumenta.html`, 3. 11. 2026) je na GitHubu; osnutek strani »Uporaba univerzalnega merilnika« je narejen (`orodja/lekcija_merilnik.py` → `slog/osnutki/uporaba-merilnika.txt`, 3. 11. 2026), čaka na potrditev; ni še objavljen. Razporeditev območij na stikalu za tok je prebrana s fotografije; uporabnik naj preveri z instrumentom.
+- IVEp: stran »Uporaba univerzalnega merilnika« (1367, meni 1369 pod IVEp, `/uporaba-univerzalnega-merilnika/`) objavljena 3. 11. 2026; generator `orodja/lekcija_merilnik.py`, animacija `odcitavanje-instrumenta.html`, slika instrumenta Iskra MI 7043 (medij 1366). Skale in območja potrjene s fotografijo. Okvir »Matura« manjka (ni potrjeno, ali je tema v katalogu). Višine iframa (1450) po objavi ni vizualno preverjena.
 
 ## Odprto
 - INEp: Nadtokovna zaščita (619), Izvedba električnih inštalacij (662), Nevarnosti el. toka (995).
