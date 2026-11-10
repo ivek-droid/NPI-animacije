@@ -1,0 +1,41 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">LEGO programiranje</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>sestaviti blokovni program v EV3 Classroom,</li>
+<li>prenesti program na robota in ga preizkusiti,</li>
+<li>izmeriti, kaj je robot naredil, in program popraviti.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kaj potrebuješ</h2>
+<ul>
+<li>robota LEGO EV3: vozilo z dvema motorjema,</li>
+<li>računalnik s programom EV3 Classroom (vmesnik je v angleščini),</li>
+<li>merilni trak in lepilni trak.</li>
+</ul>[/et_pb_text][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kje je kaj priključeno</h2>
+<ul>
+<li>levi motor: vrata <strong>B</strong>, desni motor: vrata <strong>C</strong>,</li>
+<li>vrata <strong>1</strong>: senzor dotika, vrata <strong>2</strong>: žiroskop,</li>
+<li>vrata <strong>3</strong>: barvni senzor, vrata <strong>4</strong>: ultrazvočni senzor.</li>
+</ul>
+<p>Ko je robot povezan, so vrednosti na vseh vratih vidne v vrstici na vrhu programa.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kako delaš</h2>
+<ol>
+<li>Preberi vajo.</li>
+<li>Sestavi program v EV3 Classroom.</li>
+<li>Preizkusi program na robotu in izmeri, kaj je naredil.</li>
+<li>Popravi program in reši »Preveri se«.</li>
+</ol>
+<div class="pg-okvir pg-okvir--primer" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Robot je samo eden</p>
+<p style="margin-top:0">Program najprej pripravi na računalniku in ga preizkusi v animaciji. Na robotu preizkusiš šele potem. Tako je čakanje krajše.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Vaje</h2>
+<ul>
+<li>Vaja 1: Spoznaj robota in program (pripravljamo)</li>
+<li><strong>Vaja 2: <a href="https://npi.splet.arnes.si/lego-voznja-naravnost/">Vožnja naravnost</a></strong></li>
+<li>Vaja 3: Zavoji (pripravljamo)</li>
+<li>Vaja 4: Ponavljanje (pripravljamo)</li>
+<li>Vaja 5: Zvok, zaslon in lučka (pripravljamo)</li>
+<li>Vaja 6: Senzor dotika (pripravljamo)</li>
+<li>Vaja 7: Barvni senzor (pripravljamo)</li>
+<li>Vaja 8: Ultrazvočni senzor (pripravljamo)</li>
+<li>Vaja 9: Končni izziv (pripravljamo)</li>
+</ul>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]

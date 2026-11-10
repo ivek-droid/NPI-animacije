@@ -34,6 +34,7 @@
 <ol>
 <li>Na tla prilepi trak za začetek. Robota postavi tako, da se sprednji rob dotika traku.</li>
 <li>Zaženi program. Robot se ustavi.</li>
+<li>Poglej vrstico z vrati zgoraj v programu. Pri vratih B in C se je število stopinj povečalo. En vrtljaj kolesa je 360°.</li>
 <li>Izmeri pot od traku do sprednjega roba robota. Zapiši: <strong>1 vrtljaj = ___ cm</strong>.</li>
 <li>Ponovi meritev še dvakrat. Izračunaj povprečje treh meritev. To je obseg tvojega kolesa o.</li>
 <li>Izračunaj obseg še iz premera kolesa: d = 5,6 cm.</li>

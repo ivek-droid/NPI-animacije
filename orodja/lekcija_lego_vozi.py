@@ -33,6 +33,7 @@ program = H2 + 'Sestavi program</h2>\n' + ol([
 meritev = H2 + 'Izmeri, koliko pelje en vrtljaj</h2>\n' + ol([
     'Na tla prilepi trak za začetek. Robota postavi tako, da se sprednji rob dotika traku.',
     'Zaženi program. Robot se ustavi.',
+    'Poglej vrstico z vrati zgoraj v programu. Pri vratih B in C se je število stopinj povečalo. En vrtljaj kolesa je 360°.',
     'Izmeri pot od traku do sprednjega roba robota. Zapiši: <strong>1 vrtljaj = ___ cm</strong>.',
     'Ponovi meritev še dvakrat. Izračunaj povprečje treh meritev. To je obseg tvojega kolesa o.',
     'Izračunaj obseg še iz premera kolesa: d = 5,6 cm.']) + '''
