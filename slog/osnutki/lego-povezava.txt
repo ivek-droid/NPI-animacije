@@ -13,7 +13,8 @@
 <li>Na računalniku odpri nastavitve Bluetooth in dodaj napravo <strong>EV3C</strong>.</li>
 <li>Ko računalnik vpraša po kodi PIN, vpiši <strong>1234</strong>. Kodo potrdi tudi na robotu.</li>
 <li>Počakaj, da pod napravo EV3C piše »Povezava je vzpostavljena«.</li>
-<li>V programu EV3 Classroom klikni gumb za povezavo robota in izberi <strong>EV3C</strong>.</li>
+<li>Odpri EV3 Classroom. Program te vodi skozi povezavo. Izberi robota <strong>EV3C</strong>.</li>
+<li>Ko je robot povezan, ima ikona robota zeleno piko.</li>
 </ol>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-windows-povezano.png" alt="Windows: naprava EV3C s sporočilom »Povezava je vzpostavljena«." title_text="Windows: naprava EV3C s sporočilom »Povezava je vzpostavljena«." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="360px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Tako izgleda, ko je robot seznanjen z računalnikom.</p>[/et_pb_text][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
 <p class="pg-okvir__oznaka">Povezava z USB kablom</p>
 <p style="margin-top:0">Če Bluetooth ne dela, uporabi USB kabel. Kabel priključi v robota (vrata PC) in v računalnik. Nato v programu EV3 Classroom izberi robota.</p>
@@ -26,26 +27,27 @@
 <li>Poskusi še z USB kablom.</li>
 </ul>
 </div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preberi vrednosti na vratih</h2>
-<p>Ko je robot povezan, program na vrhu kaže vrednosti na vseh vratih. Vsak senzor in motor je priključen na svoja vrata.</p>
+<p>Klikni ikono robota z zeleno piko (»open brick connection«). Odpre se pogled na robota. Vsak senzor in motor je priključen na svoja vrata. Ob vratih vidiš njegovo vrednost.</p>
 <ul>
 <li>vrata <strong>1</strong>: senzor dotika,</li>
-<li>vrata <strong>2</strong>: žiroskop,</li>
-<li>vrata <strong>3</strong>: barvni senzor,</li>
-<li>vrata <strong>4</strong>: ultrazvočni senzor,</li>
-<li>vrata <strong>B</strong>: levi motor, vrata <strong>C</strong>: desni motor.</li>
-</ul>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Poskusi</h2>
+<li>vrata <strong>2</strong>: žiroskop (stopinje),</li>
+<li>vrata <strong>3</strong>: barvni senzor (odstotki),</li>
+<li>vrata <strong>4</strong>: ultrazvočni senzor (cm),</li>
+<li>vrata <strong>B</strong>: levi motor, vrata <strong>C</strong>: desni motor (stopinje).</li>
+</ul>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-vrata-robot.png" alt="Pogled na robota EV3C: motorja na vratih B in C ter senzorji na vratih 1, 2, 3 in 4 z njihovimi vrednostmi." title_text="Pogled na robota EV3C: motorja na vratih B in C ter senzorji na vratih 1, 2, 3 in 4 z njihovimi vrednostmi." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="560px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Pogled na robota. Ob vsakih vratih je vrednost.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Poskusi</h2>
 <ol>
 <li>Pritisni senzor dotika. Poglej, kaj se zgodi z vrednostjo pri vratih 1.</li>
-<li>Dlan postavi pred ultrazvočni senzor in jo odmikaj. Poglej, kaj se zgodi z vrednostjo pri vratih 4.</li>
+<li>Dlan postavi pred ultrazvočni senzor in jo odmikaj. Poglej, kako se spreminja razdalja pri vratih 4.</li>
+<li>Zavrti levo kolo z roko za en polni obrat. Poglej število stopinj pri vratih B. Spremenilo se je za 360°.</li>
 </ol>
-<p>Kolesa se z roko težko vrtijo, ker jih drži motor. Stopinje pri vratih B in C boš videl po prvem programu.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Prvi program</h2>
+<p>Isto lahko narediš z desnim kolesom in vrati C.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Prvi program</h2>
 <ol>
 <li>Robota postavi na tla. Pred njim naj bo prosta pot vsaj 30 cm. Na mizi bi robot padel.</li>
 <li>V programu EV3 Classroom odpri nov projekt. Na delovni površini je že rumeni blok »when program starts«.</li>
 <li>Klikni paleto MOVEMENT (roza).</li>
 <li>Povleci blok »move forward for 1 rotations« tik pod rumeni blok. Bloka se zaskočita.</li>
 <li>Klikni desni gumb ▶ (prenos in zagon). Robot odpelje naprej.</li>
-<li>Poglej vrata B in C. Število stopinj se je povečalo za 360°. To je en vrtljaj kolesa.</li>
+<li>V pogledu na robota poglej vrata B in C. Število stopinj se je povečalo za 360°. To je en vrtljaj kolesa.</li>
 </ol>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-gumba-prenos-zagon.png" alt="Spodaj desno v programu: levi gumb s puščico navzdol (prenos) in desni modri gumb ▶ (prenos in zagon)." title_text="Spodaj desno v programu: levi gumb s puščico navzdol (prenos) in desni modri gumb ▶ (prenos in zagon)." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="300px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Levi gumb samo prenese program na robota. Desni gumb ga prenese in zažene.</p>[/et_pb_text][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--pozor" style="margin:0">
 <p class="pg-okvir__oznaka">Roke stran</p>
 <p style="margin-top:0">Robot odpelje takoj po kliku. Roke umakni z njegove poti in poskrbi, da je pred njim prosto.</p>
