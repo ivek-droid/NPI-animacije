@@ -29,7 +29,7 @@ napaka = box('pozor', 'Pogosta napaka',
     '<p>Ko je stikalo izklopljeno, je na navoju sijalke še vedno 230 V proti zemlji. Izprobaj v animaciji.</p>', '16px 0 0')
 
 anim_blok = anim('stikalo-v-fazi.html', 'kam daš stikalo',
-                 'Izklopi in vklopi stikalo. Nato ga prestavi v nevtralni vodnik in opazuj napetost na navojnem kontaktu.', 720)
+                 'Izklopi in vklopi stikalo. Nato ga prestavi v nevtralni vodnik in opazuj napetost na navojnem kontaktu.', 800)
 
 preveri = H2 + 'Preveri se</h2>' \
     + q('1. V kateri vodnik vežemo stikalo za razsvetljavo?', 'V fazni vodnik (L). Tako je sijalka ob izklopljenem stikalu brez napetosti.') \
