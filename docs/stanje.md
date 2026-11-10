@@ -21,9 +21,11 @@
 - LaTeX za formule: ni uveden. Zahteva zunanjo knjižnico (KaTeX/MathJax) prek Divi → Integracija (koda v glavi) in pretvorbo vseh formul na 9 straneh; odločitev uporabnika po testu na eni strani.
 - IVEp, stran 1367: razdelek »Za v zvezek« (4. 11. 2026): list »Univerzalni merilni instrument« (uporabnikov docx → A4 ležeče PDF brez metapodatkov + JPG predogled; mediji 1391 JPG, 1392 PDF, `slike/univerzalni-merilni-instrument.*`; generator `orodja/lekcija_merilnik.py`). Gumb odpre PDF v novem zavihku, slika ima lightbox.
 
+- IVEp: Vezave za razsvetljavo – uvod (764) objavljeno v novem slogu 10. 11. 2026 (generator `orodja/lekcija_razsvetljava_uvod.py`, animacija `stikalo-v-fazi.html` iframe 800, shema medij 1397). Okvir »Matura« po dogovoru ni dodan. Slug je `vezave-za-razsvetljavo-2`. Opis videa ni preverjen.
+
 ## Odprto
 - INEp: Nadtokovna zaščita (619), Izvedba električnih inštalacij (662), Nevarnosti el. toka (995).
-- IVEp: Vezave za razsvetljavo – uvod (764): osnutek je pripravljen (začasna stran 1398, neobjavljena, 10. 11. 2026), čaka potrditev uporabnika. Po potrditvi: `POST /pages/764` z vsebino `slog/osnutki/vezave-za-razsvetljavo-uvod.txt`, nato osnutek 1398 v smeti. Generator `orodja/lekcija_razsvetljava_uvod.py`, animacija `stikalo-v-fazi.html` (iframe 800), shema medij 1397. Okvir »Matura« (razsvetljava 5.1–5.4) ni potrjen glede kataloga; opis videa ni preverjen. Zaključno delo in dokumentacija (1123) še stari slog.
+- IVEp: Zaključno delo in dokumentacija (1123) še stari slog.
 - IEKp (44), STR (145), VUI (58), Pomoč (822): še stari slog.
 - Domača stran s karticami predmetov (IVE, INE, IEK, STR, VUI; polna imena za `aria-label` manjkajo).
 - Globalni CSS v3 (3. 11. 2026; v2 je po pomoti zožil vse iframe-e, ker so v `<p>`, zdaj izvzeti z `p:has(> iframe)`): odstavki in seznami največ 68 znakov (`--measure`), gumb »na vrh strani« vklopljen (Divi → Splošno) in oblikovan (56 px). Naslov strani 89 in postavka menija 161 sta zdaj »Trifazni izmenični sistem«. Pri shranjevanju CSS prek JS uporabi CodeMirror (`.CodeMirror.CodeMirror.setValue`, nato `#epanel-save`); sama sprememba `textarea.value` se ne shrani. Gumb »na vrh« nima besedilne oznake za bralnik zaslona (Divi ga ne doda).
