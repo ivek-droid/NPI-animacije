@@ -24,7 +24,7 @@
 - IVEp: Vezave za razsvetljavo – uvod (764) objavljeno v novem slogu 10. 11. 2026 (generator `orodja/lekcija_razsvetljava_uvod.py`, animacija `stikalo-v-fazi.html` iframe 800, shema medij 1397). Okvir »Matura« po dogovoru ni dodan. Slug je `vezave-za-razsvetljavo-2`. Opis videa ni preverjen.
 
 ## LEGO programiranje (STR, 10. 11. 2026)
-- Osnutek vaje 2 »Vožnja naravnost« (`slog/osnutki/lego-vozi-naravnost.txt`, generator `orodja/lekcija_lego_vozi.py`, slike blokov `slog/lego/`), animacija `robot-vozi-naravnost.html` (iframe ~660, test `node orodja/test_robot_vozi.js`). NI objavljeno na strani. Podmeni pod STR (145) še ni narejen.
+- Osnutek vaje 2 »Vožnja naravnost« (`slog/osnutki/lego-vozi-naravnost.txt`, generator `orodja/lekcija_lego_vozi.py`, slike blokov `slog/lego/`), animacija `robot-vozi-naravnost.html` (iframe ~660, test `node orodja/test_robot_vozi.js`). OBJAVLJENO 10. 11. 2026: stran 1402 `/lego-voznja-naravnost/` (medij 1401), menijska postavka »LEGO programiranje« (1404) pod STR (148, stran 145). Naslednje vaje naj bodo podmeniji pod 1404; razmisli o uvodni strani »LEGO programiranje«.
 - Robot: EV3 Education Core Set 45544, vozilo z motorjema B (levo) in C (desno), kolesa premer 5,6 cm (obseg 17,6 cm); senzorji: žiroskop, barvni, ultrazvočni, 2× dotik. EV3 Classroom 1.5.3, namizna, angleški vmesnik. Blok sprejema decimalno piko. Rumeni blok »when program starts« je že na novem projektu.
 - Vaja 1 (povezava) še ni narejena; preveri, ali program zaženeš s klikom na rumeni blok.
 
