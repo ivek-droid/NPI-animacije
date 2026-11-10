@@ -31,4 +31,5 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | izberi-presek.html | 1220 (pri 480 px 1530) | Dimenzioniranje vodnika (1338), razdelek »Izberi presek sam« pred »Preveri se« |
 | priklop-merilnikov.html | 1220 (pri 480 px 1700) | IVEp, stran »Uporaba univerzalnega merilnika« (1367), pred animacijo odčitavanja; test `orodja/test_priklop.js` |
 | odcitavanje-instrumenta.html | 1450 (pri 480 px 2300) | IVEp, stran »Uporaba univerzalnega merilnika« (1367); test `orodja/test_odcitavanje.js` |
+| stikalo-v-fazi.html | 800 (pri 480 px 790, pod 400 px do 950) | Vezave za razsvetljavo – uvod (764, osnutek 1398); test `node orodja/test_stikalo.js`; statična shema `node orodja/shema_razsvetljava.js` |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |
