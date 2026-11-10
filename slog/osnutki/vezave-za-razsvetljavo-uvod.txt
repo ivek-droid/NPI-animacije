@@ -1,0 +1,54 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Vezave za razsvetljavo – uvod</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>povedati, v kateri vodnik vežemo stikalo za razsvetljavo in zakaj,</li>
+<li>povedati, na kateri kontakt sijalke priključiš fazni in na kateri nevtralni vodnik,</li>
+<li>našteti korake varnega posega pri sijalki.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Splošno pravilo</h2>
+<p>Pomisli, kako doma zamenjaš žarnico. Z roko primeš navoj sijalke. Zato na njem ne sme biti napetosti, ko je stikalo izklopljeno.</p>
+<ul>
+<li><strong>Stikalo</strong> vedno vežemo v fazni vodnik (L).</li>
+<li>Fazni vodnik pelje skozi stikalo na <strong>centralni kontakt</strong>. To je kontakt na dnu podnožja sijalke.</li>
+<li><strong>Nevtralni vodnik</strong> (N) priključimo neposredno na <strong>navojni kontakt</strong>.</li>
+</ul>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/razsvetljava-pravilna-vezava.png" alt="Shema pravilne vezave sijalke: fazni vodnik L gre skozi varovalko in stikalo na centralni kontakt sijalke, nevtralni vodnik N pa neposredno na navojni kontakt. Ko je stikalo vklopljeno, je na centralnem kontaktu 230 V, na navoju 0 V." title_text="Shema pravilne vezave sijalke: fazni vodnik L gre skozi varovalko in stikalo na centralni kontakt sijalke, nevtralni vodnik N pa neposredno na navojni kontakt. Ko je stikalo vklopljeno, je na centralnem kontaktu 230 V, na navoju 0 V." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Pravilna vezava: stikalo v faznem vodniku, vklopljeno. Napetosti so proti zemlji.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Zakaj tako?</h2>
+<p>Pri izklopljenem stikalu sta centralni kontakt in navoj na 0 V proti zemlji. Tako ni napetosti na delih sijalke, ki jih lahko primeš. To velja, če je inštalacija pravilno narejena.</p>
+<p>Pri sijalkah z Edisonovim navojem (npr. E27) je navoj bolj izpostavljen dotiku kot kontakt na dnu. Zato je na navoju nevtralni vodnik. Če bi bila na navoju faza, bi bilo na njem 230 V proti zemlji, ko je stikalo vklopljeno. Dotik bi bil smrtno nevaren.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--pozor" style="margin:0">
+<p class="pg-okvir__oznaka">Varen poseg pri sijalki</p>
+<p>Ugasnjena sijalka ali izklopljeno stikalo ni dokaz, da ni napetosti. Pred posegom:</p>
+<ol>
+<li>Izklopi odklopnik ali izvleci varovalko.</li>
+<li>Zavaruj pred ponovnim vklopom.</li>
+<li>Preveri z napetostnim preizkuševalnikom, da ni napetosti.</li>
+<li>Šele nato posegaj v priključek sijalke.</li>
+</ol>
+<p>Pri izvlečeni varovalki prekinitev vidiš. Pri odklopniku je ne vidiš, zato vedno še preveri.</p>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Stikalo vežeš v nevtralni vodnik. Sijalka vseeno sveti in se ugasne.</p>
+<p>Ko je stikalo izklopljeno, je na navoju sijalke še vedno 230 V proti zemlji. Izprobaj v animaciji.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi sam</h2>
+<p>Izklopi in vklopi stikalo. Nato ga prestavi v nevtralni vodnik in opazuj napetost na navojnem kontaktu. Uporabiš lahko tudi tipko Tab in Enter.</p>
+[iframe src="https://ivek-droid.github.io/NPI-animacije/stikalo-v-fazi.html?kompakt" width="100%" height="720" title="Animacija: kam daš stikalo"][/et_pb_text][et_pb_button button_url="https://ivek-droid.github.io/NPI-animacije/stikalo-v-fazi.html" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. V kateri vodnik vežemo stikalo za razsvetljavo?</summary><p style="margin-top:12px">V fazni vodnik (L). Tako je sijalka ob izklopljenem stikalu brez napetosti.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. Na kateri kontakt sijalke priključimo fazni in na kateri nevtralni vodnik?</summary><p style="margin-top:12px">Fazni vodnik (skozi stikalo) na centralni kontakt, nevtralni vodnik na navojni kontakt.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. Stikalo je pomotoma v nevtralnem vodniku in je izklopljeno. Sijalka ne sveti. Koliko voltov je na navoju proti zemlji?</summary><p style="margin-top:12px">230 V. Fazni vodnik je prek nitke povezan z navojem. Dotik navoja je smrtno nevaren.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>Stikalo vežemo v fazni vodnik (L).</li>
+<li>Fazni vodnik gre skozi stikalo na centralni kontakt.</li>
+<li>Nevtralni vodnik gre na navojni kontakt.</li>
+<li>Pred posegom izklopi odklopnik, zavaruj in preveri, da ni napetosti.</li>
+</ul>
+</div><div class="pg-okvir pg-okvir--matura" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Matura</p>
+<p>Naloge o razsvetljavi (točke 5.1 do 5.4) so v zbirki maturitetnih nalog. Vezalni načrt narišeš po pravilih iz lekcij.</p>
+<p><a href="https://npi.splet.arnes.si/elektricne-instalacije/#razsvetljava-naloge">Zbirka maturitetnih nalog: razsvetljava</a> · <a href="https://www.ric.si/poklicna-matura/predmeti/drugi-predmet/elektrotehnika/">Maturitetno gradivo (RIC)</a></p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Naprej</h2>
+<p>Poglej še posamezne vezave:</p>
+<ul>
+<li><a href="https://npi.splet.arnes.si/?page_id=798">Enopolna vezava</a></li>
+<li><a href="https://npi.splet.arnes.si/?page_id=804">Serijska vezava</a></li>
+<li><a href="https://npi.splet.arnes.si/?page_id=809">Menjalna vezava</a></li>
+<li><a href="https://npi.splet.arnes.si/?page_id=813">Križna vezava</a></li>
+<li><a href="https://npi.splet.arnes.si/?page_id=1075">Bistabilni impulzni rele</a></li>
+</ul>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Poglej video</h2>
+<p>Klikni sliko. Video se odpre v novem oknu.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2024/03/vpd-uvod-z-napotki.png" alt="Video: uvod v vezave za razsvetljavo z napotki (odpre se v novem oknu)" title_text="Video: uvod v vezave za razsvetljavo z napotki (odpre se v novem oknu)" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" url="https://video.arnes.si/watch/pqj752j255qt" url_new_window="on" max_width="420px"][/et_pb_image][/et_pb_column][/et_pb_row][/et_pb_section]
