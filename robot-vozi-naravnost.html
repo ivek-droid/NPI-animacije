@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koliko pelje robot? – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f4f6f5;
+  --panel: #ffffff;
+  --ink: #18201e;
+  --muted: #586561;
+  --border: #d5dbd8;
+  --accent: #0d7a6a;
+  --robot: #4b1585;
+  --robot-soft: #e8dff5;
+  --mark: #c4410c;
+  --btn: #4b1585;
+  --btn-ink: #ffffff;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111617; --panel: #1a2123; --ink: #e7edeb; --muted: #97a5a1; --border: #2c3638;
+    --accent: #4fd1b9; --robot: #b99af0; --robot-soft: #2d2540; --mark: #f0803c;
+    --btn: #b99af0; --btn-ink: #14101c;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.55 var(--font-body);
+  padding-block: 12px 20px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+h1 { margin: 0 0 6px; font-size: 1.75rem; line-height: 1.15; font-weight: 600; text-wrap: balance; }
+.ct-lead { margin: 0; color: var(--muted); max-width: 64ch; }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+.ct-stage { padding: 8px 8px 0; }
+svg.ct-scene { display: block; width: 100%; height: auto; }
+
+.ct-t { font-family: var(--font-mono); font-size: 34px; font-weight: 700; fill: var(--ink); }
+.ct-l { font-family: var(--font-body); font-size: 38px; fill: var(--muted); paint-order: stroke; stroke: var(--panel); stroke-width: 10px; stroke-linejoin: round; }
+.ct-n { font-family: var(--font-body); font-size: 26px; font-weight: 700; fill: #ffffff; }
+
+.ct-readout {
+  margin: 0; padding: 12px 16px; border-top: 1px solid var(--border);
+  font: 600 1.125rem/1.4 var(--font-mono);
+}
+.ct-controls { display: flex; flex-wrap: wrap; gap: 14px 24px; padding: 14px 16px; align-items: flex-end; }
+.ct-field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.ct-field legend { padding: 0; font-weight: 600; margin-bottom: 6px; }
+.ct-step { display: flex; align-items: center; gap: 8px; }
+.ct-val {
+  min-width: 4.5ch; text-align: center; font: 700 1.25rem/1 var(--font-mono);
+}
+.ct-btn {
+  min-height: 48px; min-width: 48px; padding: 0 18px; border-radius: 10px; cursor: pointer;
+  font: 600 1rem/1 var(--font-body); border: 2px solid var(--btn); background: var(--panel); color: var(--ink);
+}
+.ct-btn.ct-main { background: var(--btn); color: var(--btn-ink); }
+.ct-btn:focus-visible, input[type=range]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ct-btn[disabled] { opacity: .45; cursor: default; }
+input[type=range] { width: min(260px, 100%); min-height: 44px; accent-color: var(--robot); }
+.ct-note { margin: 0; padding: 0 16px 14px; color: var(--muted); font-size: 0.9375rem; }
+.ct-desc { margin: 0; color: var(--muted); max-width: 70ch; }
+.ct-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.ct-kompakt body { padding-block: 0; }
+.ct-kompakt .ct-wrap > header, .ct-kompakt .ct-desc { display: none; }
+@media (max-width: 520px) {
+  .ct-controls { gap: 12px 16px; }
+}
+</style>
+</head>
+<body>
+<main class="ct-wrap">
+  <header>
+    <h1>Koliko pelje robot?</h1>
+    <p class="ct-lead">Eden vrtljaj kolesa je ena dolžina obsega kolesa. Spremeni število vrtljajev in obseg ter opazuj, kako daleč pride robot.</p>
+  </header>
+
+  <section class="ct-panel" aria-label="Animacija vožnje robota">
+    <div class="ct-stage">
+      <svg class="ct-scene" id="scene" viewBox="-70 0 970 450" role="img" aria-labelledby="sceneTitle sceneDesc">
+        <title id="sceneTitle">Robot vozi naravnost po ravnilu</title>
+        <desc id="sceneDesc">Robot se premakne naprej. Na ravnilu so označena mesta, kjer se konča vsak vrtljaj kolesa. Razdalja med oznakami je enaka obsegu kolesa.</desc>
+        <!-- povečano kolo -->
+        <g id="bigWheel" transform="translate(110 80)">
+          <circle r="56" fill="var(--panel)" stroke="var(--ink)" stroke-width="6"/>
+          <circle r="44" fill="none" stroke="var(--border)" stroke-width="4"/>
+          <g id="bigSpin">
+            <line x1="0" y1="0" x2="0" y2="-50" stroke="var(--mark)" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="0" cy="-50" r="8" fill="var(--mark)"/>
+          </g>
+          <circle r="7" fill="var(--ink)"/>
+        </g>
+        <text class="ct-l" x="190" y="124">kolo</text>
+        <text class="ct-l" id="turns" x="190" y="76">vrtljaji: 0</text>
+        <text class="ct-t" id="dist" x="880" y="76" text-anchor="end">s = 0 cm</text>
+        <!-- tla in ravnilo -->
+        <g transform="translate(0 56)">
+        <line x1="-60" y1="230" x2="870" y2="230" stroke="var(--muted)" stroke-width="3"/>
+        <g id="ruler"></g>
+        <g id="marks"></g>
+        <!-- robot -->
+        <g id="robot">
+          <line id="front" x1="0" y1="138" x2="0" y2="262" stroke="var(--robot)" stroke-width="3" stroke-dasharray="7 6"/>
+          <rect x="-150" y="140" width="150" height="62" rx="8" fill="var(--robot)"/>
+          <rect x="-34" y="152" width="22" height="22" rx="3" fill="var(--robot-soft)"/>
+          <circle cx="-52" cy="206" r="24" fill="var(--panel)" stroke="var(--ink)" stroke-width="5"/>
+          <g transform="translate(-52 206)"><g id="smallSpin">
+            <line x1="0" y1="0" x2="0" y2="-20" stroke="var(--mark)" stroke-width="5" stroke-linecap="round"/>
+          </g></g>
+          <circle cx="-52" cy="206" r="4" fill="var(--ink)"/>
+        </g>
+        </g>
+      </svg>
+    </div>
+    <p class="ct-readout" id="readout" aria-live="polite"></p>
+    <div class="ct-controls">
+      <fieldset class="ct-field">
+        <legend id="lgN">Število vrtljajev n</legend>
+        <div class="ct-step" role="group" aria-labelledby="lgN">
+          <button type="button" class="ct-btn" id="nMinus" aria-label="Manj vrtljajev">−</button>
+          <span class="ct-val" id="nVal" aria-live="off">3</span>
+          <button type="button" class="ct-btn" id="nPlus" aria-label="Več vrtljajev">+</button>
+        </div>
+      </fieldset>
+      <fieldset class="ct-field">
+        <legend id="lgO">Obseg kolesa o (cm)</legend>
+        <div class="ct-step" role="group" aria-labelledby="lgO">
+          <button type="button" class="ct-btn" id="oMinus" aria-label="Manjši obseg">−</button>
+          <span class="ct-val" id="oVal" aria-live="off">20</span>
+          <button type="button" class="ct-btn" id="oPlus" aria-label="Večji obseg">+</button>
+        </div>
+      </fieldset>
+      <div class="ct-step">
+        <button type="button" class="ct-btn ct-main" id="run">Zaženi</button>
+        <button type="button" class="ct-btn" id="pause" aria-pressed="false" disabled>Pavza</button>
+        <button type="button" class="ct-btn" id="reset">Ponovi</button>
+      </div>
+    </div>
+    <p class="ct-note">Animacija je poenostavljena: kolo se ne zdrsne, pot je natančno n · o. Pravi robot se od tega malo razlikuje. Izmeri ga.</p>
+  </section>
+
+  <p class="ct-desc">Opis: robot se pomika naprej po ravnilu. Vsakič, ko se kolo zavrti enkrat, robot pride do naslednje oznake. Oznake so med seboj oddaljene za obseg kolesa. Pot robota je število vrtljajev krat obseg kolesa.</p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = 'http://www.w3.org/2000/svg';
+  var X0 = 100, X1 = 850;                 // 0 cm in največ cm na ravnilu
+  var NICE = [60, 90, 120, 150, 180];
+  var n = 3, o = 20;                     // vrtljaji, obseg v cm
+  var p = 0;                             // napredek 0..1
+  var running = false, paused = false, raf = 0, last = 0;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fmt(x) { return String(Math.round(x * 10) / 10).replace('.', ','); }
+  function sTotal() { return n * o; }
+  function rulerMax() {
+    var s = sTotal();
+    for (var i = 0; i < NICE.length; i++) if (NICE[i] >= s) return NICE[i];
+    return NICE[NICE.length - 1];
+  }
+  function X(cm) { return X0 + cm * (X1 - X0) / rulerMax(); }
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    parent.appendChild(e); return e;
+  }
+
+  function buildStatic() {
+    var ruler = $('ruler'), marks = $('marks');
+    ruler.textContent = ''; marks.textContent = '';
+    var max = rulerMax(), step = max / 6;
+    el('rect', { x: X0, y: 244, width: X1 - X0, height: 14, fill: 'var(--panel)', stroke: 'var(--ink)', 'stroke-width': 3 }, ruler);
+    for (var i = 0; i <= 6; i++) {
+      var cm = i * step, x = X(cm);
+      el('line', { x1: x, y1: 258, x2: x, y2: 270, stroke: 'var(--ink)', 'stroke-width': 3 }, ruler);
+      var t = el('text', { x: x, y: 302, 'text-anchor': 'middle', 'class': 'ct-l' }, ruler);
+      t.textContent = fmt(cm);
+    }
+    var cmT = el('text', { x: 14, y: 302, 'text-anchor': 'start', 'class': 'ct-l' }, ruler);
+    cmT.textContent = 'cm';
+    // oznake konca vsakega vrtljaja
+    for (var k = 1; k <= Math.ceil(n); k++) {
+      var d = k * o; if (d > sTotal() + 0.001) break;
+      var xx = X(d);
+      el('line', { x1: xx, y1: 232, x2: xx, y2: 326, stroke: 'var(--accent)', 'stroke-width': 3, 'stroke-dasharray': '6 5' }, marks);
+      el('circle', { cx: xx, cy: 356, r: 20, fill: 'var(--accent)' }, marks);
+      var tn = el('text', { x: xx, y: 364, 'text-anchor': 'middle', 'class': 'ct-n' }, marks);
+      tn.textContent = k;
+    }
+  }
+
+  function draw() {
+    var s = sTotal() * p;
+    $('robot').setAttribute('transform', 'translate(' + X(s).toFixed(1) + ' 0)');
+    var ang = 360 * s / o;
+    $('bigSpin').setAttribute('transform', 'rotate(' + ang.toFixed(1) + ')');
+    $('smallSpin').setAttribute('transform', 'rotate(' + ang.toFixed(1) + ')');
+    $('turns').textContent = 'vrtljaji: ' + fmt(n * p);
+    $('dist').textContent = 's = ' + fmt(s) + ' cm';
+  }
+
+  function readout() {
+    $('readout').textContent = 'Pot s = n · o = ' + fmt(n) + ' · ' + fmt(o) + ' cm = ' + fmt(sTotal()) + ' cm';
+    $('nVal').textContent = fmt(n);
+    $('oVal').textContent = fmt(o);
+    $('nMinus').disabled = n <= 0.5;
+    $('nPlus').disabled = n >= 6;
+    $('oMinus').disabled = o <= 10;
+    $('oPlus').disabled = o >= 30;
+  }
+
+  function setButtons() {
+    $('run').disabled = running && !paused;
+    $('run').textContent = paused ? 'Nadaljuj' : 'Zaženi';
+    $('pause').disabled = !running;
+    $('pause').setAttribute('aria-pressed', paused ? 'true' : 'false');
+  }
+
+  function stop() { cancelAnimationFrame(raf); running = false; paused = false; }
+
+  function resetAll() { stop(); p = 0; buildStatic(); draw(); readout(); setButtons(); }
+
+  function frame(ts) {
+    if (!running || paused) return;
+    var dt = (ts - last) / 1000; last = ts;
+    var dur = Math.max(1.5, 0.9 * n);           // s: enakomerna hitrost
+    p = Math.min(1, p + dt / dur);
+    draw();
+    if (p >= 1) { running = false; setButtons(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function run() {
+    if (running && paused) { paused = false; last = performance.now(); setButtons(); raf = requestAnimationFrame(frame); return; }
+    if (running) return;
+    if (p >= 1) p = 0;
+    if (reduce) { p = 1; draw(); setButtons(); return; }
+    running = true; paused = false; last = performance.now(); setButtons();
+    raf = requestAnimationFrame(frame);
+  }
+
+  function pause() {
+    if (!running) return;
+    paused = !paused;
+    if (!paused) { last = performance.now(); raf = requestAnimationFrame(frame); }
+    setButtons();
+  }
+
+  function changeN(d) { n = Math.min(6, Math.max(0.5, n + d)); resetAll(); }
+  function changeO(d) { o = Math.min(30, Math.max(10, o + d)); resetAll(); }
+
+  $('run').addEventListener('click', run);
+  $('pause').addEventListener('click', pause);
+  $('reset').addEventListener('click', resetAll);
+  $('nMinus').addEventListener('click', function () { changeN(-0.5); });
+  $('nPlus').addEventListener('click', function () { changeN(0.5); });
+  $('oMinus').addEventListener('click', function () { changeO(-0.5); });
+  $('oPlus').addEventListener('click', function () { changeO(0.5); });
+
+  resetAll();
+})();
+</script>
+</body>
+</html>

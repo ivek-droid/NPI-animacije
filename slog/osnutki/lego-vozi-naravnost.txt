@@ -1,0 +1,78 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Vožnja naravnost</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>sestaviti program z blokoma »when program starts« in »move forward«,</li>
+<li>spremeniti število vrtljajev koles,</li>
+<li>izmeriti, koliko pelje robot pri enem vrtljaju,</li>
+<li>izračunati, koliko vrtljajev potrebuje za izbrano pot.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kaj se zgodi pri enem vrtljaju</h2>
+<p>Pomisli na kolo. Kolo se zavrti enkrat in kolo kolesa prevozi pot, ki je dolga toliko kot obod kolesa.</p>
+<p>Tako je tudi pri robotu. Kolo robota se zavrti enkrat, robot pa se premakne naprej za en <strong>obseg kolesa</strong>. Obseg je dolžina črte okoli kolesa.</p>
+<p>Zato lahko pot izračunaš. Vpišeš število vrtljajev, robot pa pelje naprej.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Pravilo</p>
+<p style="margin-top:0">Pot robota: <strong>s = n · o</strong></p>
+<ul>
+<li>s = pot v centimetrih (cm)</li>
+<li>n = število vrtljajev kolesa</li>
+<li>o = obseg kolesa v centimetrih (cm)</li>
+</ul>
+<p>Obseg izračunaš iz premera kolesa: <strong>o = π · d</strong>. Pri nas je π ≈ 3,14.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Sestavi program</h2>
+<ol>
+<li>Robot je povezan z računalnikom (vaja 1). Postavi ga na tla. Pred njim naj bo prosta pot vsaj 1 m.</li>
+<li>V EV3 Classroom odpri nov projekt. Na delovni površini je že rumeni blok »when program starts«.</li>
+<li>Klikni paleto MOVEMENT (roza).</li>
+<li>Povleci blok »move forward for 1 rotations« tik pod rumeni blok. Bloka se zaskočita.</li>
+<li>Zaženi program. Klikni rumeni blok.</li>
+</ol>
+<p>Program ima samo dva bloka. Število <strong>1</strong> v bloku pomeni 1 vrtljaj kolesa.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-when-program-starts.png" alt="Blok »when program starts« (rumen): začetek programa." title_text="Blok »when program starts« (rumen): začetek programa." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="300px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok iz palete EVENTS.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-move-forward.png" alt="Blok »move forward for 1 rotations« (roza): vožnja naprej za 1 vrtljaj." title_text="Blok »move forward for 1 rotations« (roza): vožnja naprej za 1 vrtljaj." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="420px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok iz palete MOVEMENT.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Izmeri, koliko pelje en vrtljaj</h2>
+<ol>
+<li>Na tla prilepi trak za začetek. Robota postavi tako, da se sprednji rob dotika traku.</li>
+<li>Zaženi program. Robot se ustavi.</li>
+<li>Izmeri pot od traku do sprednjega roba robota. Zapiši: <strong>1 vrtljaj = ___ cm</strong>.</li>
+<li>Ponovi meritev še dvakrat. Izračunaj povprečje treh meritev. To je obseg tvojega kolesa o.</li>
+<li>Izračunaj obseg še iz premera kolesa: d = 5,6 cm.</li>
+</ol>
+<p>o = π · d = 3,14 · 5,6 cm ≈ <strong>17,6 cm</strong></p>
+<p>Izmerjena in izračunana vrednost se morata približno ujemati.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--pozor" style="margin:0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Pot izmeriš od enega dela robota, na koncu pa do drugega. Merjenje začneš in končaš na isti točki robota.</p>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Robot se ne premakne ali se vrti</p>
+<p>Motorja morata biti priključena na vrati B (levo kolo) in C (desno kolo). Preveri kabla. V paleti MOVEMENT je tudi blok »set movement motors to B and C«.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Koliko vrtljajev za dano pot?</h2>
+<p>Če poznaš obseg kolesa, lahko vrtljaje izračunaš. Ne rabiš ugibati.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer</p>
+<p style="margin-top:0">Drug robot ima obseg kolesa 20 cm. Pelje naj 60 cm. Koliko vrtljajev vpišeš v blok?</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>o = 20 cm, s = 60 cm</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>število vrtljajev n = ?</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>s = n · o, torej n = s / o</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>n = 60 cm / 20 cm</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">n = 3 vrtljaji</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>3 · 20 cm = 60 cm. Ujema se.</span></li>
+</ol>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Deliš obratno: n = o / s. Rezultat bi bil 0,33 vrtljaja, kar je očitno premalo. Če računaš v metrih, pretvori vse v isto enoto.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Izziv: 1 meter</h2>
+<p>Tvoj robot naj pelje natanko 1 m (100 cm).</p>
+<ol>
+<li>Izračunaj število vrtljajev: n = s / o = 100 cm / 17,6 cm ≈ <strong>5,68</strong>.</li>
+<li>V blok vpiši to število z decimalno piko: 5.68. Vejica ni dovoljena.</li>
+<li>Zaženi program in izmeri pot. Za koliko cm si zgrešil?</li>
+<li>Popravi število vrtljajev in poskusi znova.</li>
+</ol>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi sam</h2>
+<p>Nastavi število vrtljajev in obseg kolesa. Pritisni Zaženi in opazuj, kam pride robot. Uporabiš lahko tudi tipko Tab in Enter.</p>
+[iframe src="https://ivek-droid.github.io/NPI-animacije/robot-vozi-naravnost.html?kompakt" width="100%" height="660" title="Animacija: koliko pelje robot"][/et_pb_text][et_pb_button button_url="https://ivek-droid.github.io/NPI-animacije/robot-vozi-naravnost.html" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. Obseg kolesa je 15 cm. Koliko pelje robot pri 4 vrtljajih?</summary><p style="margin-top:12px">4 · 15 cm = 60 cm.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. Obseg kolesa je 15 cm. Koliko vrtljajev potrebuje za 90 cm?</summary><p style="margin-top:12px">90 cm / 15 cm = 6 vrtljajev.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. V blok namesto 1 vpišeš 2. Kaj se zgodi?</summary><p style="margin-top:12px">Robot pelje dvakrat dlje, ker se kolo zavrti dvakrat.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>Program: »when program starts« in »move forward for … rotations«.</li>
+<li>En vrtljaj kolesa = en obseg kolesa.</li>
+<li>s = n · o, n = s / o.</li>
+<li>Obseg kolesa: o = π · d ≈ 17,6 cm (d = 5,6 cm).</li>
+<li>Vedno izmeri in popravi.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
