@@ -62,7 +62,7 @@ kratko = box('cilj', 'Na kratko', ul(['Program: »when program starts« in »mov
 out = sec(
     row(col('4_4', text(cilj('Vožnja naravnost', ['sestaviti program z blokoma »when program starts« in »move forward«,', 'spremeniti število vrtljajev koles,', 'izmeriti, koliko pelje robot pri enem vrtljaju,', 'izračunati, koliko vrtljajev potrebuje za izbrano pot.']))))
   + row(col('1_2', text(kaj)) + col('1_2', text(pravilo)), '1_2,1_2')
-  + row(col('1_2', text(program)) + col('1_2', blk('lego-when-program-starts.png', 'Blok »when program starts« (rumen): začetek programa.', '300px') + cap('Blok iz palete EVENTS.') + blk('lego-move-forward.png', 'Blok »move forward for 1 rotations« (roza): vožnja naprej za 1 vrtljaj.', '420px') + cap('Blok iz palete MOVEMENT.')), '1_2,1_2')
+  + row(col('1_2', text(program)) + col('1_2', blk('lego-program-vozi.png', 'Program iz dveh blokov: rumeni »when program starts« in roza »move forward for 1 rotations«.', '520px') + cap('Končani program.')), '1_2,1_2')
   + row(col('1_2', text(meritev)) + col('1_2', text(napaka1)), '1_2,1_2')
   + row(col('1_2', text(H2 + 'Koliko vrtljajev za dano pot?</h2>\n<p>Če poznaš obseg kolesa, lahko vrtljaje izračunaš. Ne rabiš ugibati.</p>')) + col('1_2', text(primer)), '1_2,1_2')
   + row(col('4_4', text(izziv))))

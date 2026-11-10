@@ -26,7 +26,7 @@
 ## LEGO programiranje (STR, 10. 11. 2026)
 - Osnutek vaje 2 »Vožnja naravnost« (`slog/osnutki/lego-vozi-naravnost.txt`, generator `orodja/lekcija_lego_vozi.py`, slike blokov `slog/lego/`), animacija `robot-vozi-naravnost.html` (iframe ~660, test `node orodja/test_robot_vozi.js`). NI objavljeno na strani. Podmeni pod STR (145) še ni narejen.
 - Robot: EV3 Education Core Set 45544, vozilo z motorjema B (levo) in C (desno), kolesa premer 5,6 cm (obseg 17,6 cm); senzorji: žiroskop, barvni, ultrazvočni, 2× dotik. EV3 Classroom 1.5.3, namizna, angleški vmesnik. Blok sprejema decimalno piko. Rumeni blok »when program starts« je že na novem projektu.
-- Manjka: posnetek sestavljenega programa z »move forward for 1 rotations« (uporabnikov posnetek je imel 1.2 degrees); preveri, ali program zaženeš s klikom na rumeni blok. Vaja 1 (povezava) še ni narejena.
+- Vaja 1 (povezava) še ni narejena; preveri, ali program zaženeš s klikom na rumeni blok.
 
 ## Odprto
 - INEp: Nadtokovna zaščita (619), Izvedba električnih inštalacij (662), Nevarnosti el. toka (995).
