@@ -40,7 +40,6 @@ kratko = box('cilj', 'Na kratko', ul([
     'Fazni vodnik gre skozi stikalo na centralni kontakt.',
     'Nevtralni vodnik gre na navojni kontakt.',
     'Pred posegom izklopi odklopnik, zavaruj in preveri, da ni napetosti.']))
-matura = box('matura', 'Matura', '<p>Naloge o razsvetljavi (točke 5.1 do 5.4) so v zbirki maturitetnih nalog. Vezalni načrt narišeš po pravilih iz lekcij.</p>\n<p><a href="https://npi.splet.arnes.si/elektricne-instalacije/#razsvetljava-naloge">Zbirka maturitetnih nalog: razsvetljava</a> · <a href="https://www.ric.si/poklicna-matura/predmeti/drugi-predmet/elektrotehnika/">Maturitetno gradivo (RIC)</a></p>', '16px 0 0')
 naprej = H2 + 'Naprej</h2>\n<p>Poglej še posamezne vezave:</p>\n' + ul([
     '<a href="https://npi.splet.arnes.si/?page_id=798">Enopolna vezava</a>',
     '<a href="https://npi.splet.arnes.si/?page_id=804">Serijska vezava</a>',
@@ -58,6 +57,6 @@ out = sec(
   + row(col('1_2', text(zakaj)) + col('1_2', text(pozor + napaka)), '1_2,1_2'))
 out += sec(row(col('4_4', anim_blok)), '#f5f3ef')
 out += sec(
-    row(col('1_2', text(preveri)) + col('1_2', text(kratko + matura)), '1_2,1_2')
+    row(col('1_2', text(preveri)) + col('1_2', text(kratko)), '1_2,1_2')
   + row(col('1_2', text(naprej)) + col('1_2', text(VID) + video('2024/03/vpd-uvod-z-napotki.png', 'Video: uvod v vezave za razsvetljavo z napotki (odpre se v novem oknu)', 'https://video.arnes.si/watch/pqj752j255qt')), '1_2,1_2'))
 write('vezave-za-razsvetljavo-uvod', out)
