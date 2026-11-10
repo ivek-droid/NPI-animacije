@@ -15,8 +15,8 @@ kako = H2 + 'Kako delaš</h2>\n' + ol([
     'Preizkusi program na robotu in izmeri, kaj je naredil.',
     'Popravi program in reši »Preveri se«.']) + '\n' + box('primer', 'Robot je samo eden', '<p style="margin-top:0">Program najprej pripravi na računalniku in ga preizkusi v animaciji. Na robotu preizkusiš šele potem. Tako je čakanje krajše.</p>', '16px 0 0')
 vaje = H2 + 'Vaje</h2>\n' + ul([
-    'Vaja 1: Spoznaj robota in program (pripravljamo)',
-    f'<strong>Vaja 2: <a href="{L}lego-voznja-naravnost/">Vožnja naravnost</a></strong>',
+    f'Vaja 1: <a href="{L}lego-spoznaj-robota/">Spoznaj robota in program</a>',
+    f'Vaja 2: <a href="{L}lego-voznja-naravnost/">Vožnja naravnost</a>',
     'Vaja 3: Zavoji (pripravljamo)',
     'Vaja 4: Ponavljanje (pripravljamo)',
     'Vaja 5: Zvok, zaslon in lučka (pripravljamo)',

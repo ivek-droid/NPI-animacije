@@ -29,8 +29,8 @@
 <p style="margin-top:0">Program najprej pripravi na računalniku in ga preizkusi v animaciji. Na robotu preizkusiš šele potem. Tako je čakanje krajše.</p>
 </div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Vaje</h2>
 <ul>
-<li>Vaja 1: Spoznaj robota in program (pripravljamo)</li>
-<li><strong>Vaja 2: <a href="https://npi.splet.arnes.si/lego-voznja-naravnost/">Vožnja naravnost</a></strong></li>
+<li>Vaja 1: <a href="https://npi.splet.arnes.si/lego-spoznaj-robota/">Spoznaj robota in program</a></li>
+<li>Vaja 2: <a href="https://npi.splet.arnes.si/lego-voznja-naravnost/">Vožnja naravnost</a></li>
 <li>Vaja 3: Zavoji (pripravljamo)</li>
 <li>Vaja 4: Ponavljanje (pripravljamo)</li>
 <li>Vaja 5: Zvok, zaslon in lučka (pripravljamo)</li>
