@@ -1,6 +1,7 @@
-# Stanje strani (3. 11. 2026)
+# Stanje strani (10. 11. 2026)
 
 ## Objavljeno v novem slogu
+- IVEp prva stran (139, `/ive/`, 10. 11. 2026): »Izdelava vezice iz bakrenega vodnika« v novem slogu, besedilo dobesedno; generator `orodja/lekcija_ivep_prva.py`. Besedilne popravke je treba še potrditi (glej spodaj).
 - IVEp: menjalna (809), enopolna (798), serijska (804), križna (813), impulzni rele (1075).
 - INEp: Trifazni izmenični sistem (89), Pridobivanje električne energije (82).
 - INEp → ELEKTRIČNE INŠTALACIJE (185, meni 188): zbirka maturitetnih nalog (slike in PDF-ji, nespremenjena) in podmeniji:
@@ -26,3 +27,5 @@
 - IEKp (44), STR (145), VUI (58), Pomoč (822): še stari slog.
 - Domača stran s karticami predmetov (IVE, INE, IEK, STR, VUI; polna imena za `aria-label` manjkajo).
 - Globalni CSS v3 (3. 11. 2026; v2 je po pomoti zožil vse iframe-e, ker so v `<p>`, zdaj izvzeti z `p:has(> iframe)`): odstavki in seznami največ 68 znakov (`--measure`), gumb »na vrh strani« vklopljen (Divi → Splošno) in oblikovan (56 px). Naslov strani 89 in postavka menija 161 sta zdaj »Trifazni izmenični sistem«. Pri shranjevanju CSS prek JS uporabi CodeMirror (`.CodeMirror.CodeMirror.setValue`, nato `#epanel-save`); sama sprememba `textarea.value` se ne shrani. Gumb »na vrh« nima besedilne oznake za bralnik zaslona (Divi ga ne doda).
+
+- Stran 139, predlagani popravki besedila (neuveljavljeni): »podložka« → »podložko«; »nevtralni ali ničelni« → samo »nevtralni« (ničelni v opombi); preveriti barve faznih vodnikov (L1 rjava, L2 črna, L3 siva?) in PEN (rumeno-zelen z modrima koncema); okvir »Matura« ni dodan.
