@@ -54,6 +54,7 @@ izziv = H2 + 'Izziv: 1 meter</h2>\n<p>Tvoj robot naj pelje natanko 1 m (100 cm).
     'V blok vpiši to število z decimalno piko: 5.68. Vejica ni dovoljena.',
     'Zaženi program in izmeri pot. Za koliko cm si zgrešil?',
     'Popravi število vrtljajev in poskusi znova.'])
+NAMIG = box('cilj', 'Namig', '<p style="margin-top:0">Če se robot ob zagonu zamaje, dodaj med rumeni in roza blok še blok »wait 1 seconds«. Poišči ga v paleti CONTROL (oranžna). Robot začne vožnjo eno sekundo po zagonu in se pred tem pomiri.</p>', '16px 0 0')
 anim_sec = anim('robot-vozi-naravnost.html', 'koliko pelje robot', 'Nastavi število vrtljajev in obseg kolesa. Pritisni Zaženi in opazuj, kam pride robot.', 660)
 preveri = H2 + 'Preveri se</h2>' + q('1. Obseg kolesa je 15 cm. Koliko pelje robot pri 4 vrtljajih?', '4 · 15 cm = 60 cm.') \
     + q('2. Obseg kolesa je 15 cm. Koliko vrtljajev potrebuje za 90 cm?', '90 cm / 15 cm = 6 vrtljajev.') \
@@ -62,7 +63,7 @@ kratko = box('cilj', 'Na kratko', ul(['Program: »when program starts« in »mov
 out = sec(
     row(col('4_4', text(cilj('Vožnja naravnost', ['sestaviti program z blokoma »when program starts« in »move forward«,', 'spremeniti število vrtljajev koles,', 'izmeriti, koliko pelje robot pri enem vrtljaju,', 'izračunati, koliko vrtljajev potrebuje za izbrano pot.']))))
   + row(col('1_2', text(kaj)) + col('1_2', text(pravilo)), '1_2,1_2')
-  + row(col('1_2', text(program)) + col('1_2', blk('lego-program-vozi.png', 'Program iz dveh blokov: rumeni »when program starts« in roza »move forward for 1 rotations«.', '520px') + cap('Končani program.')), '1_2,1_2')
+  + row(col('1_2', text(program)) + col('1_2', blk('lego-program-vozi.png', 'Program iz dveh blokov: rumeni »when program starts« in roza »move forward for 1 rotations«.', '520px') + cap('Končani program.') + text(NAMIG)), '1_2,1_2')
   + row(col('1_2', text(meritev)) + col('1_2', text(napaka1)), '1_2,1_2')
   + row(col('1_2', text(H2 + 'Koliko vrtljajev za dano pot?</h2>\n<p>Če poznaš obseg kolesa, lahko vrtljaje izračunaš. Ne rabiš ugibati.</p>')) + col('1_2', text(primer)), '1_2,1_2')
   + row(col('4_4', text(izziv))))
