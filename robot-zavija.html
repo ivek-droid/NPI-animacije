@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zavoj robota na mestu – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f4f6f5;
+  --panel: #ffffff;
+  --ink: #18201e;
+  --muted: #586561;
+  --border: #d5dbd8;
+  --accent: #0d7a6a;
+  --robot: #4b1585;
+  --robot-soft: #e8dff5;
+  --mark: #c4410c;
+  --btn: #4b1585;
+  --btn-ink: #ffffff;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111617; --panel: #1a2123; --ink: #e7edeb; --muted: #97a5a1; --border: #2c3638;
+    --accent: #4fd1b9; --robot: #b99af0; --robot-soft: #2d2540; --mark: #f0803c;
+    --btn: #b99af0; --btn-ink: #14101c;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.55 var(--font-body);
+  padding-block: 12px 20px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+h1 { margin: 0 0 6px; font-size: 1.75rem; line-height: 1.15; font-weight: 600; text-wrap: balance; }
+.ct-lead { margin: 0; color: var(--muted); max-width: 64ch; }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+.ct-stage { padding: 8px 8px 0; }
+svg.ct-scene { display: block; width: 100%; height: auto; max-height: 300px; }
+
+.ct-l { font-family: var(--font-body); font-size: 24px; fill: var(--muted); paint-order: stroke; stroke: var(--panel); stroke-width: 8px; stroke-linejoin: round; }
+.ct-a { font-family: var(--font-mono); font-size: 30px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 8px; stroke-linejoin: round; }
+.ct-w { font-family: var(--font-body); font-size: 22px; font-weight: 700; fill: #ffffff; }
+
+.ct-block {
+  margin: 0 16px; padding: 10px 14px; border-radius: 12px; display: inline-block;
+  background: #ff58c8; color: #ffffff; font: 700 1rem/1.3 var(--font-body);
+}
+.ct-block.ct-b-dark { color: #1b1e28; }
+.ct-calc { margin: 0; padding: 12px 16px; border-top: 1px solid var(--border); font: 600 1rem/1.5 var(--font-mono); }
+.ct-calc span { display: block; }
+.ct-calc .ct-res { font-size: 1.125rem; }
+.ct-controls { display: flex; flex-wrap: wrap; gap: 14px 24px; padding: 14px 16px; align-items: flex-end; }
+.ct-field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.ct-field legend { padding: 0; font-weight: 600; margin-bottom: 6px; }
+.ct-step { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ct-nrow { flex-wrap: nowrap; }
+.ct-val { min-width: 4.5ch; text-align: center; font: 700 1.25rem/1 var(--font-mono); }
+.ct-btn {
+  min-height: 48px; min-width: 48px; padding: 0 18px; border-radius: 10px; cursor: pointer;
+  font: 600 1rem/1 var(--font-body); border: 2px solid var(--btn); background: var(--panel); color: var(--ink);
+}
+.ct-btn.ct-main { background: var(--btn); color: var(--btn-ink); }
+.ct-btn[aria-pressed="true"].ct-dir { background: var(--btn); color: var(--btn-ink); }
+.ct-btn:focus-visible, input[type=range]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ct-btn[disabled] { opacity: .45; cursor: default; }
+input[type=range] { width: 200px; flex: 0 1 200px; min-width: 90px; min-height: 44px; accent-color: var(--robot); }
+.ct-note { margin: 0; padding: 0 16px 14px; color: var(--muted); font-size: 0.9375rem; }
+.ct-desc { margin: 0; color: var(--muted); max-width: 70ch; }
+
+.ct-kompakt body { padding-block: 0; }
+.ct-kompakt .ct-wrap > header, .ct-kompakt .ct-desc { display: none; }
+@media (max-width: 520px) { .ct-controls { gap: 12px 16px; } .ct-calc { font-size: .875rem; } input[type=range] { flex-basis: 120px; width: 120px; } }
+</style>
+</head>
+<body>
+<main class="ct-wrap">
+  <header>
+    <h1>Zavoj robota na mestu</h1>
+    <p class="ct-lead">Pri zavoju na mestu se eno kolo vrti naprej, drugo nazaj. Robot se zasuče okoli sredine med kolesoma. Spremeni število vrtljajev in smer ter opazuj, za koliko stopinj se zasuče.</p>
+  </header>
+
+  <section class="ct-panel" aria-label="Animacija zavoja robota">
+    <div class="ct-stage">
+      <svg class="ct-scene" id="scene" viewBox="0 0 560 300" role="img" aria-labelledby="sceneTitle sceneDesc">
+        <title id="sceneTitle">Robot se zasuče na mestu</title>
+        <desc id="sceneDesc">Pogled od zgoraj. Robot ima levo kolo B in desno kolo C. Pri zavoju se eno kolo vrti naprej, drugo nazaj, robot se zasuče okoli sredine med kolesoma. Lok kaže zasuk v stopinjah. Črtkana črta kaže pravi kot 90 stopinj.</desc>
+        <g transform="translate(280 215)">
+          <!-- začetna smer (črtkano) in pravi kot -->
+          <line id="line0" x1="0" y1="0" x2="0" y2="-165" stroke="var(--muted)" stroke-width="3" stroke-dasharray="7 6"/>
+          <line id="line90" x1="0" y1="0" x2="165" y2="0" stroke="var(--accent)" stroke-width="3" stroke-dasharray="7 6"/>
+          <text class="ct-l" id="t90" x="172" y="-8" text-anchor="start">90°</text>
+          <path id="arc" d="" fill="none" stroke="var(--mark)" stroke-width="6" stroke-linecap="round"/>
+          <text class="ct-a" id="angleTxt" x="0" y="-182" text-anchor="middle">0°</text>
+          <!-- robot -->
+          <g id="robot">
+            <rect x="-48" y="-80" width="96" height="116" rx="10" fill="var(--robot)"/>
+            <path d="M0 -76 L-16 -50 L16 -50 Z" fill="var(--robot-soft)"/>
+            <!-- kolesi (os ob y = 0) -->
+            <rect x="-72" y="-28" width="24" height="56" rx="5" fill="var(--panel)" stroke="var(--ink)" stroke-width="4"/>
+            <rect x="48" y="-28" width="24" height="56" rx="5" fill="var(--panel)" stroke="var(--ink)" stroke-width="4"/>
+            <line id="markB" x1="-70" y1="0" x2="-50" y2="0" stroke="var(--mark)" stroke-width="5" stroke-linecap="round"/>
+            <line id="markC" x1="50" y1="0" x2="70" y2="0" stroke="var(--mark)" stroke-width="5" stroke-linecap="round"/>
+            <text class="ct-w" x="-60" y="62" text-anchor="middle" style="fill:var(--ink)">B</text>
+            <text class="ct-w" x="60" y="62" text-anchor="middle" style="fill:var(--ink)">C</text>
+            <path id="arrB" d="" fill="var(--ink)"/>
+            <path id="arrC" d="" fill="var(--ink)"/>
+            <circle r="5" fill="var(--robot-soft)"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p style="margin:0 0 8px"><span class="ct-block" id="blockTxt">move right: 100 for 0,54 rotations</span></p>
+    <p class="ct-calc" id="calc" aria-live="polite">
+      <span id="c1"></span><span id="c2"></span><span class="ct-res" id="c3"></span>
+    </p>
+    <div class="ct-controls">
+      <fieldset class="ct-field">
+        <legend id="lgN">Število vrtljajev n</legend>
+        <div class="ct-step ct-nrow" role="group" aria-labelledby="lgN">
+          <button type="button" class="ct-btn" id="nMinus" aria-label="Manj vrtljajev za 0,01">−</button>
+          <input type="range" id="nSlider" min="0.05" max="2" step="0.01" value="0.54" aria-labelledby="lgN">
+          <button type="button" class="ct-btn" id="nPlus" aria-label="Več vrtljajev za 0,01">+</button>
+          <span class="ct-val" id="nVal" aria-live="off">0,54</span>
+        </div>
+      </fieldset>
+      <fieldset class="ct-field">
+        <legend id="lgD">Smer</legend>
+        <div class="ct-step" role="group" aria-labelledby="lgD">
+          <button type="button" class="ct-btn ct-dir" id="dirL" aria-pressed="false">Levo (−100)</button>
+          <button type="button" class="ct-btn ct-dir" id="dirR" aria-pressed="true">Desno (100)</button>
+        </div>
+      </fieldset>
+      <div class="ct-step">
+        <button type="button" class="ct-btn ct-main" id="run">Zaženi</button>
+        <button type="button" class="ct-btn" id="pause" aria-pressed="false" disabled>Pavza</button>
+        <button type="button" class="ct-btn" id="reset">Ponovi</button>
+      </div>
+    </div>
+    <p class="ct-note">Razmak koles T = 12 cm, obseg kolesa o = 17,6 cm. Animacija je idealna: kolesa ne drsijo. Pravi robot se od izračuna malo razlikuje. Izmeri ga.</p>
+  </section>
+
+  <p class="ct-desc">Opis: robot se zasuče na mestu. Levo kolo B in desno kolo C se vrtita vsako v svojo smer. Rdeči lok kaže zasuk. Zelena črtkana črta kaže pravi kot 90°. Večje število vrtljajev pomeni večji zasuk. Pri 0,54 vrtljaja je zasuk približno 90°.</p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var T = 12, O = 17.6, PI = 3.14;   // cm; π = 3,14 kot v lekciji
+  var n = 0.54, dir = 1;             // vrtljaji, +1 desno, −1 levo
+  var p = 0;                          // napredek 0..1
+  var running = false, paused = false, raf = 0, last = 0;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var R = 120;                        // polmer loka
+
+  function fmt(x, d) { d = d === undefined ? 2 : d; var s = x.toFixed(d); s = s.replace(/\.?0+$/, ''); return s.replace('.', ','); }
+  function theta() { return n * O / (PI * T) * 360; }     // zasuk v stopinjah (brez predznaka)
+  function rad(a) { return a * Math.PI / 180; }
+  function pt(a, r) { return [(r * Math.sin(rad(a))).toFixed(1), (-r * Math.cos(rad(a))).toFixed(1)]; }
+
+  function arrowPath(cx, up) {          // majhna puščica na kolesu: up = naprej
+    var y = 0, s = up ? -1 : 1;
+    return 'M' + cx + ' ' + (y + s * 20) + ' L' + (cx - 11) + ' ' + (y + s * 2) + ' L' + (cx + 11) + ' ' + (y + s * 2) + ' Z';
+  }
+
+  function setDir() {
+    // desno: B naprej, C nazaj; levo: B nazaj, C naprej
+    $('arrB').setAttribute('d', arrowPath(-60, dir === 1));
+    $('arrC').setAttribute('d', arrowPath(60, dir !== 1));
+    $('line90').setAttribute('x2', 165 * dir);
+    var t = $('t90'); t.setAttribute('x', 172 * dir); t.setAttribute('text-anchor', dir === 1 ? 'start' : 'end');
+    $('dirR').setAttribute('aria-pressed', dir === 1 ? 'true' : 'false');
+    $('dirL').setAttribute('aria-pressed', dir === -1 ? 'true' : 'false');
+  }
+
+  function draw() {
+    var th = theta(), a = th * p;                       // trenutni zasuk
+    $('robot').setAttribute('transform', 'rotate(' + (dir * a).toFixed(2) + ')');
+    // kolesne oznake: pot kolesa n·o·p, v kolesu to krog 56 cm... oznaka potuje po kolesu
+    var wheelCm = n * O * p, shift = ((wheelCm % O) / O) * 56 - 28;
+    $('markB').setAttribute('y1', (-dir * shift).toFixed(1)); $('markB').setAttribute('y2', (-dir * shift).toFixed(1));
+    $('markC').setAttribute('y1', (dir * shift).toFixed(1)); $('markC').setAttribute('y2', (dir * shift).toFixed(1));
+    // lok od 0 do a
+    if (a < 0.3) { $('arc').setAttribute('d', ''); }
+    else {
+      var e = pt(dir * a, R), s = pt(0, R);
+      $('arc').setAttribute('d', 'M' + s[0] + ' ' + s[1] + ' A' + R + ' ' + R + ' 0 ' + (a > 180 ? 1 : 0) + ' ' + (dir === 1 ? 1 : 0) + ' ' + e[0] + ' ' + e[1]);
+    }
+    var ok = Math.abs(th - 90) <= 1.5 && p >= 1;
+    $('arc').setAttribute('stroke', ok ? 'var(--accent)' : 'var(--mark)');
+    $('angleTxt').textContent = Math.round(a) + '°' + (ok ? ' = pravi kot' : '');
+  }
+
+  function readout() {
+    var s = n * O, circ = PI * T, th = theta();
+    $('nVal').textContent = fmt(n);
+    $('nSlider').value = n;
+    $('blockTxt').textContent = 'move ' + (dir === 1 ? 'right: 100' : 'left: -100') + ' for ' + fmt(n) + ' rotations';
+    $('c1').textContent = 'Vsako kolo prevozi: n · o = ' + fmt(n) + ' · 17,6 = ' + fmt(s, 1) + ' cm';
+    $('c2').textContent = 'Celoten krog robota: π · T = 3,14 · 12 = ' + fmt(circ, 1) + ' cm';
+    $('c3').textContent = 'Zasuk = ' + fmt(s, 1) + ' / ' + fmt(circ, 1) + ' · 360° = ' + Math.round(th) + '°';
+    $('nMinus').disabled = n <= 0.05;
+    $('nPlus').disabled = n >= 2;
+  }
+
+  function setButtons() {
+    $('run').disabled = running && !paused;
+    $('run').textContent = paused ? 'Nadaljuj' : 'Zaženi';
+    $('pause').disabled = !running;
+    $('pause').setAttribute('aria-pressed', paused ? 'true' : 'false');
+  }
+
+  function stop() { cancelAnimationFrame(raf); running = false; paused = false; }
+  function resetAll() { stop(); p = 0; setDir(); draw(); readout(); setButtons(); }
+
+  function frame(ts) {
+    if (!running || paused) return;
+    var dt = (ts - last) / 1000; last = ts;
+    var dur = Math.max(1.2, theta() / 90 * 1.4);
+    p = Math.min(1, p + dt / dur);
+    draw();
+    if (p >= 1) { running = false; setButtons(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function run() {
+    if (running && paused) { paused = false; last = performance.now(); setButtons(); raf = requestAnimationFrame(frame); return; }
+    if (running) return;
+    if (p >= 1) p = 0;
+    if (reduce) { p = 1; draw(); setButtons(); return; }
+    running = true; paused = false; last = performance.now(); setButtons();
+    raf = requestAnimationFrame(frame);
+  }
+
+  function pause() {
+    if (!running) return;
+    paused = !paused;
+    if (!paused) { last = performance.now(); raf = requestAnimationFrame(frame); }
+    setButtons();
+  }
+
+  function setN(v) { n = Math.min(2, Math.max(0.05, Math.round(v * 100) / 100)); resetAll(); }
+  function setD(d) { dir = d; resetAll(); }
+
+  $('run').addEventListener('click', run);
+  $('pause').addEventListener('click', pause);
+  $('reset').addEventListener('click', resetAll);
+  $('nMinus').addEventListener('click', function () { setN(n - 0.01); });
+  $('nPlus').addEventListener('click', function () { setN(n + 0.01); });
+  $('nSlider').addEventListener('input', function () { setN(parseFloat(this.value)); });
+  $('dirR').addEventListener('click', function () { setD(1); });
+  $('dirL').addEventListener('click', function () { setD(-1); });
+
+  resetAll();
+})();
+</script>
+</body>
+</html>

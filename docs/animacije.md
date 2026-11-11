@@ -33,4 +33,5 @@ Generator `orodja/animacije_build.py` (serijska, križna, rele, trifazni); menja
 | odcitavanje-instrumenta.html | 1450 (pri 480 px 2300) | IVEp, stran »Uporaba univerzalnega merilnika« (1367); test `orodja/test_odcitavanje.js` |
 | stikalo-v-fazi.html | 800 (pri 480 px 790, pod 400 px do 950) | Vezave za razsvetljavo – uvod (764, osnutek 1398); test `node orodja/test_stikalo.js`; statična shema `node orodja/shema_razsvetljava.js` |
 | robot-vozi-naravnost.html | 660 (pri 480 px ~520) | STR, »LEGO: vožnja naravnost« (1402); test `node orodja/test_robot_vozi.js` |
+| robot-zavija.html | 740 (pri 480 px ~725, pri 1000 px ~690) | STR, »LEGO: zavoji« (osnutek `slog/osnutki/lego-zavoji.txt`, še ni objavljeno); test `node orodja/test_robot_zavija.js` |
 | ohmov-zakon.html, ura.html | – | starejši, niso v novem slogu |
