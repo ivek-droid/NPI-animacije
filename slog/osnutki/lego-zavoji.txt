@@ -32,13 +32,14 @@
 <li>Program naj ima dva bloka: »when program starts« in »move right: 100 for 0.5 rotations«.</li>
 <li>Klikni desni gumb ▶ (prenos in zagon). Robot se zasuče na mestu v desno.</li>
 <li>Poglej vrata B in C. Pri vratih B piše okoli +180°, pri vratih C okoli −180°. Kolesi sta se vrteli v nasprotnih smereh.</li>
-<li>Zamenjaj 100 z −100. Robot zavije v levo. Števci B in C imata zdaj obratna predznaka.</li>
+<li>Poglej še vrata 2 (žiroskop). Ob vsakem zagonu programa se postavi na 0. Po zavoju kaže zasuk robota v stopinjah: pri zavoju v desno plus, pri zavoju v levo minus. Pri 0.5 vrtljaja kaže okoli 84°.</li>
+<li>Zamenjaj 100 z −100. Robot zavije v levo. Števci B in C imata zdaj obratna predznaka, žiroskop kaže minus.</li>
 </ol>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-move-right-100.png" alt="Blok »move right: 100 for 0.54 rotations«." title_text="Blok »move right: 100 for 0.54 rotations«." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="420px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Primer bloka za zavoj v desno.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Poskusi: koliko vrtljajev za pravi kot?</h2>
 <ol>
 <li>Na tla prilepi dva trakova pod pravim kotom. Uporabi list A4 kot šablono: oba trakova naj tečeta ob dveh sosednjih robovih lista.</li>
 <li>Robota postavi tako, da stoji ob prvem traku in gleda vzdolž njega.</li>
 <li>Zaženi program z <strong>0.5</strong> vrtljaja. Poglej: ali se robot zasuče manj ali več kot za pravi kot?</li>
-<li>Poskusi z <strong>0.54</strong> vrtljaja. Poglej, ali stoji robot zdaj vzdolž drugega traku.</li>
+<li>Poskusi z <strong>0.54</strong> vrtljaja. Poglej, ali stoji robot zdaj vzdolž drugega traku. Žiroskop pri vratih 2 kaže okoli 90°.</li>
 <li>Po potrebi popravljaj število: 0.5, 0.52, 0.54, 0.56, 0.6. Izberi vrednost, pri kateri je zasuk najbolj podoben pravemu kotu.</li>
 <li>Zapiši: <strong>moj robot za pravi kot: ___ vrtljaja</strong>.</li>
 <li>Isto preveri še za zavoj v levo (−100).</li>
@@ -85,6 +86,7 @@
 <li>Pri zavoju na mestu se kolesi vrtita v nasprotnih smereh.</li>
 <li>Za 90° je pot vsakega kolesa četrtina kroga: s = π · T / 4.</li>
 <li>n = s / o ≈ 0,54 vrtljaja (T = 12 cm, o = 17,6 cm).</li>
+<li>Žiroskop (vrata 2) se ob zagonu programa postavi na 0 in po zavoju kaže zasuk v stopinjah.</li>
 <li>Vedno izmeri in popravi.</li>
 </ul>
 </div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]

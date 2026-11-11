@@ -50,14 +50,15 @@ prog = H2 + 'Prvi zavoj</h2>\n' + ol([
     'Program naj ima dva bloka: »when program starts« in »move right: 100 for 0.5 rotations«.',
     'Klikni desni gumb ▶ (prenos in zagon). Robot se zasuče na mestu v desno.',
     'Poglej vrata B in C. Pri vratih B piše okoli +180°, pri vratih C okoli −180°. Kolesi sta se vrteli v nasprotnih smereh.',
-    'Zamenjaj 100 z −100. Robot zavije v levo. Števci B in C imata zdaj obratna predznaka.'])
+    'Poglej še vrata 2 (žiroskop). Ob vsakem zagonu programa se postavi na 0. Po zavoju kaže zasuk robota v stopinjah: pri zavoju v desno plus, pri zavoju v levo minus. Pri 0.5 vrtljaja kaže okoli 84°.',
+    'Zamenjaj 100 z −100. Robot zavije v levo. Števci B in C imata zdaj obratna predznaka, žiroskop kaže minus.'])
 sl_prog = blk('lego-move-right-100.png', 'Blok »move right: 100 for 0.54 rotations«.', '420px') + cap('Primer bloka za zavoj v desno.')
 
 poskus = H2 + 'Poskusi: koliko vrtljajev za pravi kot?</h2>\n' + ol([
     'Na tla prilepi dva trakova pod pravim kotom. Uporabi list A4 kot šablono: oba trakova naj tečeta ob dveh sosednjih robovih lista.',
     'Robota postavi tako, da stoji ob prvem traku in gleda vzdolž njega.',
     'Zaženi program z <strong>0.5</strong> vrtljaja. Poglej: ali se robot zasuče manj ali več kot za pravi kot?',
-    'Poskusi z <strong>0.54</strong> vrtljaja. Poglej, ali stoji robot zdaj vzdolž drugega traku.',
+    'Poskusi z <strong>0.54</strong> vrtljaja. Poglej, ali stoji robot zdaj vzdolž drugega traku. Žiroskop pri vratih 2 kaže okoli 90°.',
     'Po potrebi popravljaj število: 0.5, 0.52, 0.54, 0.56, 0.6. Izberi vrednost, pri kateri je zasuk najbolj podoben pravemu kotu.',
     'Zapiši: <strong>moj robot za pravi kot: ___ vrtljaja</strong>.',
     'Isto preveri še za zavoj v levo (−100).'])
@@ -95,6 +96,7 @@ kratko = box('cilj', 'Na kratko', ul([
     'Pri zavoju na mestu se kolesi vrtita v nasprotnih smereh.',
     'Za 90° je pot vsakega kolesa četrtina kroga: s = π · T / 4.',
     'n = s / o ≈ 0,54 vrtljaja (T = 12 cm, o = 17,6 cm).',
+    'Žiroskop (vrata 2) se ob zagonu programa postavi na 0 in po zavoju kaže zasuk v stopinjah.',
     'Vedno izmeri in popravi.']))
 
 out = sec(
