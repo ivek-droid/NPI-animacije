@@ -17,7 +17,7 @@ kako = H2 + 'Kako delaš</h2>\n' + ol([
 vaje = H2 + 'Vaje</h2>\n' + ul([
     f'Vaja 1: <a href="{L}lego-spoznaj-robota/">Spoznaj robota in program</a>',
     f'Vaja 2: <a href="{L}lego-voznja-naravnost/">Vožnja naravnost</a>',
-    'Vaja 3: Zavoji (pripravljamo)',
+    f'Vaja 3: <a href="{L}lego-zavoji/">Zavoji</a>',
     'Vaja 4: Ponavljanje (pripravljamo)',
     'Vaja 5: Zvok, zaslon in lučka (pripravljamo)',
     'Vaja 6: Senzor dotika (pripravljamo)',

@@ -31,7 +31,7 @@
 <ul>
 <li>Vaja 1: <a href="https://npi.splet.arnes.si/lego-spoznaj-robota/">Spoznaj robota in program</a></li>
 <li>Vaja 2: <a href="https://npi.splet.arnes.si/lego-voznja-naravnost/">Vožnja naravnost</a></li>
-<li>Vaja 3: Zavoji (pripravljamo)</li>
+<li>Vaja 3: <a href="https://npi.splet.arnes.si/lego-zavoji/">Zavoji</a></li>
 <li>Vaja 4: Ponavljanje (pripravljamo)</li>
 <li>Vaja 5: Zvok, zaslon in lučka (pripravljamo)</li>
 <li>Vaja 6: Senzor dotika (pripravljamo)</li>
