@@ -19,6 +19,7 @@ SQ = 40.0
 NSQ = SQ / O
 assert round(NSQ, 2) == 2.27                      # kvadrat, stranica 40 cm
 assert round(2.27 * O, 1) == 40.0
+assert round(2 * PI * (T / 2), 2) == round(PI * T, 2) == 37.68   # 2 · π · r z r = T/2 je π · T
 assert 4 * 90 == 360 and 4 * 3 == 12              # preveri se / izziv
 IMG = '2026/11/'
 def blk(name, alt, w='420px'): return img(IMG + name, alt, f' max_width="{w}"')
@@ -75,7 +76,14 @@ primer = box('primer', 'Rešen primer', f'''<p style="margin-top:0">Razmak med k
 <li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">n ≈ 0,54 vrtljaja</span></span></li>
 <li><span><span class="pg-koraki__oznaka">Preverim</span>0,54 · 17,6 cm = 9,5 cm. To je približno {dec(S90, 1)} cm. Ujema se.</span></li>
 </ol>''') + box('pozor', 'Pogosta napaka', '<p>Za T vstaviš premer kolesa (5,6 cm) namesto razmaka med kolesoma (12 cm). Razmak izmeriš od sredine enega do sredine drugega kolesa.</p>', '16px 0 0')
-zakaj = H2 + 'Zakaj ravno četrtina kroga?</h2>\n<p>Ko se robot zasuče na mestu, vsako kolo opiše lok kroga s premerom T. Cel krog ima dolžino π · T. Zasuk za 90° je četrtina obrata, zato je tudi pot kolesa četrtina kroga.</p>\n<p>Račun ti da začetno vrednost. Pravi robot se lahko malo razlikuje, zato jo vedno preveri s poskusom.</p>'
+zakaj = H2 + 'Zakaj ravno četrtina kroga?</h2>\n' \
+    + '<p>Obseg kroga že poznaš: o = 2 · π · r. Pazi, kaj je tukaj r.</p>\n' \
+    + '<p>Robot se zasuče okoli točke na sredini med kolesoma. Vsako kolo je od te točke oddaljeno T / 2. To je polmer: <strong>r = T / 2</strong>, ne T.</p>\n' \
+    + '<p>Vstavi v obrazec: 2 · π · T / 2 = π · T. Dvojki se pokrajšata. Vsako kolo opiše krog s premerom T in obsegom <strong>π · T</strong>.</p>\n' \
+    + '<p>Zasuk za 90° je četrtina obrata. Pot kolesa je zato četrtina kroga: <strong>s = π · T / 4</strong>.</p>\n' \
+    + '<p>Račun ti da začetno vrednost. Pravi robot se lahko malo razlikuje, zato jo vedno preveri s poskusom.</p>' \
+    + blk('lego-zavoj-krog.png', 'Pogled od zgoraj: robot z dvema kolesoma na razmaku T = 12 cm. Okoli središča med kolesoma je krog s premerom T in polmerom r = T / 2. Obe kolesi pri zasuku za 90° prepotujeta četrtino tega kroga.', '460px') \
+    + cap('Robot od zgoraj. Debela črta je pot vsakega kolesa pri zasuku za 90°: četrtina kroga s premerom T.')
 
 izziv = H2 + 'Izziv: kvadrat s stranico 40 cm</h2>\n<p>Robot naj prevozi kvadrat in se vrne na začetek.</p>\n' + ol([
     f'Stranica: 40 cm. Število vrtljajev za vožnjo: n = 40 cm / 17,6 cm ≈ <strong>{dec(NSQ)}</strong>. Vpiši ga v blok »move forward« s piko (2.27).',
