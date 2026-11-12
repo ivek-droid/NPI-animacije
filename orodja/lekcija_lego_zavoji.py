@@ -23,6 +23,7 @@ assert round(2 * PI * (T / 2), 2) == round(PI * T, 2) == 37.68   # 2 · π · r 
 S90_PIVOT = PI * T / 2                       # zavoj okoli enega kolesa: polmer T, četrtina obsega 2 · π · T
 assert round(S90_PIVOT, 2) == 18.84 and round(S90_PIVOT / O, 2) == 1.07
 assert round(2 * PI * T / 4, 2) == round(S90_PIVOT, 2)
+assert round(2 * O / T * 180 / PI) == 168        # račun za 2 vrtljaja pri številki 50 (meritev uporabnika, 12. 11.: žiroskop 165°, B 720°, C 0°)
 assert 4 * 90 == 360 and 4 * 3 == 12              # preveri se / izziv
 IMG = '2026/11/'
 def blk(name, alt, w='420px'): return img(IMG + name, alt, f' max_width="{w}"')
@@ -107,7 +108,7 @@ radovedne = H2 + 'Za radovedne: kaj pomenijo druge številke?</h2>\n' \
     + tab([['0', 'obe kolesi se vrtita enako hitro naprej', 'robot vozi naravnost'],
            ['100', 'kolesi se vrtita enako hitro v nasprotnih smereh', 'robot se zasuče na mestu v desno'],
            ['−100', 'enako kot pri 100, v obratni smeri', 'robot se zasuče na mestu v levo'],
-           ['50', 'desno kolo stoji, levo se vrti (preveri v poskusu spodaj)', 'robot zavije okoli desnega kolesa']],
+           ['50', 'desno kolo stoji, levo se vrti', 'robot zavije okoli desnega kolesa']],
           ['Številka', 'Kolesi', 'Robot']) \
     + '\n<p style="margin-top:12px">Pri −50 je obratno: stoji levo kolo. Pri številkah med 0 in 50 se eno kolo vrti počasneje od drugega in robot zavije v lok.</p>'
 poskus50 = H2 + 'Poskusi: številka 50</h2>\n' + ol([
@@ -119,7 +120,8 @@ poskus50 = H2 + 'Poskusi: številka 50</h2>\n' + ol([
 racun50 = box('primer', 'Račun vnaprej', f'''<p style="margin-top:0">Pri številki 50 se vrti samo eno kolo. Opiše krog s polmerom <strong>T</strong> (ne T / 2), ker je središče kroga mirujoče kolo.</p>
 <p>Za 90° je pot četrtina tega kroga: s = 2 · π · T / 4 = π · T / 2 = 3,14 · 12 cm / 2 = {dec(S90_PIVOT)} cm.</p>
 <p>Število vrtljajev: n = {dec(S90_PIVOT)} cm / 17,6 cm ≈ <strong>{dec(S90_PIVOT / O)}</strong>. To je dvakrat toliko kot pri zavoju na mestu.</p>
-<p>Račun je napoved. Poskus pokaže, ali drži za tvojega robota.</p>''')
+<p>Izmerjeno na robotu (right: 50, 2 vrtljaja): vrata B 720°, vrata C 0°, žiroskop okoli 165°. Račun za 2 vrtljaja: 2 · 17,6 cm / 12 cm = 2,93 rad ≈ 168°. Ujema se.</p>
+<p>Tvoj robot se lahko malo razlikuje, zato vedno preveri s poskusom.</p>''')
 
 anim_sec = anim('robot-zavija.html', 'zasuk robota', 'Nastavi število vrtljajev in smer. Pritisni Zaženi in opazuj, za koliko stopinj se zasuče robot.', 740)
 
