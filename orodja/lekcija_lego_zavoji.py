@@ -20,6 +20,9 @@ NSQ = SQ / O
 assert round(NSQ, 2) == 2.27                      # kvadrat, stranica 40 cm
 assert round(2.27 * O, 1) == 40.0
 assert round(2 * PI * (T / 2), 2) == round(PI * T, 2) == 37.68   # 2 · π · r z r = T/2 je π · T
+S90_PIVOT = PI * T / 2                       # zavoj okoli enega kolesa: polmer T, četrtina obsega 2 · π · T
+assert round(S90_PIVOT, 2) == 18.84 and round(S90_PIVOT / O, 2) == 1.07
+assert round(2 * PI * T / 4, 2) == round(S90_PIVOT, 2)
 assert 4 * 90 == 360 and 4 * 3 == 12              # preveri se / izziv
 IMG = '2026/11/'
 def blk(name, alt, w='420px'): return img(IMG + name, alt, f' max_width="{w}"')
@@ -93,6 +96,31 @@ izziv = H2 + 'Izziv: kvadrat s stranico 40 cm</h2>\n<p>Robot naj prevozi kvadrat
     'Poglej, kje se robot ustavi. Za koliko cm je zgrešil začetek? V katero smer gleda?'])
 napaka2 = box('pozor', 'Zakaj robot ne pride natančno nazaj?', '<p>Vsak zavoj se zasuče malo preveč ali malo premalo. Pri štirih zavojih se napake seštejejo. Če je vsak zavoj zgrešil za 3°, je po štirih zavojih napaka že 12°.</p>')
 
+TD = 'style="padding:8px 10px;border-bottom:1px solid #c9c4bb;text-align:left;vertical-align:top"'
+def tr(c, th=False):
+    t = 'th' if th else 'td'
+    return '<tr>' + ''.join(f'<{t} {TD}>{x}</{t}>' for x in c) + '</tr>'
+def tab(rows, head):
+    return '<table style="width:100%;border-collapse:collapse;font-size:18px">' + tr(head, True) + ''.join(tr(r) for r in rows) + '</table>'
+radovedne = H2 + 'Za radovedne: kaj pomenijo druge številke?</h2>\n' \
+    + '<p>Številka pri »straight« ni kot in ni hitrost. Pove, kako se kolesi vrtita druga glede na drugo.</p>\n' \
+    + tab([['0', 'obe kolesi se vrtita enako hitro naprej', 'robot vozi naravnost'],
+           ['100', 'kolesi se vrtita enako hitro v nasprotnih smereh', 'robot se zasuče na mestu v desno'],
+           ['−100', 'enako kot pri 100, v obratni smeri', 'robot se zasuče na mestu v levo'],
+           ['50', 'desno kolo stoji, levo se vrti (preveri v poskusu spodaj)', 'robot zavije okoli desnega kolesa']],
+          ['Številka', 'Kolesi', 'Robot']) \
+    + '\n<p style="margin-top:12px">Pri −50 je obratno: stoji levo kolo. Pri številkah med 0 in 50 se eno kolo vrti počasneje od drugega in robot zavije v lok.</p>'
+poskus50 = H2 + 'Poskusi: številka 50</h2>\n' + ol([
+    'V bloku zamenjaj število pri »straight« s <strong>50</strong>. Vrtljaje pusti na <strong>1</strong>.',
+    'Zaženi program (▶).',
+    'Poglej vrata B in C. Katero kolo je ostalo na 0°? Koliko stopinj je naredilo drugo kolo?',
+    'Poglej, okoli katerega kolesa je robot zavil.',
+    'Poskusi še <strong>25</strong> in <strong>−50</strong>. Kaj opaziš?'])
+racun50 = box('primer', 'Račun vnaprej', f'''<p style="margin-top:0">Pri številki 50 se vrti samo eno kolo. Opiše krog s polmerom <strong>T</strong> (ne T / 2), ker je središče kroga mirujoče kolo.</p>
+<p>Za 90° je pot četrtina tega kroga: s = 2 · π · T / 4 = π · T / 2 = 3,14 · 12 cm / 2 = {dec(S90_PIVOT)} cm.</p>
+<p>Število vrtljajev: n = {dec(S90_PIVOT)} cm / 17,6 cm ≈ <strong>{dec(S90_PIVOT / O)}</strong>. To je dvakrat toliko kot pri zavoju na mestu.</p>
+<p>Račun je napoved. Poskus pokaže, ali drži za tvojega robota.</p>''')
+
 anim_sec = anim('robot-zavija.html', 'zasuk robota', 'Nastavi število vrtljajev in smer. Pritisni Zaženi in opazuj, za koliko stopinj se zasuče robot.', 740)
 
 preveri = H2 + 'Preveri se</h2>' + q('1. Kaj naredi blok »move right: 100 for 0.5 rotations«?', 'Robot se zasuče na mestu v desno. Eno kolo se vrti naprej, drugo nazaj. Vsako kolo se zavrti pol vrtljaja.') \
@@ -115,6 +143,7 @@ out = sec(
   + row(col('1_2', text(poskus)) + col('1_2', text(napaka1)), '1_2,1_2')
   + row(col('1_2', text(zakaj)) + col('1_2', text(primer)), '1_2,1_2')
   + row(col('1_2', text(izziv)) + col('1_2', text(napaka2)), '1_2,1_2'))
+out += sec(row(col('4_4', text(radovedne))) + row(col('1_2', text(poskus50)) + col('1_2', racun50), '1_2,1_2'))
 out += sec(row(col('4_4', anim_sec)), '#f5f3ef')
 out += sec(row(col('1_2', text(preveri)) + col('1_2', text(kratko)), '1_2,1_2'))
 write('lego-zavoji', out)
