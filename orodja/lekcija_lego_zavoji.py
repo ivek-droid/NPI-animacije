@@ -23,6 +23,8 @@ assert round(2 * PI * (T / 2), 2) == round(PI * T, 2) == 37.68   # 2 · π · r 
 S90_PIVOT = PI * T / 2                       # zavoj okoli enega kolesa: polmer T, četrtina obsega 2 · π · T
 assert round(S90_PIVOT, 2) == 18.84 and round(S90_PIVOT / O, 2) == 1.07
 assert round(2 * PI * T / 4, 2) == round(S90_PIVOT, 2)
+assert round((2 * O - O) / (PI * T) * 180) == 84 and round(2 * O, 1) == 35.2   # splošno pravilo, primer right: 25 (meritev 84°)
+assert round(2 * 0.54 * O / (PI * T) * 180) == 91   # pri 100 se poti seštejeta: enako kot zavoj na mestu
 assert round(2 * O / T * 180 / PI) == 168        # račun za 2 vrtljaja pri številki 50 (meritev uporabnika, 12. 11.: žiroskop 165°, B 720°, C 0°)
 assert 4 * 90 == 360 and 4 * 3 == 12              # preveri se / izziv
 IMG = '2026/11/'
@@ -110,7 +112,10 @@ radovedne = H2 + 'Za radovedne: kaj pomenijo druge številke?</h2>\n' \
            ['−100', 'enako kot pri 100, v obratni smeri', 'robot se zasuče na mestu v levo'],
            ['50', 'desno kolo stoji, levo se vrti', 'robot zavije okoli desnega kolesa']],
           ['Številka', 'Kolesi', 'Robot']) \
-    + '\n<p style="margin-top:12px">Pri −50 je obratno: stoji levo kolo. Pri številkah med 0 in 50 se eno kolo vrti počasneje od drugega in robot zavije v lok.</p>'
+    + '\n<p style="margin-top:12px">Pri −50 je obratno: stoji levo kolo. Pri številkah med 0 in 50 se eno kolo vrti počasneje od drugega in robot zavije v lok.</p>' \
+    + '\n<p><strong>Splošno pravilo</strong> za vse številke: zasuk = razlika poti koles / (π · T) · 180°.</p>' \
+    + '\n<p>Primer »right: 25«, 2 vrtljaja: zunanje kolo prevozi 2 · 17,6 = 35,2 cm, notranje polovico, 17,6 cm. Razlika je 17,6 cm. Zasuk = 17,6 / (3,14 · 12) · 180° ≈ 84°. Žiroskop je pokazal 84°.</p>' \
+    + '\n<p>Pri 100 gre eno kolo naprej, drugo nazaj, zato poti seštej. Pri 50 notranje kolo stoji, njegova pot je 0.</p>'
 poskus50 = H2 + 'Poskusi: številka 50</h2>\n' + ol([
     'V bloku zamenjaj število pri »straight« s <strong>50</strong>. Vrtljaje pusti na <strong>1</strong>.',
     'Zaženi program (▶).',
