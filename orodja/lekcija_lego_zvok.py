@@ -18,9 +18,11 @@ zvok = H2 + 'Zvok: pisk</h2>\n' + ol([
     'Odpri nov projekt. Odpri paleto <strong>SOUND</strong>.',
     'Povleci blok <strong>»play beep 60 for 0.2 seconds«</strong> tik pod rumeni blok.',
     'Klikni ▶ (desni gumb). Slišiš kratek pisk.',
-    'Številka 60 je višina tona. Vpiši <strong>72</strong> in zaženi. Nato vpiši <strong>48</strong> in zaženi. Pri kateri številki je ton višji?',
+    'Klikni na številko <strong>60</strong>. Odpre se klaviatura. Vsaka tipka je ena številka: <strong>C (60)</strong> je levo, <strong>C (72)</strong> desno. Klikni na tipko in zaženi.',
+    'Poskusi tipko bolj levo in tipko bolj desno. <strong>Večja številka je višji ton.</strong> Poslušaj, ali drži.',
     'Številka 0.2 je dolžina pisanja v sekundah. Vpiši <strong>1</strong> in zaženi.'])
-sl_beep = img(IMG + 'lego-play-beep.png', 'Blok »play beep 60 for 0.2 seconds« iz palete SOUND.', ' max_width="260px"') + cap('Blok za pisk. Prva številka je višina tona, druga je dolžina v sekundah.')
+sl_beep = img(IMG + 'lego-play-beep.png', 'Blok »play beep 60 for 0.2 seconds« iz palete SOUND.', ' max_width="260px"') + cap('Blok za pisk. Prva številka je višina tona, druga je dolžina v sekundah.') \
+    + img(IMG + 'lego-beep-klaviatura.png', 'Klaviatura, ki se odpre ob kliku na številko pri bloku play beep. Izbrana je tipka E (64). Levo je C (60), desno C (72).', ' max_width="340px"') + cap('Klaviatura: vsaka tipka je ena številka. Desno so višji toni.')
 glasnost = H2 + 'Glasnost</h2>\n' + '''<p>Blok <strong>»set volume to 100 %«</strong> nastavi glasnost. Vstavi ga na začetek programa, pred prvi zvok.</p>
 <p>Poskusi s 100 in z 30. V razredu je dovolj tudi 50.</p>'''
 sl_vol = img(IMG + 'lego-set-volume.png', 'Blok »set volume to 100 %« iz palete SOUND.', ' max_width="200px"') + cap('Blok za glasnost.')
@@ -35,6 +37,7 @@ poskus = H2 + 'Poskus: počakaj ali ne?</h2>\n' + ol([
     'Pod njega povleci <strong>»play beep 60 for 0.2 seconds«</strong>. Zaženi in poslušaj.',
     'Zamenjaj prvi blok z <strong>»start sound Communication / Hello«</strong>. Zaženi in poslušaj.',
     'Kaj slišiš drugače? Kaj se zgodi s piskom?']) 
+napaka_zaslon = box('pozor', 'Stari napis ostane', '<p>Nov napis <strong>ne pobriše</strong> starega. Pokrije samo toliko znakov, kolikor jih ima sam. Ostali znaki starega napisa ostanejo.</p>\n<p>Primer: najprej napišeš »avtomobilcek«, nato na isti vrstici »formentor«. Na zaslonu piše <strong>formentorcek</strong>: zadnje tri črke so ostale od prvega napisa.</p>\n<p>Zato pred novim napisom vedno uporabi <strong>»clear display«</strong>.</p>', '16px 0 0')
 napaka1 = box('pozor', 'Pogosta napaka', '<p>Izbereš <strong>»start sound«</strong>, robot pa že vozi, preden se zvok konča. Če želiš zvok slišati do konca, izberi <strong>»play sound … until done«</strong>.</p>\n<p>Če zvoka ne slišiš, preveri glasnost: blok <strong>set volume</strong>.</p>', '16px 0 0')
 
 zaslon = H2 + 'Zaslon: napis</h2>\n' + ol([
@@ -43,15 +46,16 @@ zaslon = H2 + 'Zaslon: napis</h2>\n' + ol([
     'Klikni na besedo <strong>EV3</strong> in vpiši <strong>Vozim</strong>.',
     'Zaženi. Poglej zaslon na robotu.',
     'Številka pri »line« je vrstica na zaslonu. Vpiši <strong>3</strong> in zaženi. Kje je zdaj napis?',
-    'Blok <strong>»clear display«</strong> pobriše zaslon. Povleci ga pod blok »write« in zaženi.']) + '<p>Za začetek piši besede brez črk č, š in ž (na primer <strong>Vozim</strong>, <strong>Stop</strong>). Zaslon robota teh črk morda ne pokaže.</p>'
+    'Blok <strong>»clear display«</strong> pobriše zaslon. Povleci ga pod blok »write« in zaženi.']) + '<p>Zaslon robota črke <strong>č</strong> ne zna prikazati. Namesto č napiše c. Zato piši brez strešic: namesto č, š in ž piši c, s in z.</p>'
 sl_write = img(IMG + 'lego-write-line.png', 'Blok »write EV3 at line 1« iz palete DISPLAY.', ' max_width="260px"') + cap('Blok za napis na zaslonu. Prvo polje je besedilo, drugo je vrstica.') \
     + img(IMG + 'lego-clear-display.png', 'Blok »clear display« iz palete DISPLAY.', ' max_width="180px"') + cap('Blok, ki pobriše zaslon.')
 lucka = H2 + 'Lučka</h2>\n' + ol([
     'V paleti <strong>DISPLAY</strong> poišči blok <strong>»set status light to green«</strong>.',
     'Povleci ga pod rumeni blok in zaženi. Poglej lučko okoli gumbov na robotu.',
-    'Klikni na puščico ob besedi <strong>green</strong> in poglej, katere barve lahko izbereš.',
-    'Izberi <strong>red</strong> in zaženi.']) 
-sl_light = img(IMG + 'lego-status-light.png', 'Blok »set status light to green« iz palete DISPLAY.', ' max_width="260px"') + cap('Blok za lučko. Barvo izbereš s puščico.')
+    'Klikni na puščico ob besedi <strong>green</strong>. Odpre se seznam: off, green, red, orange in še tri z besedo <strong>pulse</strong>.',
+    'Izberi <strong>red</strong> in zaženi. Poskusi tudi <strong>red pulse</strong>. Kaj je drugače?']) 
+sl_light = img(IMG + 'lego-status-light.png', 'Blok »set status light to green« iz palete DISPLAY.', ' max_width="260px"') + cap('Blok za lučko. Barvo izbereš s puščico.') \
+    + img(IMG + 'lego-lucka-barve.png', 'Seznam barv lučke: off, green, red, orange, green pulse, red pulse, orange pulse.', ' max_width="240px"') + cap('Seznam barv. Rdečo uporabimo za ustavitev.')
 radovedni = H2 + 'Za radovedne</h2>\n<p>V paleti DISPLAY je tudi blok <strong>»display Eyes / Neutral for 2 seconds«</strong>. Namesto besedila pokaže sliko. Poskusi različne slike s seznama.</p>'
 
 primer = box('primer', 'Rešen primer', f'''<p style="margin-top:0">Robot naj prevozi 40 cm naprej in pri tem sporoča: med vožnjo sveti zeleno in piše »Vozim«, ob ustavitvi sveti rdeče in piše »Stop«.</p>
@@ -101,7 +105,7 @@ out = sec(
   + row(col('1_2', text(kaj)) + col('1_2', text(pravilo)), '1_2,1_2')
   + row(col('1_2', text(zvok) + sl_beep) + col('1_2', text(glasnost) + sl_vol), '1_2,1_2')
   + row(col('1_2', text(dva) + sl_until + sl_start) + col('1_2', text(poskus + napaka1)), '1_2,1_2')
-  + row(col('1_2', text(zaslon) + sl_write) + col('1_2', text(lucka) + sl_light + text(radovedni)), '1_2,1_2')
+  + row(col('1_2', text(zaslon) + sl_write + text(napaka_zaslon)) + col('1_2', text(lucka) + sl_light + text(radovedni)), '1_2,1_2')
   + row(col('1_2', text(primer)) + col('1_2', text(izziv)), '1_2,1_2'))
 out += sec(row(col('1_2', text(preveri)) + col('1_2', text(kratko)), '1_2,1_2'), '#f5f3ef')
 write('lego-zvok-zaslon-lucka', out)
