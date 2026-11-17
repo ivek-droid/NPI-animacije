@@ -1,0 +1,97 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Zvok, zaslon in lučka</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>predvajati pisk in zvok ter nastaviti glasnost,</li>
+<li>razlikovati »play sound … until done« in »start sound«,</li>
+<li>izpisati napis na zaslon robota,</li>
+<li>nastaviti barvo lučke,</li>
+<li>sestaviti program, ki s sporočili pove, kaj robot dela.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kako robot »govori«</h2>
+<p>Tovornjak, ki vzvratno vozi, <strong>piska</strong>. Semafor <strong>sveti</strong> rdeče ali zeleno. Na tabli piše <strong>STOP</strong>. Vsak od njih ti na svoj način pove, kaj se dogaja.</p>
+<p>Tudi robot ti lahko sporoča, kaj dela. Za to ima tri načine: zvok, napis na zaslonu in barvo lučke.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Pravilo</p>
+<p style="margin-top:0">Robot sporoča s tremi bloki. Vsak je v svoji paleti:</p><ul>
+<li><strong>zvok</strong>: paleta SOUND (svetlo vijolična),</li>
+<li><strong>napis na zaslonu</strong>: paleta DISPLAY (temno vijolična),</li>
+<li><strong>lučka</strong>: tudi paleta DISPLAY, blok »set status light to«.</li>
+</ul><p>Zvok ni dovolj. V hrupu ga ne slišiš. Zato mu dodamo še napis in lučko.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Zvok: pisk</h2>
+<ol>
+<li>Odpri nov projekt. Odpri paleto <strong>SOUND</strong>.</li>
+<li>Povleci blok <strong>»play beep 60 for 0.2 seconds«</strong> tik pod rumeni blok.</li>
+<li>Klikni ▶ (desni gumb). Slišiš kratek pisk.</li>
+<li>Številka 60 je višina tona. Vpiši <strong>72</strong> in zaženi. Nato vpiši <strong>48</strong> in zaženi. Pri kateri številki je ton višji?</li>
+<li>Številka 0.2 je dolžina pisanja v sekundah. Vpiši <strong>1</strong> in zaženi.</li>
+</ol>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-play-beep.png" alt="Blok »play beep 60 for 0.2 seconds« iz palete SOUND." title_text="Blok »play beep 60 for 0.2 seconds« iz palete SOUND." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="260px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok za pisk. Prva številka je višina tona, druga je dolžina v sekundah.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Glasnost</h2>
+<p>Blok <strong>»set volume to 100 %«</strong> nastavi glasnost. Vstavi ga na začetek programa, pred prvi zvok.</p>
+<p>Poskusi s 100 in z 30. V razredu je dovolj tudi 50.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-set-volume.png" alt="Blok »set volume to 100 %« iz palete SOUND." title_text="Blok »set volume to 100 %« iz palete SOUND." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="200px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok za glasnost.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Dva načina predvajanja zvoka</h2>
+<p>V paleti SOUND sta dva podobna bloka:</p><ul>
+<li><strong>play sound … until done</strong>: program <strong>počaka</strong>, da se zvok konča, šele nato izvede naslednji blok.</li>
+<li><strong>start sound</strong>: zvok se <strong>zažene</strong>, program pa gre takoj naprej.</li>
+</ul><p>Razlika se sliši, kadar sledi še kak blok.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-play-sound-until-done.png" alt="Blok »play sound Communication / Hello until done« iz palete SOUND." title_text="Blok »play sound Communication / Hello until done« iz palete SOUND." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="340px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Program počaka, da se zvok konča.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-start-sound.png" alt="Blok »start sound Communication / Hello« iz palete SOUND." title_text="Blok »start sound Communication / Hello« iz palete SOUND." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="290px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Program gre takoj naprej.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Poskus: počakaj ali ne?</h2>
+<ol>
+<li>Pod rumeni blok povleci <strong>»play sound Communication / Hello until done«</strong>.</li>
+<li>Pod njega povleci <strong>»play beep 60 for 0.2 seconds«</strong>. Zaženi in poslušaj.</li>
+<li>Zamenjaj prvi blok z <strong>»start sound Communication / Hello«</strong>. Zaženi in poslušaj.</li>
+<li>Kaj slišiš drugače? Kaj se zgodi s piskom?</li>
+</ol><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Izbereš <strong>»start sound«</strong>, robot pa že vozi, preden se zvok konča. Če želiš zvok slišati do konca, izberi <strong>»play sound … until done«</strong>.</p>
+<p>Če zvoka ne slišiš, preveri glasnost: blok <strong>set volume</strong>.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Zaslon: napis</h2>
+<ol>
+<li>Odpri paleto <strong>DISPLAY</strong>.</li>
+<li>Povleci blok <strong>»write EV3 at line 1«</strong> pod rumeni blok.</li>
+<li>Klikni na besedo <strong>EV3</strong> in vpiši <strong>Vozim</strong>.</li>
+<li>Zaženi. Poglej zaslon na robotu.</li>
+<li>Številka pri »line« je vrstica na zaslonu. Vpiši <strong>3</strong> in zaženi. Kje je zdaj napis?</li>
+<li>Blok <strong>»clear display«</strong> pobriše zaslon. Povleci ga pod blok »write« in zaženi.</li>
+</ol><p>Za začetek piši besede brez črk č, š in ž (na primer <strong>Vozim</strong>, <strong>Stop</strong>). Zaslon robota teh črk morda ne pokaže.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-write-line.png" alt="Blok »write EV3 at line 1« iz palete DISPLAY." title_text="Blok »write EV3 at line 1« iz palete DISPLAY." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="260px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok za napis na zaslonu. Prvo polje je besedilo, drugo je vrstica.</p>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-clear-display.png" alt="Blok »clear display« iz palete DISPLAY." title_text="Blok »clear display« iz palete DISPLAY." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="180px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok, ki pobriše zaslon.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Lučka</h2>
+<ol>
+<li>V paleti <strong>DISPLAY</strong> poišči blok <strong>»set status light to green«</strong>.</li>
+<li>Povleci ga pod rumeni blok in zaženi. Poglej lučko okoli gumbov na robotu.</li>
+<li>Klikni na puščico ob besedi <strong>green</strong> in poglej, katere barve lahko izbereš.</li>
+<li>Izberi <strong>red</strong> in zaženi.</li>
+</ol>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-status-light.png" alt="Blok »set status light to green« iz palete DISPLAY." title_text="Blok »set status light to green« iz palete DISPLAY." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="260px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok za lučko. Barvo izbereš s puščico.</p>[/et_pb_text][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Za radovedne</h2>
+<p>V paleti DISPLAY je tudi blok <strong>»display Eyes / Neutral for 2 seconds«</strong>. Namesto besedila pokaže sliko. Poskusi različne slike s seznama.</p>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer</p>
+<p style="margin-top:0">Robot naj prevozi 40 cm naprej in pri tem sporoča: med vožnjo sveti zeleno in piše »Vozim«, ob ustavitvi sveti rdeče in piše »Stop«.</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>pot 40 cm, obseg kolesa o = 17,6 cm</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>program z bloki za lučko, napis, pisk in vožnjo</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>vrtljaji = pot / obseg kolesa</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>n = 40 cm / 17,6 cm = 2,27 vrtljaja</span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 1</span>set status light to <strong>green</strong></span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 2</span>write <strong>Vozim</strong> at line 1</span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 3</span>play beep 60 for 0.2 seconds</span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 4</span>move forward for <strong>2.27</strong> rotations</span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 5</span>clear display</span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 6</span>write <strong>Stop</strong> at line 1</span></li>
+<li><span><span class="pg-koraki__oznaka">Blok 7</span>set status light to <strong>red</strong></span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">7 blokov, vožnja 2,27 vrtljaja</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>2,27 · 17,6 cm = 39,95 cm, kar je 40 cm. Ujema se.</span></li>
+</ol>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Blok za barvo lučke je v paleti <strong>DISPLAY</strong>, ne v paleti za zvok. Če ga ne najdeš, poglej tam.</p>
+</div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Izziv: semafor</h2>
+<p>Robot stoji in čaka. Ko pritisneš senzor dotika, zapelje.</p>
+<ol>
+<li>Na začetku naj lučka sveti <strong>rdeče</strong> in na zaslonu naj piše <strong>Stop</strong>.</li>
+<li>Nato robot čaka na pritisk. Blok <strong>»1 wait until pressed«</strong> je v paleti SENSORS (modra). Številka 1 je vrata senzorja dotika.</li>
+<li>Ko pritisneš senzor, naj lučka postane <strong>zelena</strong>, na zaslonu naj piše <strong>Vozim</strong> in robot naj <strong>enkrat pisne</strong>.</li>
+<li>Robot prevozi 40 cm (2,27 vrtljaja).</li>
+<li>Ob ustavitvi naj lučka spet sveti rdeče in na zaslonu naj piše Stop.</li>
+<li>Namig: pred novim napisom uporabi »clear display«.</li>
+</ol>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. Kakšna je razlika med »play sound … until done« in »start sound«?</summary><p style="margin-top:12px">Pri »play sound … until done« program počaka, da se zvok konča. Pri »start sound« se zvok zažene, program pa gre takoj naprej.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. V kateri paleti je blok »set status light to«?</summary><p style="margin-top:12px">V paleti DISPLAY.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. Koliko vrtljajev vpišeš pri »move forward«, da robot prevozi 40 cm?</summary><p style="margin-top:12px">2,27 vrtljaja (40 cm / 17,6 cm).</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">4. Zakaj robotu poleg zvoka dodamo še napis in lučko?</summary><p style="margin-top:12px">Zvoka ne slišiš v hrupu ali kadar ga ne moreš slišati. Napis in lučko pa vidiš.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>Zvok: paleta SOUND. Pisk: »play beep«, glasnost: »set volume«.</li>
+<li>»play sound … until done« počaka, »start sound« ne.</li>
+<li>Napis: »write … at line …« (paleta DISPLAY), brisanje: »clear display«.</li>
+<li>Lučka: »set status light to« (paleta DISPLAY).</li>
+<li>Robot lahko sporoča, kaj dela, z zvokom, napisom in lučko.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
