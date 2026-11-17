@@ -33,11 +33,13 @@ kvadrat0 = H2 + 'Kvadrat iz vaje 3</h2>\n' + '''<p>V vaji 3 si za kvadrat sestav
 <p>Zdaj ga sestaviš z <strong>enim blokom repeat</strong> in dvema blokoma znotraj njega.</p>'''
 sestavi = H2 + 'Sestavi program</h2>\n' + ol([
     'Odpri nov projekt. Na ploščadi je rumeni blok »when program starts«.',
-    'Odpri paleto <strong>CONTROL</strong>. Poišči blok <strong>»repeat 10«</strong> in ga povleci tik pod rumeni blok.',
+    'Odpri paleto <strong>CONTROL</strong> (oranžna). Poišči blok <strong>»repeat 10«</strong> in ga povleci tik pod rumeni blok.',
     'Klikni na številko 10 in vpiši <strong>4</strong>.',
     'Iz palete MOVEMENT povleci blok <strong>»move forward for 1 rotations«</strong> v notranjost bloka repeat. Vpiši <strong>2.27</strong> (s piko).',
     'Pod njega, še vedno znotraj bloka repeat, povleci blok <strong>»move straight: 0 for 1 rotations«</strong>. Pri »straight« vpiši <strong>100</strong>, pri vrtljajih vrednost, ki si jo našel pri zavojih (okoli <strong>0.54</strong>).',
     'Preveri: oba bloka morata biti <strong>znotraj</strong> bloka repeat.'])
+IMG = '2026/11/'
+sl_rep = img(IMG + 'lego-repeat-10.png', 'Blok »repeat 10« iz palete CONTROL: oranžen blok z odprtim prostorom v sredini.', ' max_width="240px"') + cap('Blok repeat iz palete CONTROL. Bloke povleci v odprti prostor.')
 zazeni = H2 + 'Preizkusi na robotu</h2>\n' + ol([
     'Robota postavi na tla. Označi začetno mesto s trakom. Okoli naj bo prosto vsaj 50 cm.',
     'Klikni desni gumb ▶ (prenos in zagon).',
@@ -88,7 +90,7 @@ kratko = box('cilj', 'Na kratko', ul([
 out = sec(
     row(col('4_4', text(cilj('Ponavljanje', ['uporabiti blok repeat,', 'iz osmih blokov narediti tri,', 'izračunati število ponovitev za zaprt lik,', 'sestaviti program za šestkotnik in trikotnik.']))))
   + row(col('1_2', text(kaj)) + col('1_2', text(pravilo)), '1_2,1_2')
-  + row(col('1_2', text(kvadrat0 + sestavi)) + col('1_2', text(zazeni)), '1_2,1_2')
+  + row(col('1_2', text(kvadrat0 + sestavi) + sl_rep) + col('1_2', text(zazeni)), '1_2,1_2')
   + row(col('1_2', text(zakaj)) + col('1_2', text(napaka1)), '1_2,1_2')
   + row(col('1_2', text(primer)) + col('1_2', text(izziv)), '1_2,1_2'))
 out += sec(row(col('4_4', anim_sec)), '#f5f3ef')

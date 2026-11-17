@@ -22,12 +22,12 @@
 <p>Zdaj ga sestaviš z <strong>enim blokom repeat</strong> in dvema blokoma znotraj njega.</p><h2 style="margin-top:0">Sestavi program</h2>
 <ol>
 <li>Odpri nov projekt. Na ploščadi je rumeni blok »when program starts«.</li>
-<li>Odpri paleto <strong>CONTROL</strong>. Poišči blok <strong>»repeat 10«</strong> in ga povleci tik pod rumeni blok.</li>
+<li>Odpri paleto <strong>CONTROL</strong> (oranžna). Poišči blok <strong>»repeat 10«</strong> in ga povleci tik pod rumeni blok.</li>
 <li>Klikni na številko 10 in vpiši <strong>4</strong>.</li>
 <li>Iz palete MOVEMENT povleci blok <strong>»move forward for 1 rotations«</strong> v notranjost bloka repeat. Vpiši <strong>2.27</strong> (s piko).</li>
 <li>Pod njega, še vedno znotraj bloka repeat, povleci blok <strong>»move straight: 0 for 1 rotations«</strong>. Pri »straight« vpiši <strong>100</strong>, pri vrtljajih vrednost, ki si jo našel pri zavojih (okoli <strong>0.54</strong>).</li>
 <li>Preveri: oba bloka morata biti <strong>znotraj</strong> bloka repeat.</li>
-</ol>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi na robotu</h2>
+</ol>[/et_pb_text][et_pb_image src="https://npi.splet.arnes.si/files/2026/11/lego-repeat-10.png" alt="Blok »repeat 10« iz palete CONTROL: oranžen blok z odprtim prostorom v sredini." title_text="Blok »repeat 10« iz palete CONTROL: oranžen blok z odprtim prostorom v sredini." show_in_lightbox="on" _builder_version="4.27.9" border_radii="on|14px|14px|14px|14px" max_width="240px"][/et_pb_image][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<p style="font-size:16px;color:#4a4f5c;margin-top:6px;line-height:1.4">Blok repeat iz palete CONTROL. Bloke povleci v odprti prostor.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi na robotu</h2>
 <ol>
 <li>Robota postavi na tla. Označi začetno mesto s trakom. Okoli naj bo prosto vsaj 50 cm.</li>
 <li>Klikni desni gumb ▶ (prenos in zagon).</li>
