@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ponavljanje: kvadrat z blokom repeat – animacija</title>
+<script>if (/[?&]kompakt\b/.test(location.search)) document.documentElement.classList.add('ct-kompakt');</script>
+<style>
+:root {
+  --bg: #f4f6f5;
+  --panel: #ffffff;
+  --ink: #18201e;
+  --muted: #586561;
+  --border: #d5dbd8;
+  --accent: #0d7a6a;
+  --robot: #4b1585;
+  --robot-soft: #e8dff5;
+  --mark: #c4410c;
+  --btn: #4b1585;
+  --btn-ink: #ffffff;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111617; --panel: #1a2123; --ink: #e7edeb; --muted: #97a5a1; --border: #2c3638;
+    --accent: #4fd1b9; --robot: #b99af0; --robot-soft: #2d2540; --mark: #f0803c;
+    --btn: #b99af0; --btn-ink: #14101c;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.55 var(--font-body);
+  padding-block: 12px 20px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.ct-wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+h1 { margin: 0 0 6px; font-size: 1.75rem; line-height: 1.15; font-weight: 600; text-wrap: balance; }
+.ct-lead { margin: 0; color: var(--muted); max-width: 64ch; }
+.ct-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+.ct-stage { padding: 8px 8px 0; }
+svg.ct-scene { display: block; width: 100%; height: auto; max-height: 320px; }
+
+.ct-l { font-family: var(--font-body); font-size: 24px; fill: var(--muted); paint-order: stroke; stroke: var(--panel); stroke-width: 8px; stroke-linejoin: round; }
+.ct-a { font-family: var(--font-mono); font-size: 30px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 8px; stroke-linejoin: round; }
+.ct-w { font-family: var(--font-body); font-size: 22px; font-weight: 700; fill: #ffffff; }
+
+.ct-block {
+  margin: 0 16px; padding: 10px 14px; border-radius: 12px; display: inline-block;
+  background: #ff58c8; color: #ffffff; font: 700 1rem/1.3 var(--font-body);
+}
+.ct-block.ct-b-dark { color: #1b1e28; }
+.ct-calc { margin: 0; padding: 12px 16px; border-top: 1px solid var(--border); font: 600 1rem/1.5 var(--font-mono); }
+.ct-calc span { display: block; }
+.ct-calc .ct-res { font-size: 1.125rem; }
+.ct-controls { display: flex; flex-wrap: wrap; gap: 14px 24px; padding: 14px 16px; align-items: flex-end; }
+.ct-field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.ct-field legend { padding: 0; font-weight: 600; margin-bottom: 6px; }
+.ct-step { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ct-nrow { flex-wrap: nowrap; }
+.ct-val { min-width: 4.5ch; text-align: center; font: 700 1.25rem/1 var(--font-mono); }
+.ct-btn {
+  min-height: 48px; min-width: 48px; padding: 0 18px; border-radius: 10px; cursor: pointer;
+  font: 600 1rem/1 var(--font-body); border: 2px solid var(--btn); background: var(--panel); color: var(--ink);
+}
+.ct-btn.ct-main { background: var(--btn); color: var(--btn-ink); }
+.ct-btn[aria-pressed="true"].ct-dir { background: var(--btn); color: var(--btn-ink); }
+.ct-btn:focus-visible, input[type=range]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ct-btn[disabled] { opacity: .45; cursor: default; }
+input[type=range] { width: 200px; flex: 0 1 200px; min-width: 90px; min-height: 44px; accent-color: var(--robot); }
+.ct-note { margin: 0; padding: 0 16px 14px; color: var(--muted); font-size: 0.9375rem; }
+.ct-desc { margin: 0; color: var(--muted); max-width: 70ch; }
+
+.ct-kompakt body { padding-block: 0; }
+.ct-kompakt .ct-wrap > header, .ct-kompakt .ct-desc { display: none; }
+@media (max-width: 520px) { .ct-controls { gap: 12px 16px; } .ct-calc { font-size: .875rem; } input[type=range] { flex-basis: 120px; width: 120px; } }
+
+.ct-prog { margin: 0 16px 10px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.ct-rep { background: #e8a317; color: #1b1e28; border-radius: 12px; padding: 8px 14px 10px; font: 700 1rem/1.3 var(--font-body); }
+.ct-rep > .ct-rep-in { margin: 6px 0 0 18px; display: flex; flex-direction: column; gap: 4px; }
+.ct-rep .ct-step-b { background: #ff58c8; color: #fff; border-radius: 10px; padding: 8px 12px; outline-offset: 2px; }
+.ct-rep .ct-step-b.ct-on { outline: 4px solid var(--ink); }
+.ct-count { margin: 0; padding: 10px 16px 0; font: 700 1.125rem/1.4 var(--font-mono); }
+</style>
+</head>
+<body>
+<main class="ct-wrap">
+  <header>
+    <h1>Ponavljanje: kvadrat z blokom repeat</h1>
+    <p class="ct-lead">Blok »repeat« ponovi bloke v svojem notranjem delu. Izberi število ponovitev, zaženi program in opazuj, kaj nariše robot.</p>
+  </header>
+
+  <section class="ct-panel" aria-label="Animacija ponavljanja">
+    <div class="ct-stage">
+      <svg class="ct-scene" id="scene" viewBox="0 0 560 320" role="img" aria-labelledby="sceneTitle sceneDesc">
+        <title id="sceneTitle">Robot vozi kvadrat</title>
+        <desc id="sceneDesc">Pogled od zgoraj. Robot v vsaki ponovitvi prevozi stranico 40 centimetrov in zavije za pravi kot v desno. Debela črta je njegova pot. Pri štirih ponovitvah nariše skoraj zaprt kvadrat.</desc>
+        <rect x="0" y="0" width="560" height="320" fill="none"/>
+        <g id="grid" stroke="var(--border)" stroke-width="1"></g>
+        <circle id="start" cx="200" cy="270" r="9" fill="none" stroke="var(--accent)" stroke-width="4"/>
+        <text class="ct-l" x="218" y="296">začetek</text>
+        <polyline id="trail" points="" fill="none" stroke="var(--mark)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+        <g id="robot" transform="translate(200 270) rotate(0)">
+          <rect x="-16" y="-22" width="32" height="44" rx="6" fill="var(--robot)"/>
+          <path d="M0 -20 L-9 -6 L9 -6 Z" fill="var(--robot-soft)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="ct-prog" aria-label="Program">
+      <div class="ct-rep"><span id="repTxt">repeat 4</span>
+        <div class="ct-rep-in">
+          <span class="ct-step-b" id="bFwd">move forward for 2,27 rotations</span>
+          <span class="ct-step-b" id="bTurn">move right: 100 for 0,54 rotations</span>
+        </div>
+      </div>
+    </div>
+    <p class="ct-count" id="count" aria-live="polite">Ponovitev 0 od 4</p>
+    <p class="ct-calc" id="calc" aria-live="off"><span id="c1"></span><span id="c2"></span><span class="ct-res" id="c3"></span></p>
+    <div class="ct-controls">
+      <fieldset class="ct-field">
+        <legend id="lgN">Število ponovitev</legend>
+        <div class="ct-step ct-nrow" role="group" aria-labelledby="lgN">
+          <button type="button" class="ct-btn" id="nMinus" aria-label="Ena ponovitev manj">−</button>
+          <input type="range" id="nSlider" min="1" max="8" step="1" value="4" aria-labelledby="lgN">
+          <button type="button" class="ct-btn" id="nPlus" aria-label="Ena ponovitev več">+</button>
+          <span class="ct-val" id="nVal" aria-live="off">4</span>
+        </div>
+      </fieldset>
+      <div class="ct-step">
+        <button type="button" class="ct-btn ct-main" id="run">Zaženi</button>
+        <button type="button" class="ct-btn" id="pause" aria-pressed="false" disabled>Pavza</button>
+        <button type="button" class="ct-btn" id="reset">Ponovi</button>
+      </div>
+    </div>
+    <p class="ct-note">Stranica 40 cm (2,27 vrtljaja), zavoj 0,54 vrtljaja, razmak koles T = 12 cm, obseg kolesa 17,6 cm. Animacija je idealna: kolesa ne drsijo. Pravi robot se malo razlikuje.</p>
+  </section>
+
+  <p class="ct-desc">Opis: v notranjem delu bloka repeat sta dva bloka: vožnja naravnost za 2,27 vrtljaja in zavoj v desno za 0,54 vrtljaja. Ena ponovitev nariše eno stranico kvadrata in zavoj. Pri štirih ponovitvah robot nariše skoraj zaprt kvadrat. Pri osmih naredi dva kroga. Mali zasuk, ki ga ima vsak zavoj preveč, se seštevajo.</p>
+</main>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var O = 17.6, T = 12, PI = 3.14, S = 5;           // obseg kolesa, razmak koles, π, px na cm
+  var NF = 2.27, NT = 0.54;                          // vrtljaji vožnje in zavoja
+  var SIDE = NF * O;                                 // cm
+  var TURN = NT * O / (PI * T) * 360;                // ° na zavoj (≈ 90,8)
+  var N = 4, running = false, paused = false, raf = 0, last = 0, t = 0;
+  var DF = 1.1, DT = 0.7;                            // trajanje vožnje in zavoja v s
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var X0 = 200, Y0 = 270;
+  var g = '';
+  for (var i = 0; i <= 560; i += 40) g += '<line x1="' + i + '" y1="0" x2="' + i + '" y2="320"/>';
+  for (var j = 0; j <= 320; j += 40) g += '<line x1="0" y1="' + j + '" x2="560" y2="' + j + '"/>';
+  $('grid').innerHTML = g;
+
+  function fmt(x, d) { var s = x.toFixed(d); if (d > 0) s = s.replace(/\.?0+$/, ''); return s.replace('.', ','); }
+  function total() { return N * (DF + DT); }
+  // stanje robota ob času tt: položaj, smer, trenutna ponovitev, faza, točke poti
+  function state(tt) {
+    var x = X0, y = Y0, h = 0, pts = [[x, y]], rep = 0, ph = '';
+    var len = SIDE * S;
+    for (var k = 0; k < N; k++) {
+      var t0 = k * (DF + DT);
+      if (tt <= t0) break;
+      var f = Math.min(1, (tt - t0) / DF);
+      x += len * f * Math.sin(h * Math.PI / 180); y -= len * f * Math.cos(h * Math.PI / 180);
+      pts.push([x, y]); rep = k + 1; ph = 'fwd';
+      if (f < 1) break;
+      var tu = Math.min(1, (tt - t0 - DF) / DT);
+      if (tt <= t0 + DF) break;
+      h += TURN * tu; ph = 'turn';
+      if (tu < 1) break;
+    }
+    return { x: x, y: y, h: h, pts: pts, rep: rep, ph: ph };
+  }
+  function draw() {
+    var s = state(t);
+    $('trail').setAttribute('points', s.pts.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '));
+    $('robot').setAttribute('transform', 'translate(' + s.x.toFixed(1) + ' ' + s.y.toFixed(1) + ') rotate(' + s.h.toFixed(2) + ')');
+    $('bFwd').classList.toggle('ct-on', s.ph === 'fwd' && t < total());
+    $('bTurn').classList.toggle('ct-on', s.ph === 'turn' && t < total());
+    var done = t >= total() - 1e-9;
+    $('count').textContent = done ? 'Konec: ' + N + ' ponovitev od ' + N : 'Ponovitev ' + s.rep + ' od ' + N;
+    var tot = N * TURN;
+    $('c3').textContent = done ? 'Skupni zasuk: ' + N + ' · ' + fmt(TURN, 1) + '° = ' + fmt(tot, 1) + '°' : '';
+  }
+  function readout() {
+    $('nVal').textContent = N; $('nSlider').value = N; $('repTxt').textContent = 'repeat ' + N;
+    $('c1').textContent = 'Ena ponovitev: vožnja 2,27 · 17,6 = ' + fmt(SIDE, 1) + ' cm + zavoj ' + fmt(TURN, 1) + '°';
+    $('c2').textContent = 'Skupaj ' + N + ' ponovitev: pot ' + fmt(N * SIDE, 0) + ' cm';
+    $('nMinus').disabled = N <= 1; $('nPlus').disabled = N >= 8;
+  }
+  function setButtons() {
+    $('run').disabled = running && !paused;
+    $('run').textContent = paused ? 'Nadaljuj' : 'Zaženi';
+    $('pause').disabled = !running;
+    $('pause').setAttribute('aria-pressed', paused ? 'true' : 'false');
+  }
+  function stop() { cancelAnimationFrame(raf); running = false; paused = false; }
+  function resetAll() { stop(); t = 0; draw(); readout(); setButtons(); }
+  function frame(ts) {
+    if (!running || paused) return;
+    t = Math.min(total(), t + (ts - last) / 1000); last = ts;
+    draw();
+    if (t >= total()) { running = false; setButtons(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function run() {
+    if (running && paused) { paused = false; last = performance.now(); setButtons(); raf = requestAnimationFrame(frame); return; }
+    if (running) return;
+    if (t >= total()) t = 0;
+    if (reduce) { t = total(); draw(); setButtons(); return; }
+    running = true; paused = false; last = performance.now(); setButtons(); raf = requestAnimationFrame(frame);
+  }
+  function pause() {
+    if (!running) return;
+    paused = !paused;
+    if (!paused) { last = performance.now(); raf = requestAnimationFrame(frame); }
+    setButtons();
+  }
+  function setN(v) { N = Math.min(8, Math.max(1, Math.round(v))); resetAll(); }
+  $('run').addEventListener('click', run);
+  $('pause').addEventListener('click', pause);
+  $('reset').addEventListener('click', resetAll);
+  $('nMinus').addEventListener('click', function () { setN(N - 1); });
+  $('nPlus').addEventListener('click', function () { setN(N + 1); });
+  $('nSlider').addEventListener('input', function () { setN(parseFloat(this.value)); });
+  resetAll();
+})();
+</script>
+</body>
+</html>

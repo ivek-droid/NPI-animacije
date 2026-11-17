@@ -1,0 +1,84 @@
+[et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h1 style="margin-bottom:16px">Ponavljanje</h1>
+<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Po tej lekciji znaš</p>
+<ul>
+<li>uporabiti blok repeat,</li>
+<li>iz osmih blokov narediti tri,</li>
+<li>izračunati število ponovitev za zaprt lik,</li>
+<li>sestaviti program za šestkotnik in trikotnik.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kaj je ponavljanje</h2>
+<p>Pomisli na skakanje s kolebnico. Trener ti ne reče: »skoči, skoči, skoči …« desetkrat. Reče: »<strong>10-krat skoči</strong>.«</p>
+<p>Tudi robotu lahko rečeš, naj nekaj ponovi. Napišeš eno navodilo in številko, kolikokrat naj ga izvede. Program je krajši in lažje ga popraviš.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Pravilo</p>
+<p style="margin-top:0">Blok <strong>repeat</strong> ima v sredini prostor za druge bloke. Robot jih izvede večkrat, kolikor je napisano na bloku.</p>
+<ul>
+<li>Številka pri »repeat« pove, <strong>kolikokrat</strong> se ponovi vsebina.</li>
+<li>Ponovi se samo tisto, kar je <strong>znotraj</strong> bloka.</li>
+<li>Bloki pod repeat se izvedejo šele, ko so vse ponovitve končane.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Kvadrat iz vaje 3</h2>
+<p>V vaji 3 si za kvadrat sestavil <strong>8 blokov</strong>: štirikrat vožnjo in štirikrat zavoj. Vsak par je enak.</p>
+<p>Zdaj ga sestaviš z <strong>enim blokom repeat</strong> in dvema blokoma znotraj njega.</p><h2 style="margin-top:0">Sestavi program</h2>
+<ol>
+<li>Odpri nov projekt. Na ploščadi je rumeni blok »when program starts«.</li>
+<li>Odpri paleto <strong>CONTROL</strong>. Poišči blok <strong>»repeat 10«</strong> in ga povleci tik pod rumeni blok.</li>
+<li>Klikni na številko 10 in vpiši <strong>4</strong>.</li>
+<li>Iz palete MOVEMENT povleci blok <strong>»move forward for 1 rotations«</strong> v notranjost bloka repeat. Vpiši <strong>2.27</strong> (s piko).</li>
+<li>Pod njega, še vedno znotraj bloka repeat, povleci blok <strong>»move straight: 0 for 1 rotations«</strong>. Pri »straight« vpiši <strong>100</strong>, pri vrtljajih vrednost, ki si jo našel pri zavojih (okoli <strong>0.54</strong>).</li>
+<li>Preveri: oba bloka morata biti <strong>znotraj</strong> bloka repeat.</li>
+</ol>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi na robotu</h2>
+<ol>
+<li>Robota postavi na tla. Označi začetno mesto s trakom. Okoli naj bo prosto vsaj 50 cm.</li>
+<li>Klikni desni gumb ▶ (prenos in zagon).</li>
+<li>Opazuj: robot prevozi štiri stranice in štirikrat zavije. Kje se ustavi? V katero smer gleda?</li>
+<li>Zamenjaj 4 z <strong>8</strong>. Zaženi. Robot naredi dva kroga. Ali je drugi krog natanko na prvem?</li>
+<li>Zamenjaj 4 z <strong>2</strong>. Kaj nariše robot?</li>
+</ol>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Koliko ponovitev za zaprt lik?</h2>
+<p>Ko robot naredi poln krog in se vrne na začetek, se je skupaj zasukal za <strong>360°</strong>.</p>
+<p>Zato velja: <strong>število ponovitev = 360° / kot zavoja</strong>.</p>
+<p>Kvadrat: 360° / 90° = 4. Šestkotnik: 360° / 60° = 6. Trikotnik: 360° / 120° = 3.</p>
+<p>Pri zavoju na mestu je število vrtljajev za zavoj sorazmerno s kotom. Za 90° je 0,54 vrtljaja, za 60° je tretjino manj, za 120° pa tretjino več.</p>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--pozor" style="margin:0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Bloka vožnje in zavoja sta <strong>pod</strong> blokom repeat, ne <strong>znotraj</strong> njega. Robot potem naredi eno stranico in en zavoj, ponovi pa ničesar.</p>
+<p>Blok repeat ima odprt prostor. Bloka povleci vanj, da ju obda.</p>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Robot ne pride natanko nazaj</p>
+<p>Vsak zavoj ima majhno napako (vaja 3). Pri štirih ponovitvah se napake seštejejo, pri osmih še bolj. Zato je drugi krog malo zamaknjen.</p>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--primer" style="margin:0">
+<p class="pg-okvir__oznaka">Rešen primer</p>
+<p style="margin-top:0">Robot naj prevozi pravilni šestkotnik s stranico 20 cm. Kolikokrat ponovimo vožnjo in zavoj, kolikšna sta vrtljaja vožnje in zavoja? T = 12 cm, o = 17,6 cm.</p>
+<ol class="pg-koraki">
+<li><span><span class="pg-koraki__oznaka">Podatki</span>stranica 20 cm, šest stranic, T = 12 cm, o = 17,6 cm</span></li>
+<li><span><span class="pg-koraki__oznaka">Iskano</span>število ponovitev, vrtljaji vožnje, vrtljaji zavoja</span></li>
+<li><span><span class="pg-koraki__oznaka">Formula</span>skupni zasuk je 360°, zato je ponovitev = 360° / kot zavoja</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>kot zavoja = 360° / 6 = 60°, ponovitev = 6</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>vožnja: n = 20 cm / 17,6 cm = 1,14</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>pot kolesa pri zavoju 60°: s = π · T · 60° / 360° = 3,14 · 12 cm / 6 = 6,28 cm</span></li>
+<li><span><span class="pg-koraki__oznaka">Vstavim</span>zavoj: n = 6,28 cm / 17,6 cm = 0,36</span></li>
+<li><span><span class="pg-koraki__oznaka">Rezultat</span><span class="pg-rezultat">repeat 6: vožnja 1,14 vrtljaja, zavoj 0,36 vrtljaja</span></span></li>
+<li><span><span class="pg-koraki__oznaka">Preverim</span>6 · 60° = 360°. 0,36 · 17,6 cm = 6,3 cm, kar je blizu 6,28 cm. Ujema se.</span></li>
+</ol>
+</div><div class="pg-okvir pg-okvir--pozor" style="margin:16px 0 0">
+<p class="pg-okvir__oznaka">Pogosta napaka</p>
+<p>Robot zavije za <strong>zunanji kot</strong>, ne za notranji kot lika. Pri šestkotniku je notranji kot 120°, robot pa zavije za 60°. Če vstaviš 120°, naredi preveč zavit lik.</p>
+</div>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Izziv: enakostranični trikotnik</h2>
+<p>Robot naj prevozi trikotnik s stranico 30 cm.</p>
+<ol>
+<li>Število ponovitev: 360° / 120° = <strong>3</strong>. Robot zavije za <strong>120°</strong>, ne za 60°.</li>
+<li>Vožnja: n = 30 cm / 17,6 cm ≈ <strong>1,70</strong>.</li>
+<li>Zavoj za 120°: s = 3,14 · 12 cm · 120° / 360° = 12,56 cm. n = 12,56 cm / 17,6 cm ≈ <strong>0,71</strong>.</li>
+<li>Sestavi program: repeat 3, vožnja naprej, zavoj v desno. Zaženi.</li>
+<li>Izmeri, kje se robot ustavi, in popravi vrtljaje zavoja, dokler ni trikotnik zaprt.</li>
+</ol>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#f5f3ef" custom_padding="20px||28px||false|false"][et_pb_row _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="4_4" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preizkusi sam</h2>
+<p>Nastavi število ponovitev in pritisni Zaženi. Poglej, kaj nariše robot in kateri blok se izvaja. Uporabiš lahko tudi tipko Tab in Enter.</p>
+[iframe src="https://ivek-droid.github.io/NPI-animacije/robot-ponavlja.html?kompakt" width="100%" height="780" title="Animacija: ponavljanje"][/et_pb_text][et_pb_button button_url="https://ivek-droid.github.io/NPI-animacije/robot-ponavlja.html" url_new_window="on" button_text="Odpri animacijo v celem oknu" module_class="pg-btn" _builder_version="4.27.9"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="4.27.9" background_color="#ffffff" custom_padding="20px||28px||false|false"][et_pb_row column_structure="1_2,1_2" _builder_version="4.27.9" width="90%" max_width="1080px" custom_padding="10px||10px||false|false" column_gap="3"][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<h2 style="margin-top:0">Preveri se</h2><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">1. Kaj naredi blok »repeat 5«?</summary><p style="margin-top:12px">Ponovi bloke, ki so znotraj njega, petkrat.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">2. Robot naredi kvadrat z blokom »repeat 4«. Koliko ponovitev potrebuješ za dva kroga?</summary><p style="margin-top:12px">8 ponovitev.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">3. Koliko ponovitev za zaprt osemkotnik? Za kolikšen kot zavije robot?</summary><p style="margin-top:12px">8 ponovitev. Kot zavoja je 360° / 8 = 45°.</p></details><details style="margin:0 0 10px;padding:10px 16px;border:2px solid #c9c4bb;border-radius:14px"><summary style="cursor:pointer;font-weight:700;min-height:32px">4. Blok »move forward« je pod blokom repeat, ne znotraj. Kolikokrat ga robot izvede?</summary><p style="margin-top:12px">Enkrat, ko so vse ponovitve končane.</p></details>[/et_pb_text][/et_pb_column][et_pb_column type="1_2" _builder_version="4.27.9"][et_pb_text _builder_version="4.27.9" text_font_size="19px" text_line_height="1.6em" text_text_color="#1b1e28"]<div class="pg-okvir pg-okvir--cilj" style="margin:0">
+<p class="pg-okvir__oznaka">Na kratko</p>
+<ul>
+<li>Blok repeat ponovi bloke, ki so znotraj njega.</li>
+<li>Kvadrat: repeat 4, vožnja naprej 2,27 vrtljaja, zavoj v desno 0,54 vrtljaja.</li>
+<li>Število ponovitev za zaprt lik: 360° / kot zavoja.</li>
+<li>Robot zavije za zunanji kot lika.</li>
+<li>Pri več ponovitvah se majhne napake seštevajo.</li>
+</ul>
+</div>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
